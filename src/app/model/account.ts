@@ -1,7 +1,8 @@
 export class Account {
-  code: string;
+	code: string;
 	name: string;
 	active: boolean;
 	color: string;
-	orderNo: number;
+	orderNo: string;
+	icon: string;
 }

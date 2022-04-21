@@ -580,11 +580,11 @@ h6 {
 }
 
 .w3-padding-small {
-	padding: 1/2*$padding $padding !important;
+	padding: calc(1/2)*$padding $padding !important;
 }
 
 .w3-padding-large {
-	padding: 3/2*$padding 3*$padding !important;
+	padding: calc(3/2)*$padding 3*$padding !important;
 }
 
 $sizes: 16, 24, 32, 48, 64;
@@ -794,7 +794,7 @@ $sizes: 16, 24, 32, 48, 64;
 	width: 3*$padding;
 	height: 3*$padding;
 	position: relative;
-	top: 3/4*$padding;
+	top: calc(3/4)*$padding;
 }
 /* #endregion */
 
@@ -1001,14 +1001,14 @@ $sizes: 16, 24, 32, 48, 64;
 
 @for $i from 1 through 12 {
     .w3-col.s#{$i} {
-        width: $i * (1/12) * 100%;
+        width: $i * calc(1/12) * 100%;
     }
 }
 
 @media (min-width:601px) {
 	@for $i from 1 through 12 {
         .w3-col.m#{$i} {
-            width: $i * (1/12) * 100%;
+            width: $i * calc(1/12) * 100%;
         }
     }
 }
@@ -1016,7 +1016,7 @@ $sizes: 16, 24, 32, 48, 64;
 @media (min-width:993px) {
     @for $i from 1 through 12 {
         .w3-col.l#{$i} {
-            width: $i * (1/12) * 100%;
+            width: $i * calc(1/12) * 100%;
         }
     }
 }
@@ -1163,7 +1163,7 @@ $round: 2px;
 .w3-code {
 	width: auto;
 	background-color: white;
-	padding: $padding 3/2*$padding;
+	padding: $padding calc(3/2)*$padding;
 	border-left: 4px solid #4CAF50;
 	word-wrap: break-word;
 	margin-top: $margin !important;

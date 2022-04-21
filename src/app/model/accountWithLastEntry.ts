@@ -1,7 +1,7 @@
 import { Account } from "./account";
 import { Entry } from "./entry";
 
-export class AccountWithLastEntry {
+export class AccountWithEntry {
   account: Account;
-  lastEntry: Entry;
+  entry: Entry;
 }

@@ -1,6 +1,7 @@
+import { AbstractDto } from "./abstractDto";
 import { Account } from "./account";
 
-export class Entry {
+export class Entry extends AbstractDto {
 	account: Account;
 	date: Date;
 	category: any;

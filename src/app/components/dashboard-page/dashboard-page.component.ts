@@ -5,11 +5,11 @@ import { Entry } from 'src/app/model/entry';
 import { AccountHttpService } from 'src/app/services/account.http.service';
 
 @Component({
-  selector: 'tm-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'tm-dashboard-page',
+  templateUrl: './dashboard-page.component.html',
+  styleUrls: ['./dashboard-page.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardPageComponent implements OnInit {
 
   items: AccountWithEntry[][];
 
@@ -29,7 +29,6 @@ export class DashboardComponent implements OnInit {
         }
         this.items[row][col] = item;
       }
-      console.log(this.items);
     });
   }
 

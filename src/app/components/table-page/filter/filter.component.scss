@@ -1,0 +1,20 @@
+div.filter {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 8px;
+
+  i {
+    padding: 12px 12px 0px 12px;
+    background: #ccc;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-right: none;
+  }
+
+  input {
+    border: none;
+    background-color: transparent;
+    width: 300px;
+  }
+}

@@ -13,6 +13,11 @@ import { ChartPageComponent } from './components/chart-page/chart-page.component
 import { ReportPageComponent } from './components/report-page/report-page.component';
 import { PaginationComponent } from './components/table-page/pagination/pagination.component';
 import { FilterComponent } from './components/table-page/filter/filter.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { InputComponent } from './components/common/form/input-text/input-text.component';
+import { InputDateComponent } from './components/common/form/input-date/input-date.component';
+import { TextareaComponent } from './components/common/form/textarea/textarea.component';
+import { SelectComponent } from './components/common/form/select/select.component';
 
 
 @NgModule({
@@ -26,12 +31,17 @@ import { FilterComponent } from './components/table-page/filter/filter.component
     ChartPageComponent,
     ReportPageComponent,
     PaginationComponent,
-    FilterComponent
+    FilterComponent,
+    InputComponent,
+    InputDateComponent,
+    TextareaComponent,
+    SelectComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pl-PL' }

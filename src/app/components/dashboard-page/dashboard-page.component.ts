@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Account } from 'src/app/model/account';
 import { AccountWithEntry } from 'src/app/model/accountWithLastEntry';
-import { Entry } from 'src/app/model/entry';
 import { AccountHttpService } from 'src/app/services/account.http.service';
 
 @Component({
@@ -31,5 +29,4 @@ export class DashboardPageComponent implements OnInit {
       }
     });
   }
-
 }

@@ -5,6 +5,7 @@ export class Account extends AbstractDto {
 	name: string;
 	active: boolean;
 	color: string;
+	lightColor: string;
 	orderNo: string;
 	icon: string;
 }

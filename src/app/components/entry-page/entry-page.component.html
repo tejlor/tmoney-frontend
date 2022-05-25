@@ -1,1 +1,32 @@
-<p>entry-page works!</p>
+  <div class="body" [ngStyle]="{'background-color': account?.lightColor}">
+  <div class="w3-card w3-white w3-margin-top w3-padding form">
+    <h1>{{account?.name}}</h1>
+    <form [formGroup]="formGroup">
+      <input type="hidden" formControlName="id" />
+      <p>
+        <label>Nazwa:</label>
+        <tm-input-text [control]="formGroup.controls['name']"></tm-input-text>
+      </p>
+      <div>
+        <label>Data:</label>
+        <tm-input-date [control]="formGroup.controls['date']"></tm-input-date>
+      </div>
+      <p>
+        <label>Kwota:</label>
+        <tm-input-text [control]="formGroup.controls['amount']"></tm-input-text>
+      </p>
+      <p>
+        <label>Kategoria:</label>
+        <tm-select [control]="formGroup.controls['category']" [options]="categories"></tm-select>
+      </p>
+      <p>
+        <label>Opis:</label>
+        <tm-textarea [control]="formGroup.controls['description']"></tm-textarea>
+      </p>
+      <div class="w3-bar">
+        <button class="w3-btn w3-blue" (click)="saveAndGoBack()">Zapisz i cofnij</button>&nbsp;
+        <button class="w3-btn w3-green" (click)="saveAndClear()">Zapisz i dodaj kolejny</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,25 +1,32 @@
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { Account } from "../model/account";
-import { AccountWithEntry } from "../model/accountWithLastEntry";
-import { HttpService } from "./http.service";
+import {Injectable} from "@angular/core";
+import {plainToInstance} from "class-transformer";
+import {Observable, map} from "rxjs";
+import {Account} from "../model/account";
+import {AccountWithEntry} from "../model/accountWithLastEntry";
+import {HttpService} from "./http.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AccountHttpService {
+export class AccountHttpService extends HttpService {
 
-  constructor(private http: HttpService) {
-
-  }
+  private readonly baseUrl = 'bank-accounts';
 
   getByCode(code: string): Observable<Account> {
-    return this.http.get(`http://192.168.1.3:2711/bank-accounts/${code}`);
+    return this.get(`${this.baseUrl}/${code}`)
+      .pipe(map(result => this.deserialize(result)));
   }
 
   getSummary(): Observable<AccountWithEntry[]> {
-    return this.http.get('http://192.168.1.3:2711/bank-accounts/summary');
+    return this.get(`${this.baseUrl}/summary`)
+      .pipe(map(result => this.deserializeAccountWithEntries(result)));
   }
 
+  private deserialize(account: object): Account {
+    return plainToInstance(Account, account);
+  }
 
+  private deserializeAccountWithEntries(accountWithEntries: object[]): AccountWithEntry[] {
+    return plainToInstance(AccountWithEntry, accountWithEntries);
+  }
 }

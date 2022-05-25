@@ -1,21 +1,47 @@
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { Entry } from "../model/entry";
-import { TableData } from "../model/tableData";
-import { TableParams } from "../model/tableParams";
-import { HttpService } from "./http.service";
+import {Injectable} from "@angular/core";
+import {plainToClassFromExist, plainToInstance} from "class-transformer";
+import {map, Observable} from "rxjs";
+import {Entry} from "../model/entry";
+import {TableData} from "../model/tableData";
+import {TableParams} from "../model/tableParams";
+import {HttpService} from "./http.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class EntryHttpService {
+export class EntryHttpService extends HttpService {
 
-  constructor(private http: HttpService) {
+  private readonly baseUrl = 'entries';
 
+  getById(id: number): Observable<Entry> {
+    return this.get(`${this.baseUrl}/${id}`)
+      .pipe(map(result => this.deserialize(result)));
   }
 
   getByCode(code: string, tableParams: TableParams): Observable<TableData<Entry>> {
-    return this.http.get(`http://192.168.1.3:2711/entries/table/${code}`, { params: tableParams });
+    return this.get(`${this.baseUrl}/table/${code}`, {params: tableParams})
+      .pipe(map(result => this.deserializeTableData(result)));
   }
 
+  save(entry: Entry): Observable<Entry> {
+    return this.post(`${this.baseUrl}`, entry)
+      .pipe(map(result => this.deserialize(result)));
+  }
+
+  update(entry: Entry): Observable<Entry> {
+    return this.put(`${this.baseUrl}`, entry)
+      .pipe(map(result => this.deserialize(result)));
+  }
+
+  saveOrUpdate(entry: Entry): Observable<Entry> {
+    return entry.id ? this.update(entry) : this.save(entry);
+  }
+
+  private deserialize(entry: object): Entry {
+    return plainToInstance(Entry, entry);
+  }
+
+  private deserializeTableData(entry: object): TableData<Entry> {
+    return plainToClassFromExist(new TableData<Entry>(Entry), entry);
+  }
 }

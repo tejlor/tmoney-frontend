@@ -17,6 +17,11 @@ export class AccountHttpService extends HttpService {
       .pipe(map(result => this.deserialize(result)));
   }
 
+  getActive(): Observable<Account[]> {
+    return this.get(`${this.baseUrl}`)
+      .pipe(map(result => this.deserializeArray(result)));
+  }
+
   getSummary(): Observable<AccountWithEntry[]> {
     return this.get(`${this.baseUrl}/summary`)
       .pipe(map(result => this.deserializeAccountWithEntries(result)));
@@ -24,6 +29,10 @@ export class AccountHttpService extends HttpService {
 
   private deserialize(account: object): Account {
     return plainToInstance(Account, account);
+  }
+
+  private deserializeArray(accounts: object[]): Account[] {
+    return plainToInstance(Account, accounts);
   }
 
   private deserializeAccountWithEntries(accountWithEntries: object[]): AccountWithEntry[] {

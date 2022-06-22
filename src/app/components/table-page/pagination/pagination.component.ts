@@ -17,7 +17,6 @@ export class PaginationComponent implements OnInit {
     this._tableInfo = value;
     if (value) {
       this.visiblePages = this.calcVisiblePages(this.pageNo, value.pageCount);
-      console.log(this.visiblePages);
     }
   }
 

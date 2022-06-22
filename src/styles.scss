@@ -4,8 +4,16 @@ html, body {
   height: 100%;
 }
 
+body {
+  background-color: $lightGray;
+}
+
 h1, h2, h3, h4, h5 {
   font-family: 'Trebuchet MS';
+  font-weight: bold;
+}
+
+label.main {
   font-weight: bold;
 }
 
@@ -17,4 +25,12 @@ h1, h2, h3, h4, h5 {
 .w3-select {
   background-color: white;
   border-radius: 5px;
+}
+
+.w3-hoverable tbody tr:hover {
+	cursor: pointer;
+}
+
+form > p {
+  margin: 24px 0px;
 }

@@ -1,5 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {CategoriesPageComponent} from './components/categories-page/categories-page.component';
+import {CategoryPageComponent} from './components/category-page/category-page.component';
 import {DashboardPageComponent} from './components/dashboard-page/dashboard-page.component';
 import {EntryPageComponent} from './components/entry-page/entry-page.component';
 import {TablePageComponent} from './components/table-page/table-page.component';
@@ -10,6 +12,8 @@ const routes: Routes = [
   {path: 'table/:code', component: TablePageComponent},
   {path: 'entry/:code/:id', component: EntryPageComponent},
   {path: 'entry/:code', component: EntryPageComponent},
+  {path: 'categories', component: CategoriesPageComponent},
+  {path: 'category/:id', component: CategoryPageComponent},
   {path: 'w3', component: W3Component},
   {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
 ];

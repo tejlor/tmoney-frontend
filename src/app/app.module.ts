@@ -1,6 +1,6 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { APP_INITIALIZER, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
@@ -18,7 +18,20 @@ import { InputComponent } from './components/common/form/input-text/input-text.c
 import { InputDateComponent } from './components/common/form/input-date/input-date.component';
 import { TextareaComponent } from './components/common/form/textarea/textarea.component';
 import { SelectComponent } from './components/common/form/select/select.component';
+import { DialogComponent } from './components/common/dialog/dialog.component';
+import { CategoriesPageComponent } from './components/categories-page/categories-page.component';
+import { CategoryPageComponent } from './components/category-page/category-page.component';
+import {InputRadioComponent} from './components/common/form/input-radio/input-radio.component';
+import {OAuthService} from './services/oauth.service';
+import {environment} from 'src/environments/environment';
 
+
+function init(oauthService: OAuthService): () => Promise<void> {
+  return () => new Promise<void>((resolve) => {
+    setInterval(() => oauthService.refreshToken(), environment.refreshInterval);
+    resolve();
+  });
+}
 
 @NgModule({
   declarations: [
@@ -35,7 +48,11 @@ import { SelectComponent } from './components/common/form/select/select.componen
     InputComponent,
     InputDateComponent,
     TextareaComponent,
-    SelectComponent
+    SelectComponent,
+    InputRadioComponent,
+    DialogComponent,
+    CategoriesPageComponent,
+    CategoryPageComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +61,16 @@ import { SelectComponent } from './components/common/form/select/select.componen
     ReactiveFormsModule
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'pl-PL' }
+    {
+      provide: LOCALE_ID,
+      useValue: 'pl-PL'
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: init,
+      deps: [OAuthService],
+      multi: true
+     }
   ],
   bootstrap: [AppComponent]
 })

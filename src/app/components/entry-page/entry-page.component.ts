@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {NgStyle} from '@angular/common';
+import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Account} from 'src/app/model/account';
@@ -13,7 +14,7 @@ import {EntryHttpService} from 'src/app/services/entry.http.service';
   templateUrl: './entry-page.component.html',
   styleUrls: ['./entry-page.component.scss']
 })
-export class EntryPageComponent implements OnInit {
+export class EntryPageComponent {
 
   account: Account;
   categories: Category[];
@@ -52,10 +53,6 @@ export class EntryPageComponent implements OnInit {
     this.categoryService.getByAccountCode(accountCode).subscribe(categories => {
       this.categories = categories;
     });
-  }
-
-  ngOnInit(): void {
-
   }
 
   saveAndGoBack(): void {

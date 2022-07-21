@@ -19,7 +19,7 @@ export class EntryHttpService extends HttpService {
   }
 
   getTableByAccountCode(accountCode: string, tableParams: TableParams): Observable<TableData<Entry>> {
-    return this.get(`${this.baseUrl}/table/${accountCode}`, tableParams)
+    return this.get(`${this.baseUrl}/table/${accountCode ?? ''}`, tableParams)
       .pipe(map(result => this.deserializeTableData(result)));
   }
 
@@ -29,7 +29,7 @@ export class EntryHttpService extends HttpService {
   }
 
   update(entry: Entry): Observable<Entry> {
-    return this.put(`${this.baseUrl}`, entry)
+    return this.put(`${this.baseUrl}/${entry.id}`, entry)
       .pipe(map(result => this.deserialize(result)));
   }
 

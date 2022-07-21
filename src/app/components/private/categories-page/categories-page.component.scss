@@ -1,0 +1,13 @@
+@import '/src/styles/variables.scss';
+
+div.w3-container {
+  padding: 24px;
+}
+
+select {
+  width: 200px;
+}
+
+thead tr {
+  background-color: themeBlue(0); 
+}

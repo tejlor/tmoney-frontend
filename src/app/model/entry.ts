@@ -4,7 +4,7 @@ import {Category} from "./category";
 
 export class Entry extends AbstractDto {
 	account: Account;
-	date: Date;
+	date: string;
 	category: Category;
 	name: string;
 	amount: number;
@@ -15,5 +15,14 @@ export class Entry extends AbstractDto {
 	constructor() {
 		super();
 		this.category = new Category();
+	}
+
+	compareTo(other: Entry): number {
+		const dateCompare = this.date.localeCompare(other.date);
+		if (dateCompare !== 0) {
+			return dateCompare;
+		}
+
+		return this.id - other.id;
 	}
 }

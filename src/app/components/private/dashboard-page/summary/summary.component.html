@@ -1,0 +1,14 @@
+<div *ngIf="entry" class="w3-card w3-text-white">
+  <h2 [routerLink]="Path.entries(null)"><i class="fa-solid fa-wallet"></i> Podsumowanie</h2>
+
+  <div class="w3-row last-transaction">
+    <div class="name">
+      {{entry.name}}
+    </div>
+    <div [class]="{'red': entry.amount < 0, 'green': entry.amount > 0}">
+      {{entry.amount | number:'1.2-2'}}
+    </div>
+  </div>
+
+  <h3>{{entry.balanceOverall | number: '1.2-2'}} <span>PLN</span></h3>
+</div>

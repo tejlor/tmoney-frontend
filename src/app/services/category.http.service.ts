@@ -23,6 +23,11 @@ export class CategoryHttpService extends HttpService {
       .pipe(map(result => this.deserializeArray(result)));
   }
 
+  getAll(): Observable<Category[]> {
+    return this.get(`${this.baseUrl}`)
+      .pipe(map(result => this.deserializeArray(result)));
+  }
+
   getTable(tableParams: TableParams): Observable<TableData<Category>> {
     return this.get(`${this.baseUrl}/table`, tableParams)
       .pipe(map(result => this.deserializeTableData(result)));
@@ -38,7 +43,7 @@ export class CategoryHttpService extends HttpService {
       .pipe(map(result => this.deserialize(result)));
   }
 
-  remove(id: number, newCategoryId: number): Observable<Category> {
+  remove(id: number, newCategoryId?: number): Observable<Category> {
     return this.delete(`${this.baseUrl}/${id}`, {newCategoryId})
       .pipe(map(result => this.deserialize(result)));
   }

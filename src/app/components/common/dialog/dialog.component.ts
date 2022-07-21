@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {DialogMode} from 'src/app/enums/dialog-mode';
 
 @Component({
@@ -22,8 +22,8 @@ export class DialogComponent implements OnInit {
   }
 
   onAcceptClick(): void {
-    this.closeDialog();
     this.config.onAccept();
+    this.closeDialog();
   }
 
   private closeDialog(): void {
@@ -39,7 +39,7 @@ export class DialogConfig {
   mode: DialogMode = DialogMode.HIDDEN;
   onAccept: (param?: any) => void;
 
-  static confirmation(header: string, message: string, onAccept: ()=>void) {
+  static confirmation(header: string, message: string, onAccept: (param?: any) => void) {
     const config = new DialogConfig();
     config.mode = DialogMode.PREVIEW;
     config.header = header;

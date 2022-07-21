@@ -1,17 +1,18 @@
 <div class="w3-modal" [ngClass]="{'none': config.mode === DialogMode.HIDDEN, 'block': config.mode !== DialogMode.HIDDEN}">
   <div class="w3-modal-content w3-animate-top w3-card-4">
-    <header class="w3-container w3-teal"> 
+    <header class="w3-container w3-blue"> 
       <span class="w3-button w3-display-topright" (click)="onCloseClick()">&times;</span>
       <h2>{{config.header}}</h2>
     </header>
     <div class="w3-container">
-      <p>{{config.message}}</p>
+      <p *ngIf="config.message">{{config.message}}</p>
+      <ng-content></ng-content>
     </div>
-    <footer className="w3-padding w3-border-top">
-      <div className="w3-bar w3-right-align" >
-        <button className="w3-button w3-round w3-white" (click)="onCloseClick()">{{config.closeText}}</button>
+    <footer class="w3-padding w3-border-top">
+      <div class="w3-bar w3-right-align" >
+        <button class="w3-button w3-round w3-white" (click)="onCloseClick()">{{config.closeText}}</button>
         &nbsp;
-        <button className="w3-button w3-round w3-theme" (click)="onAcceptClick()">{{config.acceptText}}</button>      
+        <button class="w3-button w3-round w3-theme" (click)="onAcceptClick()">{{config.acceptText}}</button>      
       </div>
     </footer>
   </div>

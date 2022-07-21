@@ -1,0 +1,17 @@
+<div class="login-page">
+  <div class="w3-card-4 login-panel w3-white" >
+    <div class="w3-center"><br />
+      <img src="/assets/user.svg" style="width: 40%" class="w3-margin-top" />
+    </div>
+    <div class="w3-container" >
+      <form class="w3-section" [formGroup]="formGroup">
+        <div *ngIf="errorMsg" class="w3-panel w3-pale-red w3-bar-left w3-border-red">
+          <p>{{errorMsg}}</p>
+        </div>
+        <tm-input-text label="Login" [control]="formGroup.controls['login']"></tm-input-text>
+        <tm-input-pass label="Hasło" [control]="formGroup.controls['password']"></tm-input-pass>
+        <button class="w3-button w3-block w3-round w3-green" (click)="onLogin()">Zaloguj</button>
+      </form>
+    </div>
+  </div>
+</div>

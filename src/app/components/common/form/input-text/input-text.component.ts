@@ -7,6 +7,8 @@ import {BaseInput} from '../base-input/base-input';
   templateUrl: './input-text.component.html',
   styleUrls: ['./input-text.component.scss']
 })
-export class InputComponent extends BaseInput {
+export class InputTextComponent extends BaseInput {
+  @Input() label: string;
+  @Input() labelStyle: object;
   @Input() control: AbstractControl;
 }

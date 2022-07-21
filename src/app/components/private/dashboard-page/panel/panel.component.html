@@ -1,0 +1,24 @@
+<div class="w3-card w3-text-white w3-margin" [style.backgroundColor]="account.color">
+  <h2><i [class]="account.icon"></i> {{account.name}}</h2>
+  <div class="w3-container">
+    <h3>{{entry.balance | number: '1.2-2'}} <span>PLN</span></h3>
+    <div class="w3-row last-transaction">
+      <div class="w3-col m4">
+        {{entry.name}}
+      </div>
+      <div class="w3-col m4">
+        [{{date()}}]
+      </div>
+      <div class="w3-col m4 w3-right-align" [class]="{'red': entry.amount < 0, 'green': entry.amount > 0}">
+        {{entry.amount | number:'1.2-2'}}
+      </div>
+    </div>
+  </div>
+  <div class="w3-bar buttons">
+    <button class="w3-btn" [routerLink]="Path.entries(account.code)"><i class="fa-solid fa-table"></i></button>
+    <button class="w3-btn" [routerLink]="Path.entry(account.code)"><i class="fa-solid fa-plus"></i></button>
+    <button class="w3-btn"><i class="fa-solid fa-chart-column"></i></button>
+    <button class="w3-btn"><i class="fa-solid fa-file-pdf"></i></button>
+    <button class="w3-btn"><i class="fa-solid fa-gear"></i></button>
+  </div>
+</div>

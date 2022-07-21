@@ -1,0 +1,14 @@
+@import '/src/styles/variables.scss';
+
+div.panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+div.item {
+  background-color: themeBlue(2);
+  padding: 2px 4px;
+  border-radius: 3px;
+  color: white;
+}

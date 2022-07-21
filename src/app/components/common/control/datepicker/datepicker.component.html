@@ -1,0 +1,31 @@
+<div class="w3-card" [ngStyle]="{'display': visible ? 'block' : 'none'}">
+  <div class="month-switcher">
+    <i class="fa-solid fa-angles-left" (click)="onPrevYearClick()"></i>
+    <i class="fa-solid fa-angle-left" (click)="onPrevMonthClick()"></i>
+    <span>{{monthNames[currentMonth]}} {{currentYear}}</span>
+    <i class="fa-solid fa-angle-right" (click)="onNextMonthClick()"></i>
+    <i class="fa-solid fa-angles-right" (click)="onNextYearClick()"></i>
+  </div>
+  <table class="calendar">
+    <thead>
+      <tr>
+        <th *ngFor="let day of dayNames">{{day}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let week of calendar">
+        <td *ngFor="let day of week" class="day"
+          [ngClass]="{
+            'sunday': day.isoWeekday() === 7, 
+            'saturday': day.isoWeekday() === 6, 
+            'other-month': day.month() !== currentMonth,
+            'selected': day.isSame(selectedDate)
+          }"  
+          (click)="onDayClick(day)"
+        >
+          {{day.format('D')}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

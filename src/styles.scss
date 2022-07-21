@@ -1,4 +1,5 @@
 @import 'styles/w3.scss';
+@import 'styles/variables.scss';
 
 html, body {
   height: 100%;
@@ -33,4 +34,17 @@ label.main {
 
 form > p {
   margin: 24px 0px;
+}
+
+.w3-center {
+  text-align: center;
+}
+
+.tm-blue {
+  color: white !important;
+  background-color: themeBlue(0) !important;
+}
+
+.tm-text-blue {
+  color: themeBlue(0) !important;
 }

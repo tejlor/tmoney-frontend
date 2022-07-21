@@ -8,6 +8,8 @@ import {BaseInput} from '../base-input/base-input';
   styleUrls: ['./select.component.scss']
 })
 export class SelectComponent extends BaseInput {
+  @Input() label: string;
+  @Input() labelStyle: object;
   @Input() control: AbstractControl;
   @Input() options: Option[];
 }

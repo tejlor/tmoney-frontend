@@ -22,7 +22,7 @@
 		"label-undefined": true,
 		"max-line-length": [false, 140],
 		"member-ordering": [
-      true, 
+      false, 
       {
         "order": [
           "public-static-field",
@@ -39,7 +39,7 @@
     ],
 		"no-any": false,
 		"no-arg": true,
-		"no-bitwise": true,
+		"no-bitwise": false,
 		"no-console": [false,
 			"debug",
 			"info",
@@ -67,8 +67,6 @@
 		"no-var-keyword": true,
 		"no-var-requires": false,
 		"one-line": [true,
-			"check-catch",
-			"check-else",
 			"check-open-brace",
 			"check-whitespace"
 		],
@@ -93,7 +91,6 @@
 			"check-module",
 			"check-function"
 		],
-		"variable-name": [true, "allow-leading-underscore"],
 		"whitespace": [false,
 			"check-branch",
 			"check-decl",

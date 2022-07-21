@@ -1,6 +1,4 @@
-import { HtmlParser } from '@angular/compiler';
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { AccountHttpService } from './services/account.http.service';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +6,5 @@ import { AccountHttpService } from './services/account.http.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
-  title = 'tmoney';
-
-  constructor(private accountHttpService: AccountHttpService) {
-  }
 
 }

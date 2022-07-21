@@ -1,0 +1,22 @@
+<nav #mySidebar class="w3-sidebar w3-collapse w3-white w3-animate-lef" style="width:250px; z-index:3">
+  <div class="w3-container">
+    <a href="#" (click)="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
+      <i class="fa fa-remove"></i>
+    </a>
+    <img src="/assets/tmoney-logo.png" style="width: 90%">
+    <br><br>
+    <h3>TMoney 3.0</h3>
+    <p class="w3-text-grey">by Tejlor OLAWA</p>
+  </div>
+  <div class="w3-bar-block">
+    <a [routerLink]="Path.dashboard" class="w3-bar-item w3-button w3-padding w3-text-teal"><i class="fa fa-th-large fa-fw w3-margin-right"></i>Dashboard</a> 
+    <a [routerLink]="Path.categories" class="w3-bar-item w3-button w3-padding w3-text-teal"><i class="fa fa-th-large fa-fw w3-margin-right"></i>Kategorie</a> 
+    <a (click)="updateBalances()" class="w3-bar-item w3-button w3-padding w3-text-teal"><i class="fa fa-th-large fa-fw w3-margin-right"></i>Przelicz salda</a> 
+  </div>
+</nav>
+<div class="w3-overlay w3-hide-large w3-animate-opacity" (click)="w3_close()" style="cursor:pointer" title="close side menu" #myOverlay></div>
+<a href="#"><img src="/assets/tmoney-logo.png" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+<span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" (click)="w3_open()"><i class="fa fa-bars"></i></span>
+<div class="w3-main" style="margin-left: 250px; height: 100%">
+  <router-outlet></router-outlet>
+</div>

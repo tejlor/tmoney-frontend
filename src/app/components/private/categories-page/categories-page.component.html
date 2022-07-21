@@ -1,0 +1,57 @@
+<div class="w3-container">
+
+  <h1>Kategorie</h1>
+
+  <div class="w3-row">
+    <div class="w3-col m6">
+      <button class="w3-btn tm-blue" (click)="onAddClick()"><i class="fa-solid fa-plus"></i> Nowy</button>
+    </div>
+    <div class="w3-col m6">
+      <tm-filter (change)="search($event)"></tm-filter>
+    </div>
+  </div>
+
+  <table class="w3-table-all w3-hoverable w3-card">
+    <colgroup>
+      <col width="5%">
+      <col width="15%">
+      <col width="20%">
+      <col width="5%">
+      <col width="20%">
+      <col width="10%">
+      <col width="20%">
+      <col width="5%">
+    </colgroup>
+    <thead class="w3-text-white">
+      <tr>
+        <th>ID</th>
+        <th>Nazwa</th>
+        <th>Konta</th>
+        <th class="w3-center-align">Raport</th>
+        <th>Domyślna nazwa</th>
+        <th class="w3-right-align">Domyślna kwota</th>
+        <th>Domyślny opis</th>
+        <th class="w3-center-align">Opcje</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of tableData?.rows" (click)="onRowClick(category)">
+        <td>{{category.id}}</td>
+        <td>{{category.name}}</td>
+        <td><tm-account-badges [category]="category"></tm-account-badges></td>
+        <td class="w3-center-align"><tm-yes-no-icon [value]="category.report"></tm-yes-no-icon></td>
+        <td>{{category.defaultName}}</td>
+        <td class="w3-right-align" [ngClass]="{'w3-text-red': category.defaultAmount < 0, 'w3-text-green': category.defaultAmount > 0}">
+          {{category.defaultAmount | number: '1.2-2'}}</td>
+        <td>{{category.defaultDescription}}</td>
+        <td class="w3-center-align"><i class="fa-solid fa-trash-can" (click)="onRemoveClick($event, category)"></i></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <tm-pagination [tableInfo]="tableData?.tableInfo" (pageSizeChange)="onPageSizeChange($event)"
+    (pageChange)="onPageChange($event)"></tm-pagination>
+
+  <tm-category-delete-dialog [config]="dialogConfig"></tm-category-delete-dialog>
+
+</div>

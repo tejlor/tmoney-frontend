@@ -8,5 +8,7 @@ import {BaseInput} from '../base-input/base-input';
   styleUrls: ['./textarea.component.scss']
 })
 export class TextareaComponent extends BaseInput {
+  @Input() label: string;
+  @Input() labelStyle: object;
   @Input() control: AbstractControl;
 }

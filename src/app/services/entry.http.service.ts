@@ -18,8 +18,8 @@ export class EntryHttpService extends HttpService {
       .pipe(map(result => this.deserialize(result)));
   }
 
-  getByCode(code: string, tableParams: TableParams): Observable<TableData<Entry>> {
-    return this.get(`${this.baseUrl}/table/${code}`, {params: tableParams})
+  getTableByAccountCode(accountCode: string, tableParams: TableParams): Observable<TableData<Entry>> {
+    return this.get(`${this.baseUrl}/table/${accountCode ?? ''}`, tableParams)
       .pipe(map(result => this.deserializeTableData(result)));
   }
 
@@ -29,12 +29,16 @@ export class EntryHttpService extends HttpService {
   }
 
   update(entry: Entry): Observable<Entry> {
-    return this.put(`${this.baseUrl}`, entry)
+    return this.put(`${this.baseUrl}/${entry.id}`, entry)
       .pipe(map(result => this.deserialize(result)));
   }
 
   saveOrUpdate(entry: Entry): Observable<Entry> {
     return entry.id ? this.update(entry) : this.save(entry);
+  }
+
+  updateBalances(): Observable<void> {
+    return this.post(`${this.baseUrl}/updateBalances`);
   }
 
   private deserialize(entry: object): Entry {

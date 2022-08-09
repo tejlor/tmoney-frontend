@@ -40,7 +40,7 @@ const routes: Routes = [
 ];
 
 export const Path = {
-  login: 'private/login',
+  login: 'public/login',
 
   dashboard: '/private/dashboard',
   categories: '/private/categories',

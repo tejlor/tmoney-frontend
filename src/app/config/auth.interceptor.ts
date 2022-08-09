@@ -9,7 +9,7 @@ import {OAuthService} from "../services/oauth.service";
 export class OAuthInterceptor implements HttpInterceptor {
 
   private anonymousUrls = ['oauth/token'];
-  private regexp = new RegExp('^https?:\/\/.+?\/(.+)$');
+  private regexp = new RegExp('^https?:\/\/.+?\/api\/(.+)$');
 
   constructor(
     private router: Router,
@@ -37,6 +37,7 @@ export class OAuthInterceptor implements HttpInterceptor {
   }
 
   private isUrlAnonymous(url: string): boolean {
+     console.log(url);
      const relativeUrl = this.regexp.exec(url)[1];
      return this.anonymousUrls.find(u => u.startsWith(relativeUrl)) !== undefined;
   }

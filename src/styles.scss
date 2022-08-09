@@ -48,3 +48,17 @@ form > p {
 .tm-text-blue {
   color: themeBlue(0) !important;
 }
+
+.tm-desktop {
+  @media (max-width: 600px) {
+    display: none !important;
+  }
+}
+
+.tm-mobile {
+  @media (min-width: 601px) {
+    display: none !important;
+  }
+}
+
+

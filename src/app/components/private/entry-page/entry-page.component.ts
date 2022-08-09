@@ -30,31 +30,53 @@ export class EntryPageComponent {
     private categoryService: CategoryHttpService,
     private entryService: EntryHttpService) {
 
-    this.formGroup = fb.group({
-      id: [''],
-      name: ['', Validators.required],
-      date: ['', Validators.required],
-      amount: ['', Validators.required],
-      category: ['', Validators.required],
-      description: ['']
-    });
+    this.buildForm(fb);
 
     let accountCode = this.route.snapshot.params['code'];
+    let entryId = route.snapshot.params['id'];
+
+    this.categoryService.getByAccountCode(accountCode).subscribe(categories => {
+      this.categories = categories;
+    });
+
     this.accountService.getByCode(accountCode).subscribe(account => {
       this.account = account;
       this.labelStyle = {'color': account.darkColor};
     });
 
-    let entryId = route.snapshot.params['id'];
     if (entryId) {
       this.entryService.getById(entryId).subscribe(entry => {
         this.fillForm(entry);
       });
     }
+  }
 
-    this.categoryService.getByAccountCode(accountCode).subscribe(categories => {
-      this.categories = categories;
+  private buildForm(fb: FormBuilder) {
+    this.formGroup = fb.group({
+      id: [''],
+      name: ['', Validators.required],
+      date: ['', Validators.required],
+      amount: ['', Validators.required],
+      sign: ['', Validators.required],
+      category: ['', Validators.required],
+      description: ['']
     });
+
+    this.formGroup.controls['category'].valueChanges.subscribe(category => {
+      this.fillDefaultCategoryValues(category);
+    });
+  }
+
+  private fillDefaultCategoryValues(category: Category) {
+    if (category.defaultName) {
+      this.formGroup.controls['name'].setValue(category.defaultName);
+    }
+    if (category.defaultAmount) {
+      this.formGroup.controls['amount'].setValue(category.defaultAmount);
+    }
+    if (category.defaultDescription) {
+      this.formGroup.controls['description'].setValue(category.defaultDescription);
+    }
   }
 
   saveAndGoBack(): void {
@@ -86,7 +108,7 @@ export class EntryPageComponent {
       name: entry.name,
       date: entry.date,
       amount: entry.amount,
-      category: entry.category.id,
+      category: entry.category,
       description: entry.description
     });
   }
@@ -98,7 +120,7 @@ export class EntryPageComponent {
     entry.name = this.formGroup.controls['name'].value;
     entry.date = this.formGroup.controls['date'].value;
     entry.amount = Number((this.formGroup.controls['amount'].value as string).replace(',', '.'));
-    entry.category.id = this.formGroup.controls['category'].value;
+    entry.category = this.formGroup.controls['category'].value as Category;
     entry.description = this.formGroup.controls['description'].value;
     return entry;
   }

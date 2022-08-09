@@ -6,7 +6,14 @@
       <tm-input-text label="Nazwa:" [labelStyle]="labelStyle" [control]="formGroup.controls['name']"></tm-input-text>
       <tm-input-date label="Data:" [labelStyle]="labelStyle" [control]="formGroup.controls['date']" [tmDatepicker]="datepicker"></tm-input-date>
       <tm-datepicker #datepicker></tm-datepicker>
-      <tm-input-text label="Kwota:" [labelStyle]="labelStyle" [control]="formGroup.controls['amount']"></tm-input-text>
+      <tm-input-number label="Kwota:" [labelStyle]="labelStyle" [control]="formGroup.controls['amount']"></tm-input-number>
+      <p>
+        <label class="main">Typ:</label>
+        <br>
+        <tm-input-radio [control]="formGroup.controls['sign']" [value]="1" label="Przychód"></tm-input-radio>
+        &nbsp;&nbsp;
+        <tm-input-radio [control]="formGroup.controls['sign']" [value]="-1" label="Koszt"></tm-input-radio>
+      </p>
       <tm-select label="Kategoria:" [labelStyle]="labelStyle" [control]="formGroup.controls['category']" [options]="categories"></tm-select>
       <tm-textarea label="Opis:" [labelStyle]="labelStyle" [control]="formGroup.controls['description']"></tm-textarea>
       <div>

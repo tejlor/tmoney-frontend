@@ -38,6 +38,8 @@ import {DatepickerDirective} from './components/common/directives/datepicker.dir
 import * as moment from 'moment';
 import '@angular/common/locales/global/pl';
 import 'moment/locale/pl';
+import {InputNumberComponent} from './components/common/form/input-number/input-number.component';
+import {NumericDirective} from './components/common/directives/numeric.directive';
 
 
 function init(oauthService: OAuthService): () => Promise<void> {
@@ -64,6 +66,7 @@ function init(oauthService: OAuthService): () => Promise<void> {
     InputTextComponent,
     InputPasswordComponent,
     InputDateComponent,
+    InputNumberComponent,
     TextareaComponent,
     SelectComponent,
     InputRadioComponent,
@@ -78,7 +81,8 @@ function init(oauthService: OAuthService): () => Promise<void> {
     YesNoIconComponent,
     AccountBadgesComponent,
     DatepickerComponent,
-    DatepickerDirective
+    DatepickerDirective,
+    NumericDirective
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,12 @@
 div.w3-card {
-  width: 500px;
+  margin: 16px;
+  @media (max-width: 600px) {
+    margin: 0px 8px 8px 8px;
+  }
+  @media (min-width: 601px) {
+    width: 500px;
+    margin-top: 0px;
+  }
 
   h2 {
     font-family: 'Trebuchet MS';
@@ -10,15 +17,34 @@ div.w3-card {
     letter-spacing: 4px;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
     background-color: rgba(0,0,0,0.3);
+    @media (max-width: 600px) {
+      font-size: 26px;
+    }
   }
 
   h3 {
     text-align: right;
     font-size: 28px;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+    @media (max-width: 600px) {
+      font-size: 20px;
+    }
 
     span {
       font-size: 18px;
+      @media (max-width: 600px) {
+        font-size: 14px;
+      }
+    }
+  }
+
+  p.date {
+    font-size: 14px;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+    margin-top: 20px;
+    @media (max-width: 600px) {
+      font-size: 12px;
+      margin-top: 16px;
     }
   }
 
@@ -35,6 +61,13 @@ div.w3-card {
 
     .green {
       color: #2d6930;
+    }
+
+    .amount {
+      text-align: right;
+      @media (max-width: 600px) {
+        text-align: left;
+      }
     }
   }
 

@@ -1,4 +1,4 @@
-<div *ngIf="entry" class="w3-card w3-text-white">
+<div *ngIf="entry" class="w3-card w3-text-white tm-desktop">
   <h2 [routerLink]="Path.entries(null)"><i class="fa-solid fa-wallet"></i> Podsumowanie</h2>
 
   <div class="w3-row last-transaction">
@@ -12,3 +12,6 @@
 
   <h3>{{entry.balanceOverall | number: '1.2-2'}} <span>PLN</span></h3>
 </div>
+
+<tm-dashboard-panel class="tm-mobile" [entry]="entry" [account]="account"></tm-dashboard-panel>
+

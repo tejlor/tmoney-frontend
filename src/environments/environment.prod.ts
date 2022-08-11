@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:2711/api',
-  clientName: 'tmoney-frontend',
-  clientPass: 'trudnehaseleczko',
+  apiUrl: 'http://localhost:2711/api/',
+  clientName: '[user]',
+  clientPass: '[password]',
   refreshInterval: 60000
 };

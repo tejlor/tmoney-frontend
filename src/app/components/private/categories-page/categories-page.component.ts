@@ -57,11 +57,15 @@ export class CategoriesPageComponent implements OnInit {
     this.router.navigateByUrl(`/private/category/${category.id}`);
   }
 
-  onRemoveClick($event: MouseEvent, category: Category): void {
+  onDeleteClick($event: MouseEvent, category: Category): void {
     $event.stopPropagation();
     this.dialogConfig = new CategoryDeleteDialogComponent.Config();
     this.dialogConfig.visible = true;
     this.dialogConfig.category = category;
+  }
+
+  onDeleteConfirm() {
+    this.reloadTableRows();
   }
 
   private reloadTableRows() {

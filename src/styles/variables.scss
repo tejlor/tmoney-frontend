@@ -6,9 +6,9 @@ $blue:
   #2583d2, #3d91d7, #559fdc, #6dace1, #86bae6, #9ec8eb, #b6d5f0, #cee3f5, #e6f1fa;
 
 $green:
-  #0b1401, #172902, #233d03, #2f5205, #3b6606, #467b07, #528f09, #5ea40a, #6ab80b,
-  #76cd0d,
-  #83d225, #91d73d, #9fdc55, #ace16d, #bae686, #c8eb9e, #d5f0b6, #e3f5ce, #f1fae6;
+  #091001, #122002, #1c3103, #254104, #2f5205, #386206, #417207, #4b8308, #549309
+  #5ea40a, 
+  #6ead22, #7eb63a, #8ebf53, #9ec86c, #aed184, #beda9d, #cee3b5, #deecce, #eef5e6;
 
 @function themeBlue($id) {
   @return list.nth($blue, $id + 10);

@@ -40,6 +40,7 @@ import '@angular/common/locales/global/pl';
 import 'moment/locale/pl';
 import {InputNumberComponent} from './components/common/form/input-number/input-number.component';
 import {NumericDirective} from './components/common/directives/numeric.directive';
+import {InputRadioGroupComponent} from './components/common/form/input-radio-group/input-radio-group.component';
 
 
 function init(oauthService: OAuthService): () => Promise<void> {
@@ -67,6 +68,7 @@ function init(oauthService: OAuthService): () => Promise<void> {
     InputPasswordComponent,
     InputDateComponent,
     InputNumberComponent,
+    InputRadioGroupComponent,
     TextareaComponent,
     SelectComponent,
     InputRadioComponent,

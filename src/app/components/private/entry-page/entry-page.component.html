@@ -1,4 +1,4 @@
-  <div class="body">
+  <div class="body" [ngStyle]="backgroundStyle">
   <div class="w3-card w3-white w3-margin-top w3-padding form">
     <h1>{{account?.name}}</h1>
     <form [formGroup]="formGroup">
@@ -7,13 +7,7 @@
       <tm-input-date label="Data:" [labelStyle]="labelStyle" [control]="formGroup.controls['date']" [tmDatepicker]="datepicker"></tm-input-date>
       <tm-datepicker #datepicker></tm-datepicker>
       <tm-input-number label="Kwota:" [labelStyle]="labelStyle" [control]="formGroup.controls['amount']"></tm-input-number>
-      <p>
-        <label class="main">Typ:</label>
-        <br>
-        <tm-input-radio [control]="formGroup.controls['sign']" [value]="1" label="Przychód"></tm-input-radio>
-        &nbsp;&nbsp;
-        <tm-input-radio [control]="formGroup.controls['sign']" [value]="-1" label="Koszt"></tm-input-radio>
-      </p>
+      <tm-input-radio-group label="Typ:" [labelStyle]="labelStyle" [control]="formGroup.controls['sign']" [options]="signOptions"></tm-input-radio-group>
       <tm-select label="Kategoria:" [labelStyle]="labelStyle" [control]="formGroup.controls['category']" [options]="categories"></tm-select>
       <tm-textarea label="Opis:" [labelStyle]="labelStyle" [control]="formGroup.controls['description']"></tm-textarea>
       <div>

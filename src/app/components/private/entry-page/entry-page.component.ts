@@ -16,11 +16,14 @@ import {EntryHttpService} from 'src/app/services/entry.http.service';
 })
 export class EntryPageComponent {
 
+  readonly signOptions = [{label: "Przychód", value: 1}, {label: "Koszt", value: -1}];
+
   account: Account;
   categories: Category[];
   entry: Entry;
   formGroup: FormGroup;
   labelStyle: object;
+  backgroundStyle: object;
 
   constructor(
     fb: FormBuilder,
@@ -42,6 +45,7 @@ export class EntryPageComponent {
     this.accountService.getByCode(accountCode).subscribe(account => {
       this.account = account;
       this.labelStyle = {'color': account.darkColor};
+      this.backgroundStyle = {'background-color': account.lightColor};
     });
 
     if (entryId) {
@@ -72,7 +76,10 @@ export class EntryPageComponent {
       this.formGroup.controls['name'].setValue(category.defaultName);
     }
     if (category.defaultAmount) {
-      this.formGroup.controls['amount'].setValue(category.defaultAmount);
+      this.formGroup.controls['sign'].setValue(Math.sign(category.defaultAmount));
+      if(Math.abs(category.defaultAmount) !== 1) {
+        this.formGroup.controls['amount'].setValue(Math.abs(category.defaultAmount));
+      }
     }
     if (category.defaultDescription) {
       this.formGroup.controls['description'].setValue(category.defaultDescription);
@@ -82,7 +89,7 @@ export class EntryPageComponent {
   saveAndGoBack(): void {
     if(this.isValid()) {
       this.entryService.saveOrUpdate(this.readDataFromForm()).subscribe(entry => {
-        this.router.navigateByUrl(Path.dashboard);
+        this.router.navigateByUrl(Path.entries(this.account.code));
       });
     }
   }

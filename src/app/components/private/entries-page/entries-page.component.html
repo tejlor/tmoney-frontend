@@ -3,12 +3,12 @@
   <h1>{{account?.name}}</h1>
 
   <div class="w3-row header">
-    <div class="w3-col m6">
+    <div class="w3-col m6 left">
       <button class="w3-btn w3-text-white" [style.backgroundColor]="account?.color" [routerLink]="Path.entry(account?.code)" [disabled]="!account.code">
         <i class="fa-solid fa-plus"></i> Nowy
       </button>
     </div>
-    <div class="w3-col m6 filter">
+    <div class="w3-col m6 right">
       <tm-filter (change)="search($event)"></tm-filter>
     </div>
   </div>

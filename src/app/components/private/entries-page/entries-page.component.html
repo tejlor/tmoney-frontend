@@ -2,18 +2,18 @@
 
   <h1>{{account?.name}}</h1>
 
-  <div class="w3-row">
+  <div class="w3-row header">
     <div class="w3-col m6">
       <button class="w3-btn w3-text-white" [style.backgroundColor]="account?.color" [routerLink]="Path.entry(account?.code)" [disabled]="!account.code">
         <i class="fa-solid fa-plus"></i> Nowy
       </button>
     </div>
-    <div class="w3-col m6">
+    <div class="w3-col m6 filter">
       <tm-filter (change)="search($event)"></tm-filter>
     </div>
   </div>
 
-  <table class="w3-table-all w3-hoverable w3-card">
+  <table class="w3-table-all w3-hoverable w3-card w3-responsive">
     <colgroup>
       <col width="5%">
       <col width="10%">

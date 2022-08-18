@@ -1,5 +1,19 @@
 div.pagination {
   margin-top: 16px;
+
+  div {
+    @media (max-width: 601px) {
+      text-align: center;
+    }
+  }
+
+  div.pages {
+    text-align: right;
+    @media (max-width: 600px) {
+      padding-top: 8px;
+      text-align: center;
+    }
+  }
 }
 
 select {

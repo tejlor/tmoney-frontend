@@ -1,5 +1,5 @@
 div.w3-card {
-  margin: 16px;
+  margin: 0px;
   @media (max-width: 600px) {
     margin: 0px 8px 8px 8px;
   }
@@ -9,12 +9,11 @@ div.w3-card {
   }
 
   h2 {
-    font-family: 'Trebuchet MS';
     font-size: 38px;
     padding: 8px 16px;
     margin: 0px;
     font-variant: petite-caps;
-    letter-spacing: 4px;
+    letter-spacing: 2px;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
     background-color: rgba(0,0,0,0.3);
     @media (max-width: 600px) {
@@ -53,7 +52,7 @@ div.w3-card {
     border-radius: 5px;
     padding: 8px 16px;
     margin-bottom: 8px;
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.7);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
 
     .red {
       color: #c3352b;
@@ -65,6 +64,7 @@ div.w3-card {
 
     .amount {
       text-align: right;
+      text-shadow: 1px 1px 1px rgba(0,0,0,0.7);
       @media (max-width: 600px) {
         text-align: left;
       }

@@ -9,7 +9,7 @@ import {OAuthService} from "../services/oauth.service";
 export class OAuthInterceptor implements HttpInterceptor {
 
   private anonymousUrls = ['oauth/token'];
-  private regexp = new RegExp('^https?:\/\/.+?\/(api\/)?(.+)$'); // http://localhost:2711/ or https://tmoney/api/
+  private regexp = new RegExp('^https?:\/\/.+?\/(api\/)?(.+)$'); // http://192.168.1.3:2711/ or https://tmoney/api/
 
   constructor(
     private router: Router,

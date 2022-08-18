@@ -1,5 +1,13 @@
-div.w3-container {
-  padding: 24px;
+div.header {
+  margin-bottom: 8px;
+}
+
+div.filter {
+  text-align: right;
+  @media (max-width: 600px) {
+    padding-top: 8px;
+    text-align: left;
+  }
 }
 
 select {

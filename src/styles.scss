@@ -6,16 +6,23 @@ html, body {
 }
 
 body {
+  font-family: 'Lato', sans-serif;
   background-color: $lightGray;
 }
 
 h1, h2, h3, h4, h5 {
-  font-family: 'Trebuchet MS';
-  font-weight: bold;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
 }
 
 label.main {
   font-weight: bold;
+}
+
+.w3-container {
+  @media (max-width: 600px) {
+    padding: 8px !important;
+  }
 }
 
 .w3-btn {

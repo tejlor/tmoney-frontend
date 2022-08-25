@@ -49,7 +49,7 @@ export class OAuthService {
     });
   }
 
-  logOut() {
+  logout() {
     this.token = null;
   }
 

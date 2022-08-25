@@ -5,7 +5,7 @@
       <input type="hidden" formControlName="id" />
       <tm-input-text label="Nazwa:" [control]="formGroup.controls['name']"></tm-input-text>
       <div>
-        <label class="main">Konta:</label>
+        <label class="main tm-text-blue">Konta:</label>
         <div class="w3-row" *ngFor="let row of accounts">
           <div *ngFor="let account of row" class="w3-col m6">
             <input type="checkbox" class="w3-check" #accountInput [attr.accountId]="account.id" [checked]="isAccountSelected(account)">
@@ -14,13 +14,7 @@
         </div>
         <input type="hidden" formControlName="account" />
       </div>
-      <p>
-        <label class="main">Do raportów:</label>
-        <br>
-        <tm-input-radio [control]="formGroup.controls['report']" [value]="true" label="Tak"></tm-input-radio>
-        &nbsp;&nbsp;
-        <tm-input-radio [control]="formGroup.controls['report']" [value]="false" label="Nie"></tm-input-radio>
-      </p>
+      <tm-input-radio-group label="Do raportów:" [control]="formGroup.controls['report']" [options]="reportOptions"></tm-input-radio-group>
       <tm-input-text label="Domyślna kwota:" [control]="formGroup.controls['defaultAmount']"></tm-input-text>
       <tm-input-text label="Domyślna nazwa:" [control]="formGroup.controls['defaultName']"></tm-input-text>
       <tm-textarea label="Domyślny opis:" [control]="formGroup.controls['defaultDescription']"></tm-textarea>

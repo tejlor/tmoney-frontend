@@ -1,31 +1,47 @@
 @import 'styles/w3.scss';
 @import 'styles/variables.scss';
 
+$mobile-width: 600px;
+
+@mixin mobile {
+  @media (max-width: #{$mobile-width}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$mobile-width + 1}) {
+    @content;
+  }
+}
+
 html, body {
   height: 100%;
 }
 
 body {
+  font-family: 'Lato', sans-serif;
   background-color: $lightGray;
 }
 
+main {
+  padding: 16px 16px;
+  @include mobile {
+    padding: 8px 8px;
+  }
+}
+
 h1, h2, h3, h4, h5 {
-  font-family: 'Trebuchet MS';
-  font-weight: bold;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
 }
 
 label.main {
   font-weight: bold;
 }
 
-.w3-btn {
-  border-radius: 3px;
-  font-weight: bold;
-}
-
 .w3-select {
   background-color: white;
-  border-radius: 5px;
 }
 
 .w3-hoverable tbody tr:hover {
@@ -36,7 +52,7 @@ form > p {
   margin: 24px 0px;
 }
 
-.w3-center {
+.tm-center {
   text-align: center;
 }
 
@@ -49,15 +65,28 @@ form > p {
   color: themeBlue(0) !important;
 }
 
+.tm-green {
+  color: white !important;
+  background-color: themeGreen(0) !important;
+}
+
 .tm-desktop {
-  @media (max-width: 600px) {
+  @include mobile {
     display: none !important;
   }
 }
 
 .tm-mobile {
-  @media (min-width: 601px) {
+  @include desktop {
     display: none !important;
+  }
+}
+
+.w3-col.tm-right {
+  text-align: right;
+  @media (max-width: 600px) {
+    padding-top: 8px;
+    text-align: left;
   }
 }
 

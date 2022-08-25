@@ -6,6 +6,7 @@ import {Account} from 'src/app/model/account';
 import {AccountHttpService} from 'src/app/services/account.http.service';
 import {CategoryHttpService} from 'src/app/services/category.http.service';
 import {bit} from 'src/app/utils/utils';
+import {Path} from 'src/app/app-routing.module';
 
 @Component({
   selector: 'tm-category-page',
@@ -13,6 +14,8 @@ import {bit} from 'src/app/utils/utils';
   styleUrls: ['./category-page.component.scss']
 })
 export class CategoryPageComponent {
+
+  readonly reportOptions = [{label: "Tak", value: true}, {label: "Nie", value: "false"}];
 
   @ViewChildren('accountInput') accountInputs: QueryList<ElementRef<HTMLInputElement>>;
 
@@ -62,13 +65,13 @@ export class CategoryPageComponent {
   onSaveAndGoBack(): void {
     if(this.isValid()) {
       this.categoryService.saveOrUpdate(this.readDataFromForm()).subscribe(category => {
-        this.router.navigateByUrl('/private/categories');
+        this.router.navigateByUrl(Path.categories);
       });
     }
   }
 
   onCancel() {
-    this.router.navigateByUrl('/private/categories');
+    this.router.navigateByUrl(Path.categories);
   }
 
   isAccountSelected(account: Account): boolean {

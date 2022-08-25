@@ -37,14 +37,16 @@ export class DialogConfig {
   acceptText: string = 'OK';
   closeText: string = 'Anuluj';
   mode: DialogMode = DialogMode.HIDDEN;
+  width: string = '800px';
   onAccept: (param?: any) => void;
 
-  static confirmation(header: string, message: string, onAccept: (param?: any) => void) {
+  static confirmation(header: string, message: string, onAccept: (param?: any) => void, params?: object) {
     const config = new DialogConfig();
     config.mode = DialogMode.PREVIEW;
     config.header = header;
     config.message = message;
     config.onAccept = onAccept;
+    Object.assign(config, params);
     return config;
   }
 }

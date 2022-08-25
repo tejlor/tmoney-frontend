@@ -1,59 +1,57 @@
-<div class="w3-container">
-
   <h1>{{account?.name}}</h1>
 
-  <div class="w3-row">
-    <div class="w3-col m6">
+  <div class="w3-row header">
+    <div class="w3-col m6 tm-left">
       <button class="w3-btn w3-text-white" [style.backgroundColor]="account?.color" [routerLink]="Path.entry(account?.code)" [disabled]="!account.code">
         <i class="fa-solid fa-plus"></i> Nowy
       </button>
     </div>
-    <div class="w3-col m6">
+    <div class="w3-col m6 tm-right">
       <tm-filter (change)="search($event)"></tm-filter>
     </div>
   </div>
 
-  <table class="w3-table-all w3-hoverable w3-card">
-    <colgroup>
-      <col width="5%">
-      <col width="10%">
-      <col width="20%">
-      <col width="15%">
-      <col width="25%">
-      <col width="10%">
-      <col width="10%">
-      <col width="5%">
-    </colgroup>
-    <thead class="w3-text-white">
-      <tr [style.backgroundColor]="account?.color">
-        <th>ID</th>
-        <th>Data</th>
-        <th>Nazwa</th>
-        <th>Kategoria</th>
-        <th>Opis</th>
-        <th class="w3-right-align">Kwota</th>
-        <th class="w3-right-align">Saldo</th>
-        <th class="w3-center-align">Opcje</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let entry of tableData?.rows" (click)="onRowClick(entry)">
-        <td>{{entry.id}}</td>
-        <td>{{entry.date}}</td>
-        <td>{{entry.name}}</td>
-        <td>{{entry.category.name}}</td>
-        <td>{{entry.description}}</td>
-        <td class="w3-right-align" [ngClass]="{'w3-text-red': entry.amount < 0, 'w3-text-green': entry.amount > 0}">
-          {{entry.amount | number:'1.2-2'}}</td>
-        <td class="w3-right-align">{{(account.code ? entry.balance : entry.balanceOverall) | number:'1.2-2'}}</td>
-        <td class="w3-center-align"><i *ngIf="account.code" class="fa-solid fa-trash-can" (click)="onRemoveEntryClick(entry)"></i></td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="w3-responsive">
+    <table class="w3-table-all w3-hoverable w3-card">
+      <colgroup>
+        <col width="5%">
+        <col width="10%">
+        <col width="20%">
+        <col width="15%">
+        <col width="25%">
+        <col width="10%">
+        <col width="10%">
+        <col width="5%">
+      </colgroup>
+      <thead class="w3-text-white">
+        <tr [style.backgroundColor]="account?.color">
+          <th>ID</th>
+          <th>Data</th>
+          <th>Nazwa</th>
+          <th>Kategoria</th>
+          <th>Opis</th>
+          <th class="w3-right-align">Kwota</th>
+          <th class="w3-right-align">Saldo</th>
+          <th class="w3-center-align">Opcje</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entry of tableData?.rows" (click)="onRowClick(entry)">
+          <td>{{entry.id}}</td>
+          <td>{{entry.date}}</td>
+          <td>{{entry.name}}</td>
+          <td>{{entry.category.name}}</td>
+          <td>{{entry.description}}</td>
+          <td class="w3-right-align" [ngClass]="{'w3-text-red': entry.amount < 0, 'w3-text-green': entry.amount > 0}">
+            {{entry.amount | number:'1.2-2'}}</td>
+          <td class="w3-right-align">{{(account.code ? entry.balance : entry.balanceOverall) | number:'1.2-2'}}</td>
+          <td class="w3-center-align"><i *ngIf="account.code" class="fa-solid fa-trash-can" (click)="onRemoveEntryClick(entry)"></i></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <tm-pagination [color]="account?.color" [tableInfo]="tableData?.tableInfo" (pageSizeChange)="onPageSizeChange($event)"
     (pageChange)="onPageChange($event)"></tm-pagination>
 
   <tm-dialog [config]="dialogConfig"></tm-dialog>
-
-</div>

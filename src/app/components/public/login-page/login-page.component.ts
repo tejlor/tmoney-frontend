@@ -1,52 +1,54 @@
-import { Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, ElementRef, OnInit} from '@angular/core';
+import {FormBuilder} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Path} from 'src/app/app-routing.module';
 import {OAuthService} from 'src/app/services/oauth.service';
+import {BaseFormComponent} from '../../common/base-form.component';
 
 @Component({
   selector: 'tm-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent extends BaseFormComponent implements OnInit {
 
-  formGroup: FormGroup;
-  errorMsg: string;
+  readonly LOGIN = 'login';
+  readonly PASSWORD = 'password';
 
-  constructor(fb: FormBuilder,
+  errorMessage: string;
+
+  constructor(el: ElementRef,
+              fb: FormBuilder,
               private router: Router,
               private ouathService: OAuthService) {
 
-    this.formGroup = fb.group({
-      login: ['', Validators.required],
-      password: ['', Validators.required]
-    });
+    super(el, fb);
+    this.buildForm([
+      [this.LOGIN, true],
+      [this.PASSWORD, true]
+    ]);
   }
 
   ngOnInit(): void {
-    this.ouathService.logOut();
+    this.ouathService.logout();
   }
 
-  onLogin(): void {
+  onLoginClick(): void {
     if (!this.isValid()) {
+      this.scrollToFirstInvalidControl();
       return;
     }
 
-    const login = this.formGroup.controls['login'].value;
-    const password = this.formGroup.controls['password'].value;
-    this.ouathService.generateAccessToken(login, password).subscribe(result => {
+    const login = this.controlValue(this.LOGIN);
+    const password = this.controlValue(this.PASSWORD);
+    this.ouathService.generateAccessToken(login, password).subscribe((result: boolean) => {
       if (result) {
         this.router.navigateByUrl(Path.dashboard);
       }
       else {
-        this.errorMsg = 'Login i/lub hasło jest nieprawidłowe';
+        this.errorMessage = 'Login i/lub hasło jest nieprawidłowe';
       }
     });
   }
 
-  private isValid(): boolean {
-    this.formGroup.markAllAsTouched();
-    return this.formGroup.valid;
-  }
 }

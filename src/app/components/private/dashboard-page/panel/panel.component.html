@@ -1,4 +1,4 @@
-<div class="w3-card w3-text-white" [style.backgroundColor]="account.color">
+<div class="w3-card w3-text-white" [style.backgroundColor]="account.color" *ngIf="account && entry">
   <h2><i [class]="account.icon"></i> {{account.name}}</h2>
   <div class="w3-container">
     <div class="w3-row">
@@ -14,7 +14,7 @@
       </div>
     </div>
   </div>
-  <div class="w3-bar buttons" *ngIf="account.code">
+  <div class="w3-bar buttons">
     <button class="w3-btn" [routerLink]="Path.entries(account.code)"><i class="fa-solid fa-table"></i></button>
     <button class="w3-btn" [routerLink]="Path.entry(account.code)"><i class="fa-solid fa-plus"></i></button>
     <button class="w3-btn"><i class="fa-solid fa-chart-column"></i></button>

@@ -1,8 +1,7 @@
 div.filter {
-  display: flex;
+  display: inline-flex;
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-bottom: 8px;
 
   i {
     padding: 12px 12px 0px 12px;
@@ -14,7 +13,8 @@ div.filter {
 
   input {
     border: none;
-    background-color: transparent;
+    background-color: white;
     width: 300px;
+    border-radius: 0px 5px 5px 0px;
   }
 }

@@ -1,3 +1,42 @@
+@import '/src/styles/variables.scss';
+
+nav {
+  width: 250px; 
+  z-index: 3;
+
+  i.fa-remove {
+    cursor: pointer;
+  }
+
+  img.logo {
+    width: 90%;
+  }
+
+  h3 {
+    margin: 24px 0px 8px 0px;
+  }
+
+  p {
+    margin: 8px 0px;
+  }
+
+  div.w3-bar-block {
+    a {
+      color: themeBlue(-2);
+      i {
+        width: 16px;
+        text-align: center;
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+main {
+  margin-left: 250px; 
+  height: 100%;
+}
+
 a.logo {
   img {
     margin: 12px 8px 0px 0px;

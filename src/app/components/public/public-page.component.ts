@@ -2,9 +2,6 @@ import {Component} from '@angular/core';
 
 @Component({
   selector: 'tm-public-page',
-  templateUrl: './public-page.component.html',
-  styleUrls: ['./public-page.component.scss']
+  template: '<main><router-outlet></router-outlet></main>'
 })
-export class PublicPageComponent {
-
-}
+export class PublicPageComponent {}

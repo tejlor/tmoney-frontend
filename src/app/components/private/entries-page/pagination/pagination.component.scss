@@ -10,14 +10,6 @@ div.pagination {
       text-align: center;
     }
   }
-
-  div.right {
-    text-align: right;
-    @media (max-width: 600px) {
-      padding-top: 8px;
-      text-align: center;
-    }
-  }
 }
 
 select {

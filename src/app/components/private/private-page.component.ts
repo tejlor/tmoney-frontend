@@ -11,26 +11,27 @@ export class PrivatePageComponent {
 
   readonly Path = Path;
 
-  @ViewChild('myOverlay') myOverlay: ElementRef;
-  @ViewChild('mySidebar') mySidebar: ElementRef;
+  @ViewChild('overlay') overlay: ElementRef;
+  @ViewChild('nav') nav: ElementRef;
 
   constructor(
     private entryHttpService: EntryHttpService) {
   }
 
-  w3_open(): void {
-    if (this.mySidebar.nativeElement.style.display === 'block') {
-      this.mySidebar.nativeElement.style.display = 'none';
-      this.myOverlay.nativeElement.style.display = "none";
-    } else {
-      this.mySidebar.nativeElement.style.display = 'block';
-      this.myOverlay.nativeElement.style.display = "block";
+  openMenu(): void {
+    if (this.nav.nativeElement.style.display === 'block') {
+      this.nav.nativeElement.style.display = 'none';
+      this.overlay.nativeElement.style.display = "none";
+    } 
+    else {
+      this.nav.nativeElement.style.display = 'block';
+      this.overlay.nativeElement.style.display = "block";
     }
   }
 
-  w3_close(): void {
-    this.mySidebar.nativeElement.style.display = "none";
-    this.myOverlay.nativeElement.style.display = "none";
+  closeMenu(): void {
+    this.nav.nativeElement.style.display = "none";
+    this.overlay.nativeElement.style.display = "none";
   }
 
   updateBalances():void {

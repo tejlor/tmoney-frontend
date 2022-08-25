@@ -23,7 +23,6 @@ export class EntryPageComponent {
   entry: Entry;
   formGroup: FormGroup;
   labelStyle: object;
-  backgroundStyle: object;
 
   constructor(
     fb: FormBuilder,
@@ -45,7 +44,7 @@ export class EntryPageComponent {
     this.accountService.getByCode(accountCode).subscribe(account => {
       this.account = account;
       this.labelStyle = {'color': account.darkColor};
-      this.backgroundStyle = {'background-color': account.lightColor};
+      document.body.style.backgroundColor = account.lightColor;
     });
 
     if (entryId) {

@@ -34,12 +34,12 @@ import {ErrorHandlerInterceptor} from './config/error-handler.interceptor';
 import {YesNoIconComponent} from './components/common/control/yes-no-icon/yes-no-icon.component';
 import {AccountBadgesComponent} from './components/common/control/account-badges/account-badges.component';
 import {DatepickerComponent} from './components/common/control/datepicker/datepicker.component';
-import {DatepickerDirective} from './components/common/directives/datepicker.directive';
+import {DatepickerDirective} from './components/common/directive/datepicker.directive';
 import * as moment from 'moment';
 import '@angular/common/locales/global/pl';
 import 'moment/locale/pl';
 import {InputNumberComponent} from './components/common/form/input-number/input-number.component';
-import {NumericDirective} from './components/common/directives/numeric.directive';
+import {NumericDirective} from './components/common/directive/numeric.directive';
 import {InputRadioGroupComponent} from './components/common/form/input-radio-group/input-radio-group.component';
 
 

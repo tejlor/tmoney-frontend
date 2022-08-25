@@ -1,17 +1,16 @@
-<div class="w3-container">
+<h1>Kategorie</h1>
 
-  <h1>Kategorie</h1>
-
-  <div class="w3-row header">
-    <div class="w3-col m6 tm-left">
-      <button class="w3-btn tm-blue" (click)="onAddClick()"><i class="fa-solid fa-plus"></i> Nowy</button>
-    </div>
-    <div class="w3-col m6 tm-right">
-      <tm-filter (change)="search($event)"></tm-filter>
-    </div>
+<div class="w3-row header">
+  <div class="w3-col m6 tm-left">
+    <button class="w3-btn tm-blue" (click)="onAddClick()"><i class="fa-solid fa-plus"></i> Nowy</button>
   </div>
+  <div class="w3-col m6 tm-right">
+    <tm-filter (change)="search($event)"></tm-filter>
+  </div>
+</div>
 
-  <table class="w3-table-all w3-hoverable w3-card w3-responsive">
+<div class="w3-responsive">
+  <table class="w3-table-all w3-hoverable w3-card">
     <colgroup>
       <col width="5%">
       <col width="15%">
@@ -48,10 +47,9 @@
       </tr>
     </tbody>
   </table>
-
-  <tm-pagination [tableInfo]="tableData?.tableInfo" (pageSizeChange)="onPageSizeChange($event)"
-    (pageChange)="onPageChange($event)"></tm-pagination>
-
-  <tm-category-delete-dialog [config]="dialogConfig" (onConfirm)="onDeleteConfirm()"></tm-category-delete-dialog>
-
 </div>
+
+<tm-pagination [tableInfo]="tableData?.tableInfo" (pageSizeChange)="onPageSizeChange($event)"
+  (pageChange)="onPageChange($event)"></tm-pagination>
+
+<tm-category-delete-dialog [config]="dialogConfig" (onConfirm)="onDeleteConfirm()"></tm-category-delete-dialog>

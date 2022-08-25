@@ -2,14 +2,6 @@ div.header {
   margin-bottom: 8px;
 }
 
-div.right {
-  text-align: right;
-  @media (max-width: 600px) {
-    padding-top: 8px;
-    text-align: left;
-  }
-}
-
 select {
   width: 200px;
 }

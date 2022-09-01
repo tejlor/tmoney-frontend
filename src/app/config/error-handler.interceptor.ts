@@ -38,7 +38,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     if (msg) {
       this.handleError(msg);
     }
-    
+
     return of(msg);
   }
 

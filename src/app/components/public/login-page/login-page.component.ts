@@ -35,7 +35,6 @@ export class LoginPageComponent extends BaseFormComponent implements OnInit {
 
   onLoginClick(): void {
     if (!this.isValid()) {
-      this.scrollToFirstInvalidControl();
       return;
     }
 

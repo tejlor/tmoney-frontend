@@ -1,5 +1,6 @@
 import {ElementRef} from "@angular/core";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Observer} from "rxjs";
 
 export class BaseFormComponent {
 
@@ -12,7 +13,8 @@ export class BaseFormComponent {
   }
 
   buildForm(controls: any[]) {
-    const group: {[key:string]: any} = {};
+    const group: {[key: string]: any} = {};
+    const subscriptions: {[key: string]: Partial<Observer<any>>} = {};
 
     controls.forEach(control => {
       switch(control.length) {
@@ -27,12 +29,25 @@ export class BaseFormComponent {
             group[control[0]] = ['', control[1]];
           }
           break;
+        case 3:
+          if (control[1] === true) {
+            group[control[0]] = ['', Validators.required];
+          }
+          else {
+            group[control[0]] = ['', control[1]];
+          }
+          subscriptions[control[0]] = control[2];
+          break;
         default:
           throw new Error("Invalid array length");
       }
     });
 
     this.formGroup = this.fb.group(group);
+
+    Object.keys(subscriptions).forEach(key => {
+      this.formGroup.controls[key].valueChanges.subscribe(subscriptions[key]);
+    });
   }
 
   control(key: string): AbstractControl {
@@ -44,11 +59,19 @@ export class BaseFormComponent {
   }
 
   isValid(): boolean {
+    if (!this.isFormValid()) {
+      this.scrollToFirstInvalidControl();
+      return false;
+    }
+    return true;
+  }
+
+  private isFormValid(): boolean {
     this.formGroup.markAllAsTouched();
     return this.formGroup.valid;
   }
 
-  scrollToFirstInvalidControl() {
+  private scrollToFirstInvalidControl() {
     this.el.nativeElement.querySelector('.invalid')
       ?.scrollIntoview({behaviour: 'smooth', block: 'nearest', inline: 'start'});
   }

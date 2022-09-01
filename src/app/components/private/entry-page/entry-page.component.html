@@ -2,17 +2,17 @@
   <h1>{{account?.name}}</h1>
   <form [formGroup]="formGroup">
     <input type="hidden" formControlName="id" />
-    <tm-input-text label="Nazwa:" [labelStyle]="labelStyle" [control]="formGroup.controls['name']"></tm-input-text>
-    <tm-input-date label="Data:" [labelStyle]="labelStyle" [control]="formGroup.controls['date']" [tmDatepicker]="datepicker"></tm-input-date>
+    <tm-select label="Kategoria:" [labelStyle]="labelStyle" [control]="control(CATEGORY)" [options]="categories"></tm-select>
+    <tm-input-date label="Data:" [labelStyle]="labelStyle" [control]="control(DATE)" [tmDatepicker]="datepicker"></tm-input-date>
     <tm-datepicker #datepicker></tm-datepicker>
-    <tm-input-number label="Kwota:" [labelStyle]="labelStyle" [control]="formGroup.controls['amount']"></tm-input-number>
-    <tm-input-radio-group label="Typ:" [labelStyle]="labelStyle" [control]="formGroup.controls['sign']" [options]="signOptions"></tm-input-radio-group>
-    <tm-select label="Kategoria:" [labelStyle]="labelStyle" [control]="formGroup.controls['category']" [options]="categories"></tm-select>
-    <tm-textarea label="Opis:" [labelStyle]="labelStyle" [control]="formGroup.controls['description']"></tm-textarea>
-    <div>
-      <button class="w3-btn" [ngStyle]="{'background-color': account?.color, 'color': 'white'}" (click)="saveAndGoBack()">Zapisz i cofnij</button>
-      &nbsp;
-      <button class="w3-btn" [ngStyle]="{'background-color': account?.color, 'color': 'white'}" (click)="saveAndClear()">Zapisz i dodaj kolejny</button>
-    </div>
+    <tm-input-text label="Nazwa:" [labelStyle]="labelStyle" [control]="control(NAME)"></tm-input-text>
+    <tm-input-radio-group label="Typ:" [labelStyle]="labelStyle" [control]="control(SIGN)" [options]="signOptions"></tm-input-radio-group>
+    <tm-input-number label="Kwota:" [labelStyle]="labelStyle" [control]="control(AMOUNT)"></tm-input-number>
+    <tm-textarea label="Opis:" [labelStyle]="labelStyle" [control]="control(DESCRIPTION)"></tm-textarea>
   </form>
+  <div>
+    <button class="w3-btn" [ngStyle]="{'background-color': account?.color, 'color': 'white'}" (click)="saveAndGoBack()">Zapisz i cofnij</button>
+    &nbsp;
+    <button class="w3-btn" [ngStyle]="{'background-color': account?.color, 'color': 'white'}" (click)="saveAndClear()">Zapisz i dodaj kolejny</button>
+  </div>
 </div>

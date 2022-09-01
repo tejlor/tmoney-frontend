@@ -45,7 +45,7 @@ export class NumericDirective  {
   }
 
   private unFormatValue() {
-    this. value = this.value.replace(/[^0-9,\-]/g, '') ?? '';
+    this.value = this.value.replace(/[^0-9,\-]/g, '') ?? '';
   }
 
   private formatValueAsAmount(value: number): string {

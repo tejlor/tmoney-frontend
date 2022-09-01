@@ -19,7 +19,6 @@ export class DashboardPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.accountHttpService.getSummary().subscribe(array => {
-      console.log(array);
       this.items = [];
       for (let item of array) {
         let pos = item.account.orderNo.split('.');
@@ -31,7 +30,7 @@ export class DashboardPageComponent implements OnInit {
         this.items[row][col] = item;
       }
 
-      this.lastEntry = array.reduce((prev, curr) => { console.log(prev); return prev.entry.compareTo(curr.entry) > 0 ? prev : curr;}).entry;
+      this.lastEntry = array.reduce((prev, curr) => prev.entry.compareTo(curr.entry) > 0 ? prev : curr).entry;
     });
   }
 }

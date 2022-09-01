@@ -2,8 +2,8 @@
   <div class="w3-card w3-white w3-margin-top w3-padding form">
     <h1>{{category ? category.name : 'Nowa kategoria'}}</h1>
     <form [formGroup]="formGroup">
-      <input type="hidden" formControlName="id" />
-      <tm-input-text label="Nazwa:" [control]="formGroup.controls['name']"></tm-input-text>
+      <input type="hidden" [formControlName]="ID" />
+      <tm-input-text label="Nazwa:" [control]="control(NAME)"></tm-input-text>
       <div>
         <label class="main tm-text-blue">Konta:</label>
         <div class="w3-row" *ngFor="let row of accounts">
@@ -12,12 +12,12 @@
             <label> {{account.name}}</label>
           </div>
         </div>
-        <input type="hidden" formControlName="account" />
+        <input type="hidden" [formControlName]="ACCOUNT" />
       </div>
-      <tm-input-radio-group label="Do raportów:" [control]="formGroup.controls['report']" [options]="reportOptions"></tm-input-radio-group>
-      <tm-input-text label="Domyślna kwota:" [control]="formGroup.controls['defaultAmount']"></tm-input-text>
-      <tm-input-text label="Domyślna nazwa:" [control]="formGroup.controls['defaultName']"></tm-input-text>
-      <tm-textarea label="Domyślny opis:" [control]="formGroup.controls['defaultDescription']"></tm-textarea>
+      <tm-input-radio-group label="Do raportów:" [control]="control(REPORT)" [options]="reportOptions"></tm-input-radio-group>
+      <tm-input-text label="Domyślna kwota:" [control]="control(DEFAULT_AMOUNT)"></tm-input-text>
+      <tm-input-text label="Domyślna nazwa:" [control]="control(DEFAULT_NAME)"></tm-input-text>
+      <tm-textarea label="Domyślny opis:" [control]="control(DEFAULT_DESCRIPTION)"></tm-textarea>
       <div>
         <button class="w3-btn w3-blue w3-border w3-border-blue" (click)="onSaveAndGoBack()">Zapisz i cofnij</button>
         &nbsp;

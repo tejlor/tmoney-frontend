@@ -23,6 +23,7 @@ export class LoginPageComponent extends BaseFormComponent implements OnInit {
               private ouathService: OAuthService) {
 
     super(el, fb);
+
     this.buildForm([
       [this.LOGIN, true],
       [this.PASSWORD, true]
@@ -34,20 +35,18 @@ export class LoginPageComponent extends BaseFormComponent implements OnInit {
   }
 
   onLoginClick(): void {
-    if (!this.isValid()) {
-      return;
+    if (this.isValid()) {
+      const login = this.controlValue(this.LOGIN);
+      const password = this.controlValue(this.PASSWORD);
+      this.ouathService.generateAccessToken(login, password).subscribe((result: boolean) => {
+        if (result) {
+          this.router.navigateByUrl(Path.dashboard);
+        }
+        else {
+          this.errorMessage = 'Login i/lub hasło jest nieprawidłowe';
+        }
+      });
     }
-
-    const login = this.controlValue(this.LOGIN);
-    const password = this.controlValue(this.PASSWORD);
-    this.ouathService.generateAccessToken(login, password).subscribe((result: boolean) => {
-      if (result) {
-        this.router.navigateByUrl(Path.dashboard);
-      }
-      else {
-        this.errorMessage = 'Login i/lub hasło jest nieprawidłowe';
-      }
-    });
   }
 
 }

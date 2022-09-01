@@ -1,15 +1,15 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {BaseFormComponent} from 'src/app/components/common/base-form.component';
 import {DialogConfig} from 'src/app/components/common/dialog/dialog.component';
 import {Category} from 'src/app/model/category';
 import {CategoryHttpService} from 'src/app/services/category.http.service';
 
 @Component({
   selector: 'tm-category-delete-dialog',
-  templateUrl: './delete-dialog.component.html',
-  styleUrls: ['./delete-dialog.component.scss']
+  templateUrl: './delete-dialog.component.html'
 })
-export class CategoryDeleteDialogComponent implements OnInit {
+export class CategoryDeleteDialogComponent extends BaseFormComponent implements OnInit {
 
   @Input() set config(config: CategoryDeleteDialogComponent.Config) {
     if (config.visible) {
@@ -19,17 +19,21 @@ export class CategoryDeleteDialogComponent implements OnInit {
 
   @Output() onConfirm = new EventEmitter<void>();
 
+  readonly NEW_CATEGORY_ID = 'newCategoryId';
+
   formGroup: FormGroup;
   categories: Category[];
   dialogConfig = new DialogConfig();
 
-  constructor(
-    fb: FormBuilder,
-    private categoryHttpService: CategoryHttpService) {
+  constructor(el: ElementRef,
+              fb: FormBuilder,
+              private categoryHttpService: CategoryHttpService) {
 
-    this.formGroup = fb.group({
-      newCategoryId: ['']
-    });
+    super(el, fb);
+
+    this.buildForm([
+      [this.NEW_CATEGORY_ID]
+    ]);
   }
 
   ngOnInit(): void {
@@ -39,9 +43,9 @@ export class CategoryDeleteDialogComponent implements OnInit {
   }
 
   private show(category: Category): void {
-    this.dialogConfig = DialogConfig.confirmation('Uwaga', `Czy na pewno chcesz usunąć wpis "${category.name}"?`,
+    this.dialogConfig = DialogConfig.confirmation('Uwaga', `Czy na pewno chcesz usunąć wpis '"${category.name}"'?`,
       () => {
-        this.categoryHttpService.remove(category.id, this.formGroup.controls['newCategoryId'].value)
+        this.categoryHttpService.remove(category.id, this.controlValue(this.NEW_CATEGORY_ID))
           .subscribe(() => this.onConfirm.emit());
       },
       {

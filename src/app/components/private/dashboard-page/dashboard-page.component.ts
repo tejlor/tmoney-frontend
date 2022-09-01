@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AccountWithEntry } from 'src/app/model/accountWithLastEntry';
+import {Component, OnInit} from '@angular/core';
+import {AccountWithEntry} from 'src/app/model/accountWithLastEntry';
 import {Entry} from 'src/app/model/entry';
-import { AccountHttpService } from 'src/app/services/account.http.service';
+import {AccountHttpService} from 'src/app/services/account.http.service';
 
 @Component({
   selector: 'tm-dashboard-page',
@@ -18,7 +18,7 @@ export class DashboardPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.accountHttpService.getSummary().subscribe(array => {
+    this.accountHttpService.getSummary().subscribe((array: AccountWithEntry[]) => {
       this.items = [];
       for (let item of array) {
         let pos = item.account.orderNo.split('.');

@@ -17,3 +17,17 @@ $green:
 @function themeGreen($id) {
   @return list.nth($green, $id + 10);
 }
+
+$mobile-width: 600px;
+
+@mixin mobile {
+  @media (max-width: #{$mobile-width}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$mobile-width + 1}) {
+    @content;
+  }
+}

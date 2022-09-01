@@ -44,6 +44,7 @@ export const Path = {
 
   dashboard: '/private/dashboard',
   categories: '/private/categories',
+  category: (id: number) => `/private/category/${id ?? ''}`,
 
   entries: (code: string) => `/private/entries/${code ?? ''}`,
   entry: (code: string, id?: number) => `/private/entry/${code}/${id ?? ''}`

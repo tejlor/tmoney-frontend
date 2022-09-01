@@ -5,6 +5,7 @@ import {Category} from 'src/app/model/category';
 import {CategoryHttpService} from 'src/app/services/category.http.service';
 import {Router} from '@angular/router';
 import {CategoryDeleteDialogComponent} from './delete-dialog/delete-dialog.component';
+import {Path} from 'src/app/app-routing.module';
 
 @Component({
   selector: 'tm-categories-page',
@@ -16,12 +17,10 @@ export class CategoriesPageComponent implements OnInit {
   tableData: TableData<Category>;
   dialogConfig = new CategoryDeleteDialogComponent.Config();
 
-
   private tableParams: TableParams;
 
-  constructor(
-    private router: Router,
-    private categoryHttpService: CategoryHttpService) {
+  constructor(private router: Router,
+              private categoryHttpService: CategoryHttpService) {
 
   }
 
@@ -50,11 +49,11 @@ export class CategoriesPageComponent implements OnInit {
   }
 
   onAddClick(): void {
-    this.router.navigateByUrl(`/private/category`);
+    this.router.navigateByUrl(Path.category(null));
   }
 
   onRowClick(category: Category): void {
-    this.router.navigateByUrl(`/private/category/${category.id}`);
+    this.router.navigateByUrl(Path.category(category.id));
   }
 
   onDeleteClick($event: MouseEvent, category: Category): void {

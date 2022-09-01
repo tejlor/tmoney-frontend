@@ -1,9 +1,11 @@
+@import '/src/styles/variables.scss';
+
 div.w3-card {
   margin: 0px;
-  @media (max-width: 600px) {
+  @include mobile {
     margin-bottom: 8px;
   }
-  @media (min-width: 601px) {
+  @include desktop {
     width: 500px;
     margin-top: 0px;
   }
@@ -16,7 +18,7 @@ div.w3-card {
     letter-spacing: 2px;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
     background-color: rgba(0,0,0,0.3);
-    @media (max-width: 600px) {
+    @include mobile {
       font-size: 26px;
     }
   }
@@ -25,13 +27,13 @@ div.w3-card {
     text-align: right;
     font-size: 28px;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
-    @media (max-width: 600px) {
+    @include mobile {
       font-size: 20px;
     }
 
     span {
       font-size: 18px;
-      @media (max-width: 600px) {
+      @include desktop {
         font-size: 14px;
       }
     }
@@ -41,7 +43,7 @@ div.w3-card {
     font-size: 14px;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
     margin-top: 20px;
-    @media (max-width: 600px) {
+    @include mobile {
       font-size: 12px;
       margin-top: 16px;
     }
@@ -65,7 +67,7 @@ div.w3-card {
     .amount {
       text-align: right;
       text-shadow: 1px 1px 1px rgba(0,0,0,0.7);
-      @media (max-width: 600px) {
+      @include mobile {
         text-align: left;
       }
     }

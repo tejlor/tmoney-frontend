@@ -108,13 +108,13 @@ export class EntryPageComponent extends BaseFormComponent {
 
   private fillForm(entry: Entry): void {
     this.formGroup.patchValue({
-      id: entry.id,
-      category: entry.category,
-      date: entry.date,
-      name: entry.name,
-      sign: Math.sign(entry.amount) ?? 1,
-      amount: entry.amount !== undefined ? formatNumber(Math.abs(entry.amount), 'pl-PL', '1.2-2') : '',
-      description: entry.description
+      [this.ID]: entry.id,
+      [this.CATEGORY]: entry.category,
+      [this.DATE]: entry.date,
+      [this.NAME]: entry.name,
+      [this.SIGN]: Math.sign(entry.amount) ?? 1,
+      [this.AMOUNT]: entry.amount !== undefined ? formatNumber(Math.abs(entry.amount), 'pl-PL', '1.2-2') : '',
+      [this.DESCRIPTION]: entry.description
     });
   }
 

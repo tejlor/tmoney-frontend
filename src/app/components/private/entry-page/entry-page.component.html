@@ -1,7 +1,7 @@
 <div class="w3-card w3-white w3-margin-top w3-padding form">
   <h1>{{account?.name}}</h1>
   <form [formGroup]="formGroup">
-    <input type="hidden" formControlName="id" />
+    <input type="hidden" [formControlName]="ID" />
     <tm-select label="Kategoria:" [labelStyle]="labelStyle" [control]="control(CATEGORY)" [options]="categories"></tm-select>
     <tm-input-date label="Data:" [labelStyle]="labelStyle" [control]="control(DATE)" [tmDatepicker]="datepicker"></tm-input-date>
     <tm-datepicker #datepicker></tm-datepicker>

@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Path} from 'src/app/app-routing.module';
 import {Account} from 'src/app/model/account';
+import {AccountSummary} from 'src/app/model/accountSummary';
 import {Category} from 'src/app/model/category';
 import {Entry} from 'src/app/model/entry';
 import {AccountHttpService} from 'src/app/services/account.http.service';
@@ -28,9 +29,9 @@ export class EntryPageComponent extends BaseFormComponent {
 
   readonly signOptions = [{label: "Przychód", value: 1}, {label: "Koszt", value: -1}];
 
-  account: Account;
   categories: Category[];
   entry: Entry;
+  summary: AccountSummary;
   formGroup: FormGroup;
   labelStyle: object;
 
@@ -57,13 +58,10 @@ export class EntryPageComponent extends BaseFormComponent {
     let accountCode = route.snapshot.params['code'];
     let entryId = route.snapshot.params['id'];
 
+    this.loadSummary(accountCode);
+
     this.categoryService.getByAccountCode(accountCode).subscribe(categories => {
       this.categories = categories;
-    });
-
-    this.accountService.getByCode(accountCode).subscribe(account => {
-      this.account = account;
-      this.labelStyle = {'color': account.darkColor};
     });
 
     if (entryId) {
@@ -76,7 +74,7 @@ export class EntryPageComponent extends BaseFormComponent {
   saveAndGoBack(): void {
     if (this.isValid()) {
       this.entryService.saveOrUpdate(this.readObjectFromForm()).subscribe(entry => {
-        this.router.navigateByUrl(Path.entries(this.account.code));
+        this.router.navigateByUrl(Path.entries(this.summary.account.code));
       });
     }
   }
@@ -87,8 +85,16 @@ export class EntryPageComponent extends BaseFormComponent {
         this.fillForm(new Entry());
         this.formGroup.markAsUntouched();
         this.formGroup.updateValueAndValidity();
+        this.loadSummary(this.summary.account.code);
       });
     }
+  }
+
+  private loadSummary(code: string): void {
+    this.accountService.getSummary(code).subscribe(summaries => {
+      this.summary = summaries[0];
+      this.labelStyle = {'color': this.summary.account.darkColor};
+    });
   }
 
   private fillDefaultCategoryValues(category: Category) {
@@ -120,7 +126,7 @@ export class EntryPageComponent extends BaseFormComponent {
 
   private readObjectFromForm(): Entry {
     const entry = new Entry();
-    entry.account = this.account;
+    entry.account = this.summary.account;
     entry.id = this.controlValue(this.ID);
     entry.category = this.controlValue(this.CATEGORY) as Category;
     entry.date = this.controlValue(this.DATE);

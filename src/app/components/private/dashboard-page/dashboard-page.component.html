@@ -1,4 +1,4 @@
-<tm-dashboard-summary [entry]="lastEntry"></tm-dashboard-summary>
+<tm-account-summary [summary]="summary"></tm-account-summary>
 <div class="row" *ngFor="let row of items">
     <tm-dashboard-panel *ngFor="let item of row" [account]="item.account" [entry]="item.entry"></tm-dashboard-panel>
 </div>

@@ -1,5 +1,7 @@
+<tm-account-summary [summary]="summary"></tm-account-summary>
+
 <div class="w3-card w3-white w3-margin-top w3-padding form">
-  <h1>{{account?.name}}</h1>
+  <h1>{{summary?.account.name}}</h1>
   <form [formGroup]="formGroup">
     <input type="hidden" [formControlName]="ID" />
     <tm-select label="Kategoria:" [labelStyle]="labelStyle" [control]="control(CATEGORY)" [options]="categories"></tm-select>
@@ -11,8 +13,8 @@
     <tm-textarea label="Opis:" [labelStyle]="labelStyle" [control]="control(DESCRIPTION)"></tm-textarea>
   </form>
   <div>
-    <button class="w3-btn" [ngStyle]="{'background-color': account?.color, 'color': 'white'}" (click)="saveAndGoBack()">Zapisz i cofnij</button>
+    <button class="w3-btn" [ngStyle]="{'background-color': summary?.account.color, 'color': 'white'}" (click)="saveAndGoBack()">Zapisz i cofnij</button>
     &nbsp;
-    <button class="w3-btn" [ngStyle]="{'background-color': account?.color, 'color': 'white'}" (click)="saveAndClear()">Zapisz i dodaj kolejny</button>
+    <button class="w3-btn" [ngStyle]="{'background-color': summary?.account.color, 'color': 'white'}" (click)="saveAndClear()">Zapisz i dodaj kolejny</button>
   </div>
 </div>

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AccountWithEntry } from 'src/app/model/accountWithLastEntry';
-import {Entry} from 'src/app/model/entry';
-import { AccountHttpService } from 'src/app/services/account.http.service';
+import {Component, OnInit} from '@angular/core';
+import {AccountSummary} from 'src/app/model/accountSummary';
+import {Account} from 'src/app/model/account';
+import {AccountHttpService} from 'src/app/services/account.http.service';
 
 @Component({
   selector: 'tm-dashboard-page',
@@ -10,16 +10,15 @@ import { AccountHttpService } from 'src/app/services/account.http.service';
 })
 export class DashboardPageComponent implements OnInit {
 
-  items: AccountWithEntry[][];
-  lastEntry: Entry;
+  items: AccountSummary[][];
+  summary: AccountSummary;
 
   constructor(private accountHttpService: AccountHttpService) {
 
   }
 
   ngOnInit(): void {
-    this.accountHttpService.getSummary().subscribe(array => {
-      console.log(array);
+    this.accountHttpService.getSummary().subscribe((array: AccountSummary[]) => {
       this.items = [];
       for (let item of array) {
         let pos = item.account.orderNo.split('.');
@@ -31,7 +30,14 @@ export class DashboardPageComponent implements OnInit {
         this.items[row][col] = item;
       }
 
-      this.lastEntry = array.reduce((prev, curr) => { console.log(prev); return prev.entry.compareTo(curr.entry) > 0 ? prev : curr;}).entry;
+      const account = {
+        name: 'Podsumowanie',
+        color: '#0d76cd',
+        icon: 'fa-solid fa-wallet'
+      } as Account;
+
+      const lastEntry = array.reduce((prev, curr) => prev.entry.compareTo(curr.entry) > 0 ? prev : curr).entry;
+      this.summary = new AccountSummary(account, lastEntry);
     });
   }
 }

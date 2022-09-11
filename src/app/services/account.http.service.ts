@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {plainToInstance} from "class-transformer";
 import {Observable, map} from "rxjs";
 import {Account} from "../model/account";
-import {AccountWithEntry} from "../model/accountWithLastEntry";
+import {AccountSummary} from "../model/accountSummary";
 import {HttpService} from "./http.service";
 
 @Injectable({
@@ -22,9 +22,9 @@ export class AccountHttpService extends HttpService {
       .pipe(map(result => this.deserializeArray(result)));
   }
 
-  getSummary(): Observable<AccountWithEntry[]> {
-    return this.get(`${this.baseUrl}/summary`)
-      .pipe(map(result => this.deserializeAccountWithEntries(result)));
+  getSummary(code?: string): Observable<AccountSummary[]> {
+    return this.get(`${this.baseUrl}/summary/${code ?? ''}`)
+      .pipe(map(result => this.deserializeAccountSummaryArray(result)));
   }
 
   private deserialize(account: object): Account {
@@ -35,7 +35,7 @@ export class AccountHttpService extends HttpService {
     return plainToInstance(Account, accounts);
   }
 
-  private deserializeAccountWithEntries(accountWithEntries: object[]): AccountWithEntry[] {
-    return plainToInstance(AccountWithEntry, accountWithEntries);
+  private deserializeAccountSummaryArray(accountSummaries: object[]): AccountSummary[] {
+    return plainToInstance(AccountSummary, accountSummaries);
   }
 }

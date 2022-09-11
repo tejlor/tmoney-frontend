@@ -1,50 +1,67 @@
-import {Component} from '@angular/core';
+import {formatNumber} from '@angular/common';
+import {Component, ElementRef} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Path} from 'src/app/app-routing.module';
 import {Account} from 'src/app/model/account';
+import {AccountSummary} from 'src/app/model/accountSummary';
 import {Category} from 'src/app/model/category';
 import {Entry} from 'src/app/model/entry';
 import {AccountHttpService} from 'src/app/services/account.http.service';
 import {CategoryHttpService} from 'src/app/services/category.http.service';
 import {EntryHttpService} from 'src/app/services/entry.http.service';
+import {BaseFormComponent} from '../../common/base-form.component';
 
 @Component({
   selector: 'tm-entry-page',
   templateUrl: './entry-page.component.html',
   styleUrls: ['./entry-page.component.scss']
 })
-export class EntryPageComponent {
+export class EntryPageComponent extends BaseFormComponent {
+
+  readonly ID = 'id';
+  readonly CATEGORY = 'category';
+  readonly DATE = 'date';
+  readonly NAME = 'name';
+  readonly SIGN = 'sign';
+  readonly AMOUNT = 'amount';
+  readonly DESCRIPTION = 'description';
 
   readonly signOptions = [{label: "Przychód", value: 1}, {label: "Koszt", value: -1}];
 
-  account: Account;
   categories: Category[];
   entry: Entry;
+  summary: AccountSummary;
   formGroup: FormGroup;
   labelStyle: object;
 
-  constructor(
-    fb: FormBuilder,
-    private router: Router,
-    private route: ActivatedRoute,
-    private accountService: AccountHttpService,
-    private categoryService: CategoryHttpService,
-    private entryService: EntryHttpService) {
+  constructor(el: ElementRef,
+              fb: FormBuilder,
+              private router: Router,
+              private route: ActivatedRoute,
+              private accountService: AccountHttpService,
+              private categoryService: CategoryHttpService,
+              private entryService: EntryHttpService) {
 
-    this.buildForm(fb);
+    super(el, fb);
 
-    let accountCode = this.route.snapshot.params['code'];
+    this.buildForm([
+      [this.ID],
+      [this.CATEGORY, true, this.fillDefaultCategoryValues.bind(this)],
+      [this.DATE, true],
+      [this.NAME, true],
+      [this.SIGN, true],
+      [this.AMOUNT, true],
+      [this.DESCRIPTION]
+    ]);
+
+    let accountCode = route.snapshot.params['code'];
     let entryId = route.snapshot.params['id'];
+
+    this.loadSummary(accountCode);
 
     this.categoryService.getByAccountCode(accountCode).subscribe(categories => {
       this.categories = categories;
-    });
-
-    this.accountService.getByCode(accountCode).subscribe(account => {
-      this.account = account;
-      this.labelStyle = {'color': account.darkColor};
-      document.body.style.backgroundColor = account.lightColor;
     });
 
     if (entryId) {
@@ -54,80 +71,68 @@ export class EntryPageComponent {
     }
   }
 
-  private buildForm(fb: FormBuilder) {
-    this.formGroup = fb.group({
-      id: [''],
-      name: ['', Validators.required],
-      date: ['', Validators.required],
-      amount: ['', Validators.required],
-      sign: ['', Validators.required],
-      category: ['', Validators.required],
-      description: ['']
-    });
-
-    this.formGroup.controls['category'].valueChanges.subscribe(category => {
-      this.fillDefaultCategoryValues(category);
-    });
-  }
-
-  private fillDefaultCategoryValues(category: Category) {
-    if (category.defaultName) {
-      this.formGroup.controls['name'].setValue(category.defaultName);
-    }
-    if (category.defaultAmount) {
-      this.formGroup.controls['sign'].setValue(Math.sign(category.defaultAmount));
-      if(Math.abs(category.defaultAmount) !== 1) {
-        this.formGroup.controls['amount'].setValue(Math.abs(category.defaultAmount));
-      }
-    }
-    if (category.defaultDescription) {
-      this.formGroup.controls['description'].setValue(category.defaultDescription);
-    }
-  }
-
   saveAndGoBack(): void {
-    if(this.isValid()) {
-      this.entryService.saveOrUpdate(this.readDataFromForm()).subscribe(entry => {
-        this.router.navigateByUrl(Path.entries(this.account.code));
+    if (this.isValid()) {
+      this.entryService.saveOrUpdate(this.readObjectFromForm()).subscribe(entry => {
+        this.router.navigateByUrl(Path.entries(this.summary.account.code));
       });
     }
   }
 
   saveAndClear(): void {
     if(this.isValid()) {
-      this.entryService.saveOrUpdate(this.readDataFromForm()).subscribe(entry => {
+      this.entryService.saveOrUpdate(this.readObjectFromForm()).subscribe(entry => {
         this.fillForm(new Entry());
         this.formGroup.markAsUntouched();
         this.formGroup.updateValueAndValidity();
+        this.loadSummary(this.summary.account.code);
       });
     }
   }
 
-  private isValid(): boolean {
-    this.formGroup.markAllAsTouched();
-    return this.formGroup.valid;
+  private loadSummary(code: string): void {
+    this.accountService.getSummary(code).subscribe(summaries => {
+      this.summary = summaries[0];
+      this.labelStyle = {'color': this.summary.account.darkColor};
+    });
+  }
+
+  private fillDefaultCategoryValues(category: Category) {
+    if (!this.controlValue(this.NAME)) {
+      this.control(this.NAME).setValue(category.defaultName);
+    }
+    if (!this.controlValue(this.AMOUNT)) {
+      this.control(this.SIGN).setValue(Math.sign(category.defaultAmount));
+      if (Math.abs(category.defaultAmount) !== 1) {
+        this.control(this.AMOUNT).setValue(Math.abs(category.defaultAmount));
+      }
+    }
+    if (!this.controlValue(this.DESCRIPTION)) {
+      this.control(this.DESCRIPTION).setValue(category.defaultDescription);
+    }
   }
 
   private fillForm(entry: Entry): void {
     this.formGroup.patchValue({
-      id: entry.id,
-      name: entry.name,
-      date: entry.date,
-      amount: entry.amount,
-      category: entry.category,
-      description: entry.description
+      [this.ID]: entry.id,
+      [this.CATEGORY]: entry.category,
+      [this.DATE]: entry.date,
+      [this.NAME]: entry.name,
+      [this.SIGN]: Math.sign(entry.amount) ?? 1,
+      [this.AMOUNT]: entry.amount !== undefined ? formatNumber(Math.abs(entry.amount), 'pl-PL', '1.2-2') : '',
+      [this.DESCRIPTION]: entry.description
     });
   }
 
-  private readDataFromForm(): Entry {
+  private readObjectFromForm(): Entry {
     const entry = new Entry();
-    entry.account = this.account;
-    entry.id = this.formGroup.controls['id'].value;
-    entry.name = this.formGroup.controls['name'].value;
-    entry.date = this.formGroup.controls['date'].value;
-    entry.amount = Number((this.formGroup.controls['amount'].value as string).replace(',', '.'));
-    entry.category = this.formGroup.controls['category'].value as Category;
-    entry.description = this.formGroup.controls['description'].value;
+    entry.account = this.summary.account;
+    entry.id = this.controlValue(this.ID);
+    entry.category = this.controlValue(this.CATEGORY) as Category;
+    entry.date = this.controlValue(this.DATE);
+    entry.name = this.controlValue(this.DATE);
+    entry.amount = Number((this.controlValue(this.AMOUNT) as string).replace(',', '.')) * this.controlValue(this.SIGN);
+    entry.description = this.controlValue(this.DESCRIPTION);
     return entry;
   }
 }

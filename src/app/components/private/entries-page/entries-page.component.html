@@ -2,7 +2,7 @@
 
   <div class="w3-row header">
     <div class="w3-col m6 tm-left">
-      <button class="w3-btn w3-text-white" [style.backgroundColor]="account?.color" [routerLink]="Path.entry(account?.code)" [disabled]="!account.code">
+      <button class="w3-btn w3-text-white" [style.backgroundColor]="account?.color" [routerLink]="Path.entry(account?.code)" [disabled]="!account?.code">
         <i class="fa-solid fa-plus"></i> Nowy
       </button>
     </div>
@@ -12,7 +12,7 @@
   </div>
 
   <div class="w3-responsive">
-    <table class="w3-table-all w3-hoverable w3-card">
+    <table *ngIf="account?.code" class="w3-table-all w3-hoverable w3-card">
       <colgroup>
         <col width="5%">
         <col width="10%">
@@ -44,8 +44,46 @@
           <td>{{entry.description}}</td>
           <td class="w3-right-align" [ngClass]="{'w3-text-red': entry.amount < 0, 'w3-text-green': entry.amount > 0}">
             {{entry.amount | number:'1.2-2'}}</td>
-          <td class="w3-right-align">{{(account.code ? entry.balance : entry.balanceOverall) | number:'1.2-2'}}</td>
-          <td class="w3-center-align"><i *ngIf="account.code" class="fa-solid fa-trash-can" (click)="onRemoveEntryClick(entry)"></i></td>
+          <td class="w3-right-align">{{entry.balance | number:'1.2-2'}}</td>
+          <td class="w3-center-align"><i class="fa-solid fa-trash-can" (click)="onRemoveEntryClick(entry)"></i></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table *ngIf="!account?.code" class="w3-table-all w3-hoverable w3-card">
+      <colgroup>
+        <col width="5%">
+        <col width="10%">
+        <col width="10%">
+        <col width="20%">
+        <col width="15%">
+        <col width="20%">
+        <col width="10%">
+        <col width="10%">
+      </colgroup>
+      <thead class="w3-text-white">
+        <tr [style.backgroundColor]="account?.color">
+          <th>ID</th>
+          <th>Data</th>
+          <th>Konto</th>
+          <th>Nazwa</th>
+          <th>Kategoria</th>
+          <th>Opis</th>
+          <th class="w3-right-align">Kwota</th>
+          <th class="w3-right-align">Saldo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entry of tableData?.rows" (click)="onRowClick(entry)" [ngStyle]="{backgroundColor: entry.account.lightColor}">
+          <td>{{entry.id}}</td>
+          <td>{{entry.date}}</td>
+          <td>{{entry.account.name}}</td>
+          <td>{{entry.name}}</td>
+          <td>{{entry.category.name}}</td>
+          <td>{{entry.description}}</td>
+          <td class="w3-right-align" [ngClass]="{'w3-text-red': entry.amount < 0, 'w3-text-green': entry.amount > 0}">
+            {{entry.amount | number:'1.2-2'}}</td>
+          <td class="w3-right-align">{{entry.balanceOverall | number:'1.2-2'}}</td>
         </tr>
       </tbody>
     </table>

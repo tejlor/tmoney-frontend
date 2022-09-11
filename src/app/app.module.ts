@@ -3,6 +3,9 @@ import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import * as moment from 'moment';
+import '@angular/common/locales/global/pl';
+import 'moment/locale/pl';
 import {DashboardPageComponent} from './components/private/dashboard-page/dashboard-page.component';
 import {W3Component} from './components/w3/w3.component';
 import {DashboardPanelComponent} from './components/private/dashboard-page/panel/panel.component';
@@ -28,16 +31,13 @@ import {PublicPageComponent} from './components/public/public-page.component';
 import {PrivatePageComponent} from './components/private/private-page.component';
 import {InputPasswordComponent} from './components/common/form/input-pass/input-pass.component';
 import {CategoryDeleteDialogComponent} from './components/private/categories-page/delete-dialog/delete-dialog.component';
-import {DashboardSummaryComponent} from './components/private/dashboard-page/summary/summary.component';
+import {AccountSummaryComponent} from './components/common/panel/account-summary/summary.component';
 import {OAuthInterceptor} from './config/auth.interceptor';
 import {ErrorHandlerInterceptor} from './config/error-handler.interceptor';
 import {YesNoIconComponent} from './components/common/control/yes-no-icon/yes-no-icon.component';
 import {AccountBadgesComponent} from './components/common/control/account-badges/account-badges.component';
 import {DatepickerComponent} from './components/common/control/datepicker/datepicker.component';
 import {DatepickerDirective} from './components/common/directive/datepicker.directive';
-import * as moment from 'moment';
-import '@angular/common/locales/global/pl';
-import 'moment/locale/pl';
 import {InputNumberComponent} from './components/common/form/input-number/input-number.component';
 import {NumericDirective} from './components/common/directive/numeric.directive';
 import {InputRadioGroupComponent} from './components/common/form/input-radio-group/input-radio-group.component';
@@ -79,7 +79,7 @@ function init(oauthService: OAuthService): () => Promise<void> {
     PublicPageComponent,
     PrivatePageComponent,
     CategoryDeleteDialogComponent,
-    DashboardSummaryComponent,
+    AccountSummaryComponent,
     YesNoIconComponent,
     AccountBadgesComponent,
     DatepickerComponent,

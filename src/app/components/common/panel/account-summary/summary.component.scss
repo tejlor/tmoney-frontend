@@ -1,14 +1,17 @@
 @import '/src/styles/variables.scss';
 
 div.w3-card {
-  margin: -16px -16px;
-  margin-bottom: 0px;
+  margin: -16px -16px 16px -16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: themeBlue(0);
   overflow: auto;
-  margin-bottom: 16px;
+
+  @include mobile {
+    margin: 0px 0px 8px 0px;
+    flex-direction: column;
+  }
 
   &::after {
     clear: both;
@@ -21,21 +24,35 @@ h2 {
   margin: 0px;
   font-variant: petite-caps;
   letter-spacing: 3px;
+  cursor: pointer;
   text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+
+  @include mobile {
+    font-size: 26px;
+    padding-left: 0px;
+  }
 }
 
 div.last-transaction {
   display: flex;
-  justify-content: space-between;
   background-color: rgba(255,255,255,0.3);
   border-radius: 5px;
   padding: 8px 16px;
   text-shadow: 1px 1px 1px rgba(0,0,0,0.7);
   column-gap: 16px;
 
+  @include mobile {
+    justify-content: space-around;
+    width: calc(100% - 16px);
+  }
+
   div.gap {
     color: themeBlue(0);
     text-shadow: none;
+  }
+
+  .name {
+    text-align: center;
   }
 
   .red {
@@ -53,6 +70,11 @@ h3 {
   text-align: right;
   font-size: 28px;
   text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+
+  @include mobile {
+    padding-right: 0px;
+    font-size: 20px;
+  }
 
   span {
     font-size: 18px;

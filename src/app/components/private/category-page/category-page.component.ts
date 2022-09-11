@@ -7,13 +7,22 @@ import {AccountHttpService} from 'src/app/services/account.http.service';
 import {CategoryHttpService} from 'src/app/services/category.http.service';
 import {bit} from 'src/app/utils/utils';
 import {Path} from 'src/app/app-routing.module';
+import {BaseFormComponent} from '../../common/base-form.component';
 
 @Component({
   selector: 'tm-category-page',
   templateUrl: './category-page.component.html',
   styleUrls: ['./category-page.component.scss']
 })
-export class CategoryPageComponent {
+export class CategoryPageComponent extends BaseFormComponent {
+
+  readonly ID = 'id';
+  readonly NAME = 'name';
+  readonly ACCOUNT = 'account';
+  readonly REPORT = 'report';
+  readonly DEFAULT_AMOUNT = 'defaultAmount';
+  readonly DEFAULT_NAME = 'defaultName';
+  readonly DEFAULT_DESCRIPTION = 'defaultDescription';
 
   readonly reportOptions = [{label: "Tak", value: true}, {label: "Nie", value: "false"}];
 
@@ -21,24 +30,25 @@ export class CategoryPageComponent {
 
   category: Category;
   accounts: Account[][];
-  formGroup: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    route: ActivatedRoute,
-    private accountService: AccountHttpService,
-    private categoryService: CategoryHttpService) {
+  constructor(el: ElementRef,
+              fb: FormBuilder,
+              private router: Router,
+              route: ActivatedRoute,
+              private accountService: AccountHttpService,
+              private categoryService: CategoryHttpService) {
 
-    this.formGroup = this.fb.group({
-      id: [''],
-      name: ['', Validators.required],
-      account: [''],
-      report: ['', Validators.required],
-      defaultAmount: [''],
-      defaultName: [''],
-      defaultDescription: ['']
-    });
+    super(el, fb);
+
+    this.buildForm([
+      [this.ID],
+      [this.NAME, true],
+      [this.ACCOUNT],
+      [this.REPORT, true],
+      [this.DEFAULT_AMOUNT],
+      [this.DEFAULT_NAME],
+      [this.DEFAULT_DESCRIPTION]
+    ]);
 
     this.accountService.getActive().subscribe(accounts => {
       this.accounts = [];
@@ -63,8 +73,8 @@ export class CategoryPageComponent {
   }
 
   onSaveAndGoBack(): void {
-    if(this.isValid()) {
-      this.categoryService.saveOrUpdate(this.readDataFromForm()).subscribe(category => {
+    if (this.isValid()) {
+      this.categoryService.saveOrUpdate(this.readObjectFromForm()).subscribe(category => {
         this.router.navigateByUrl(Path.categories);
       });
     }
@@ -78,6 +88,37 @@ export class CategoryPageComponent {
     return (this.category?.account & bit(account.id)) !== 0;
   }
 
+  private fillForm(category: Category): void {
+    this.formGroup.patchValue({
+      [this.ID]: category.id,
+      [this.NAME]: category.name,
+      [this.ACCOUNT]: category.account,
+      [this.REPORT]: category.report,
+      [this.DEFAULT_AMOUNT]: category.defaultAmount,
+      [this.DEFAULT_NAME]: category.defaultName,
+      [this.DEFAULT_DESCRIPTION]: category.defaultDescription
+    });
+  }
+
+  private readObjectFromForm(): Category {
+    const category = new Category();
+    category.id = this.controlValue(this.ID);
+    category.name = this.controlValue(this.NAME);
+    category.account = this.readAccountInputsValue();
+    category.report = this.controlValue(this.REPORT);
+    category.defaultAmount = this.controlValue(this.DEFAULT_AMOUNT);
+    category.defaultName = this.controlValue(this.DEFAULT_NAME);
+    category.defaultDescription = this.controlValue(this.DEFAULT_DESCRIPTION);
+
+    if (category.account === 0) {
+      category.defaultName = null;
+      category.defaultAmount = null;
+      category.defaultDescription = null;
+    }
+
+    return category;
+  }
+
   private readAccountInputsValue(): number {
     const result = this.accountInputs
       .filter(ref => ref.nativeElement.checked)
@@ -86,44 +127,8 @@ export class CategoryPageComponent {
         return result | accountId;
       }, 0);
 
-    this.formGroup.controls['account'].setValue(result);
+    this.control(this.ACCOUNT).setValue(result);
     return result;
-  }
-
-  private isValid(): boolean {
-    this.formGroup.markAllAsTouched();
-    return this.formGroup.valid;
-  }
-
-  private fillForm(category: Category): void {
-    this.formGroup.patchValue({
-      id: category.id,
-      name: category.name,
-      account: category.account,
-      report: category.report,
-      defaultAmount: category.defaultAmount,
-      defaultName: category.defaultName,
-      defaultDescription: category.defaultDescription
-    });
-  }
-
-  private readDataFromForm(): Category {
-    const category = new Category();
-    category.id = this.formGroup.controls['id'].value;
-    category.name = this.formGroup.controls['name'].value;
-    category.account = this.readAccountInputsValue();
-    category.report = this.formGroup.controls['report'].value;
-    category.defaultAmount = this.formGroup.controls['defaultAmount'].value;
-    category.defaultName = this.formGroup.controls['defaultName'].value;
-    category.defaultDescription = this.formGroup.controls['defaultDescription'].value;
-
-    if(category.account === 0) {
-      category.defaultName = null;
-      category.defaultAmount = null;
-      category.defaultDescription = null;
-    }
-
-    return category;
   }
 
 }

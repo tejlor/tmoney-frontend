@@ -1,14 +1,15 @@
-tm-entry-page {
+@import '/src/styles/variables.scss';
+
+:host {
   height: 100%;
 }
 
 div.body {
-  height: 100%;
   padding: 30px 8px 0px 8px;
 }
 
 div.form {
-  @media (min-width: 601px) {
+  @include desktop {
     width: 450px;
   }
   margin: 0px auto;

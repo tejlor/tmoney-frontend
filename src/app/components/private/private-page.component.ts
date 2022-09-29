@@ -1,6 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {EntryHttpService} from 'src/app/services/entry.http.service';
 import {Path} from 'src/app/app-routing.module';
+import {ReportHttpService} from 'src/app/services/report.http.service';
 
 @Component({
   selector: 'tm-private-page',
@@ -15,7 +16,8 @@ export class PrivatePageComponent {
   @ViewChild('nav') nav: ElementRef;
 
   constructor(
-    private entryHttpService: EntryHttpService) {
+    private entryHttpService: EntryHttpService,
+    private reportHttpService: ReportHttpService) {
   }
 
   openMenu(): void {
@@ -34,8 +36,15 @@ export class PrivatePageComponent {
     this.overlay.nativeElement.style.display = "none";
   }
 
-  updateBalances():void {
+  updateBalances(): void {
     this.entryHttpService.updateBalances().subscribe(() => window.location.reload());
+  }
+
+  generateSummaryPdf(): void {
+    this.reportHttpService.generateTable().subscribe(result => {
+      const url= window.URL.createObjectURL(result);
+      window.open(url);
+    });
   }
 
 }

@@ -1,6 +1,6 @@
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 import {environment} from "src/environments/environment";
 
 @Injectable({
@@ -17,6 +17,10 @@ export abstract class HttpService {
   protected get(url: string, params?: any): Observable<any> {
     const options = params ? {params} : undefined;
     return this.http.get(this.apiUrl + url, options);
+  }
+
+  protected getFile(url: string): Observable<Blob> {
+    return this.http.get(this.apiUrl + url, {responseType: 'blob'});
   }
 
   protected post(url: string, body?: any, headers?: any): Observable<any> {

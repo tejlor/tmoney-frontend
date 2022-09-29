@@ -2,7 +2,7 @@
 
   <div class="w3-row header">
     <div class="w3-col m6 tm-left">
-      <button class="w3-btn w3-text-white" [style.backgroundColor]="account?.color" [routerLink]="Path.entry(account?.code)" [disabled]="!account?.code">
+      <button class="w3-btn w3-text-white" [style.backgroundColor]="'#' + account?.color" [routerLink]="Path.entry(account?.code)" [disabled]="!account?.code">
         <i class="fa-solid fa-plus"></i> Nowy
       </button>
     </div>
@@ -24,7 +24,7 @@
         <col width="5%">
       </colgroup>
       <thead class="w3-text-white">
-        <tr [style.backgroundColor]="account?.color">
+        <tr [style.backgroundColor]="'#' + account?.color">
           <th>ID</th>
           <th>Data</th>
           <th>Nazwa</th>
@@ -62,7 +62,7 @@
         <col width="10%">
       </colgroup>
       <thead class="w3-text-white">
-        <tr [style.backgroundColor]="account?.color">
+        <tr [style.backgroundColor]="'#' + account?.color">
           <th>ID</th>
           <th>Data</th>
           <th>Konto</th>
@@ -74,7 +74,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let entry of tableData?.rows" (click)="onRowClick(entry)" [ngStyle]="{backgroundColor: entry.account.lightColor}">
+        <tr *ngFor="let entry of tableData?.rows" (click)="onRowClick(entry)" [ngStyle]="{backgroundColor: '#' + entry.account.lightColor}">
           <td>{{entry.id}}</td>
           <td>{{entry.date}}</td>
           <td>{{entry.account.name}}</td>
@@ -89,7 +89,7 @@
     </table>
   </div>
 
-  <tm-pagination [color]="account?.color" [tableInfo]="tableData?.tableInfo" (pageSizeChange)="onPageSizeChange($event)"
+  <tm-pagination [color]="'#' + account?.color" [tableInfo]="tableData?.tableInfo" (pageSizeChange)="onPageSizeChange($event)"
     (pageChange)="onPageChange($event)"></tm-pagination>
 
   <tm-dialog [config]="dialogConfig"></tm-dialog>

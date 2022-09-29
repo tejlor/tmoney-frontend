@@ -14,7 +14,7 @@ export class Account extends AbstractDto {
 		const account = new Account();
 		account.code = null;
 		account.name = 'Podsumowanie';
-		account.color = '#0d76cd';
+		account.color = '0d76cd';
 		account.icon = 'fa-wallet';
 		return account;
 	}

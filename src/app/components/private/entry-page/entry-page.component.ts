@@ -130,7 +130,7 @@ export class EntryPageComponent extends BaseFormComponent {
     entry.id = this.controlValue(this.ID);
     entry.category = this.controlValue(this.CATEGORY) as Category;
     entry.date = this.controlValue(this.DATE);
-    entry.name = this.controlValue(this.DATE);
+    entry.name = this.controlValue(this.NAME);
     entry.amount = Number((this.controlValue(this.AMOUNT) as string).replace(',', '.')) * this.controlValue(this.SIGN);
     entry.description = this.controlValue(this.DESCRIPTION);
     return entry;

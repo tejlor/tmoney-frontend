@@ -13,4 +13,9 @@ export class ReportHttpService extends HttpService {
     return this.getFile(`${this.baseUrl}/table/${accountCode ?? ''}`);
   }
 
+  generateReport(dateFrom: string, dateTo: string): Observable<Blob> {
+    const params = {dateFrom, dateTo};
+    return this.getFile(`${this.baseUrl}/report`, params);
+  }
+
 }

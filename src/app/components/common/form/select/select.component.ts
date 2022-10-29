@@ -12,6 +12,10 @@ export class SelectComponent extends BaseInput {
   @Input() labelStyle: object;
   @Input() control: AbstractControl;
   @Input() options: Option[];
+
+  compareById(element1: Option, element2: Option): boolean {
+    return element1.id === element2.id;
+  }
 }
 
 export interface Option {

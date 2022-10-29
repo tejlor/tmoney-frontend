@@ -19,8 +19,9 @@ export abstract class HttpService {
     return this.http.get(this.apiUrl + url, options);
   }
 
-  protected getFile(url: string): Observable<Blob> {
-    return this.http.get(this.apiUrl + url, {responseType: 'blob'});
+  protected getFile(url: string, params?: any): Observable<Blob> {
+    const options = {responseType: 'blob', params};
+    return this.http.get(this.apiUrl + url, options as any) as unknown as Observable<Blob>;
   }
 
   protected post(url: string, body?: any, headers?: any): Observable<any> {

@@ -47,4 +47,11 @@ export class PrivatePageComponent {
     });
   }
 
+  generateReportPdf(): void {
+    this.reportHttpService.generateReport('2021-01-01', '2021-12-31').subscribe(result => {
+      const url= window.URL.createObjectURL(result);
+      window.open(url);
+    });
+  }
+
 }

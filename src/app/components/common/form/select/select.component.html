@@ -1,7 +1,7 @@
 <p>
   <label class="main" [ngStyle]="labelStyle" [ngClass]="{'tm-text-blue': !labelStyle}">{{label}}</label>
-  <select [formControl]="formControl" class="w3-select w3-border w3-round" [ngClass]="{'w3-pale-red w3-border-red': isInvalid()}">
-    <option *ngFor="let option of options" [ngValue]="option">{{option.name}}</option>
+  <select [formControl]="formControl" [compareWith]="compareById" class="w3-select w3-border w3-round" [ngClass]="{'w3-pale-red w3-border-red': isInvalid()}">
+    <option *ngFor="let option of options" [ngValue]="option" >{{option.name}}</option>
   </select>
   <span *ngIf="isInvalid()" class="w3-text-red w3-small">{{getErrorMessage()}}</span>
 </p>

@@ -7,8 +7,8 @@
       <div *ngIf="errorMessage" class="w3-panel w3-pale-red w3-bar-left w3-border-red">
         <p>{{errorMessage}}</p>
       </div>
-      <tm-input-text label="Login" [control]="control(LOGIN)"></tm-input-text>
-      <tm-input-pass label="Hasło" [control]="control(PASSWORD)"></tm-input-pass>
+      <tm-input-text label="Login" name="login" [control]="control(LOGIN)"></tm-input-text>
+      <tm-input-pass label="Hasło" name="password" [control]="control(PASSWORD)"></tm-input-pass>
       <button class="w3-button w3-block w3-round tm-green" (click)="onLoginClick()">Zaloguj</button>
     </form>
   </div>

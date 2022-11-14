@@ -8,6 +8,7 @@ import { TableData } from 'src/app/model/tableData';
 import { TableParams } from 'src/app/model/tableParams';
 import {DialogConfig} from '../../common/dialog/dialog.component';
 import {Path} from 'src/app/app-routing.module';
+import {DEC_FORMAT} from 'src/app/utils/constants';
 
 @Component({
   selector: 'tm-entries-page',
@@ -17,6 +18,7 @@ import {Path} from 'src/app/app-routing.module';
 export class EntriesPageComponent implements OnInit {
 
   readonly Path = Path;
+  readonly DEC_FORMAT = DEC_FORMAT;
 
   account: Account;
   tableData: TableData<Entry>;
@@ -31,7 +33,6 @@ export class EntriesPageComponent implements OnInit {
     private route: ActivatedRoute,
     private accountService: AccountHttpService,
     private entryService: EntryHttpService) {
-
   }
 
   ngOnInit(): void {
@@ -44,28 +45,40 @@ export class EntriesPageComponent implements OnInit {
     else {
       this.account = Account.summary();
     }
-
+    console.log(this.route.snapshot.queryParams);
     this.tableParams = new TableParams();
-    this.tableParams.pageNo = 0;
-    this.tableParams.pageSize = 10;
+    this.tableParams.pageNo = this.queryParam('pageNo') ?? 0;
+    this.tableParams.pageSize = this.queryParam('pageSize') ?? 10;
     this.tableParams.sortBy = 'date DESC, id DESC';
-    this.tableParams.filter = '';
+    this.tableParams.filter = this.queryParam('filterText') ?? '';
 
     this.reloadTableRows();
   }
 
   search(filterText: string) {
     this.tableParams.filter = filterText;
+    this.router.navigate([], {
+      queryParams: {filterText},
+      queryParamsHandling: 'merge'
+    });
     this.reloadTableRows();
   }
 
   onPageSizeChange(pageSize: number): void {
     this.tableParams.pageSize = pageSize;
+    this.router.navigate([], {
+      queryParams: {pageSize},
+      queryParamsHandling: 'merge'
+    });
     this.reloadTableRows();
   }
 
   onPageChange(pageNo: number): void {
     this.tableParams.pageNo = pageNo;
+    this.router.navigate([], {
+      queryParams: {pageNo},
+      queryParamsHandling: 'merge'
+    });
     this.reloadTableRows();
   }
 
@@ -84,6 +97,10 @@ export class EntriesPageComponent implements OnInit {
     this.entryService.getTableByAccountCode(this.accountCode, this.tableParams).subscribe(result => {
       this.tableData = result;
     });
+  }
+
+  private queryParam(name: string) {
+    return this.route.snapshot.queryParams[name];
   }
 
 }

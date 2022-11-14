@@ -6,6 +6,7 @@ import {CategoryHttpService} from 'src/app/services/category.http.service';
 import {Router} from '@angular/router';
 import {CategoryDeleteDialogComponent} from './delete-dialog/delete-dialog.component';
 import {Path} from 'src/app/app-routing.module';
+import {DEC_FORMAT} from 'src/app/utils/constants';
 
 @Component({
   selector: 'tm-categories-page',
@@ -13,6 +14,8 @@ import {Path} from 'src/app/app-routing.module';
   styleUrls: ['./categories-page.component.scss']
 })
 export class CategoriesPageComponent implements OnInit {
+
+  readonly DEC_FORMAT = DEC_FORMAT;
 
   tableData: TableData<Category>;
   dialogConfig = new CategoryDeleteDialogComponent.Config();

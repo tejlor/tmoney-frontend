@@ -1,6 +1,7 @@
 import {formatNumber} from '@angular/common';
 import {Directive, ElementRef, HostListener, Input} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
+import {DEC_FORMAT} from 'src/app/utils/constants';
 
 @Directive({
   selector: '[tmNumeric]'
@@ -49,7 +50,7 @@ export class NumericDirective  {
   }
 
   private formatValueAsAmount(value: number): string {
-    return formatNumber(value, 'pl-PL', '1.2-2');
+    return formatNumber(value, 'pl-PL', DEC_FORMAT);
   }
 
 }

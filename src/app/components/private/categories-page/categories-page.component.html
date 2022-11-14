@@ -41,7 +41,7 @@
         <td class="w3-center-align"><tm-yes-no-icon [value]="category.report"></tm-yes-no-icon></td>
         <td>{{category.defaultName}}</td>
         <td class="w3-right-align" [ngClass]="{'w3-text-red': category.defaultAmount < 0, 'w3-text-green': category.defaultAmount > 0}">
-          {{category.defaultAmount | number: '1.2-2'}}</td>
+          {{category.defaultAmount | number: DEC_FORMAT}}</td>
         <td>{{category.defaultDescription}}</td>
         <td class="w3-center-align"><i class="fa-solid fa-trash-can" (click)="onDeleteClick($event, category)"></i></td>
       </tr>

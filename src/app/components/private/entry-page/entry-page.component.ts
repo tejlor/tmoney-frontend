@@ -10,6 +10,8 @@ import {Entry} from 'src/app/model/entry';
 import {AccountHttpService} from 'src/app/services/account.http.service';
 import {CategoryHttpService} from 'src/app/services/category.http.service';
 import {EntryHttpService} from 'src/app/services/entry.http.service';
+import {DEC_FORMAT} from 'src/app/utils/constants';
+import {stringToNumber} from 'src/app/utils/utils';
 import {BaseFormComponent} from '../../common/base-form.component';
 
 @Component({
@@ -119,7 +121,7 @@ export class EntryPageComponent extends BaseFormComponent {
       [this.DATE]: entry.date,
       [this.NAME]: entry.name,
       [this.SIGN]: Math.sign(entry.amount) ?? 1,
-      [this.AMOUNT]: entry.amount !== undefined ? formatNumber(Math.abs(entry.amount), 'pl-PL', '1.2-2') : '',
+      [this.AMOUNT]: entry.amount !== undefined ? formatNumber(Math.abs(entry.amount), 'pl-PL', DEC_FORMAT) : '',
       [this.DESCRIPTION]: entry.description
     });
   }
@@ -130,8 +132,8 @@ export class EntryPageComponent extends BaseFormComponent {
     entry.id = this.controlValue(this.ID);
     entry.category = this.controlValue(this.CATEGORY) as Category;
     entry.date = this.controlValue(this.DATE);
-    entry.name = this.controlValue(this.DATE);
-    entry.amount = Number((this.controlValue(this.AMOUNT) as string).replace(',', '.')) * this.controlValue(this.SIGN);
+    entry.name = this.controlValue(this.NAME);
+    entry.amount = stringToNumber(this.controlValue(this.AMOUNT)) * this.controlValue(this.SIGN);
     entry.description = this.controlValue(this.DESCRIPTION);
     return entry;
   }

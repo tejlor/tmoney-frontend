@@ -9,7 +9,6 @@ import {BaseInput} from '../base-input/base-input';
 })
 export class InputTextComponent extends BaseInput {
   @Input() label: string;
-  @Input() name: string;
   @Input() labelStyle: object;
   @Input() control: AbstractControl;
 }

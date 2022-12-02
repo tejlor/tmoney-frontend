@@ -59,6 +59,10 @@ table.calendar {
       background-color: themeBlue(8);
     }
 
+    &.today {
+      background-color: themeGreen(6);
+    }
+
     &.day {
       cursor: pointer;
 

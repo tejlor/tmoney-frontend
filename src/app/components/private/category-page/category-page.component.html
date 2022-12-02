@@ -15,7 +15,7 @@
         <input type="hidden" [formControlName]="ACCOUNT" />
       </div>
       <tm-input-radio-group label="Do raportów:" [control]="control(REPORT)" [options]="reportOptions"></tm-input-radio-group>
-      <tm-input-text label="Domyślna kwota:" [control]="control(DEFAULT_AMOUNT)"></tm-input-text>
+      <tm-input-number label="Domyślna kwota:" [control]="control(DEFAULT_AMOUNT)" tmDecimal></tm-input-number>
       <tm-input-text label="Domyślna nazwa:" [control]="control(DEFAULT_NAME)"></tm-input-text>
       <tm-textarea label="Domyślny opis:" [control]="control(DEFAULT_DESCRIPTION)"></tm-textarea>
       <div>

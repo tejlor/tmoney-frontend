@@ -37,7 +37,7 @@ export class OAuthService {
       next: token => {
         this.token = token;
         result.next(true);
-      }, 
+      },
       error: () => result.next(false)
     });
     return result;

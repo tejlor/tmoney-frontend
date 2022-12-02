@@ -10,6 +10,5 @@ import {BaseInput} from '../base-input/base-input';
 export class InputPasswordComponent extends BaseInput {
   @Input() label: string;
   @Input() labelStyle: object;
-  @Input() name: string;
   @Input() control: AbstractControl;
 }

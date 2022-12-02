@@ -4,9 +4,9 @@ import {AbstractControl} from '@angular/forms';
 import {DEC_FORMAT} from 'src/app/utils/constants';
 
 @Directive({
-  selector: '[tmNumeric]'
+  selector: '[tmDecimal]'
 })
-export class NumericDirective  {
+export class DecimalDirective  {
 
   @Input() formControl: AbstractControl;
 
@@ -23,7 +23,7 @@ export class NumericDirective  {
 
   @HostListener('input', ['$event.target.value'])
   onInput(value: string) {
-    this.value = value.replace(/[^0-9,\-]/g, '');
+    this.value = value.replace(/[^0-9,]/g, '');
   }
 
   @HostListener('blur')
@@ -46,7 +46,7 @@ export class NumericDirective  {
   }
 
   private unFormatValue() {
-    this.value = this.value.replace(/[^0-9,\-]/g, '') ?? '';
+    this.value = this.value.replace(/[^0-9,]/g, '') ?? '';
   }
 
   private formatValueAsAmount(value: number): string {

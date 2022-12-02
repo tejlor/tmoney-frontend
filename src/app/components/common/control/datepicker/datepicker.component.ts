@@ -1,5 +1,6 @@
 import {Component, ElementRef, EventEmitter, HostListener, Output} from '@angular/core';
 import * as moment from 'moment';
+import {DATE_FORMAT} from 'src/app/utils/constants';
 import {firstUpperCase} from 'src/app/utils/utils';
 
 @Component({
@@ -15,6 +16,7 @@ export class DatepickerComponent {
   readonly monthNames = moment.months().map(m => firstUpperCase(m));
 
   selectedDate: moment.Moment;
+  today: moment.Moment;
   currentDate: moment.Moment;
   currentDay: number;
   currentMonth: number;
@@ -23,6 +25,7 @@ export class DatepickerComponent {
   visible: boolean;
 
   constructor(private el: ElementRef) {;
+    this.today = moment().startOf('day');
     this.currentDate = moment().startOf('month');
     this.recalculate();
   }
@@ -36,9 +39,9 @@ export class DatepickerComponent {
   }
 
   show(value: string) {
-    this.selectedDate = value ? moment(value, 'YYYY-MM-DD') : null;
+    this.selectedDate = value ? moment(value, DATE_FORMAT) : null;
     this.currentDate = this.selectedDate
-      ? this.selectedDate.startOf('month')
+      ? moment(this.selectedDate).startOf('month')
       : moment().startOf('month');
     this.recalculate();
     this.visible = true;

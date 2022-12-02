@@ -16,23 +16,25 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
   private catch(error: HttpErrorResponse): Observable<any> {
     let msg = '';
-      
+
     switch(error.status) {
       case 400:
-        msg = 'Przesłano błędne dane';
+        msg = '400 -Przesłano błędne dane';
         break;
-      case 401: 
+      case 401:
+        msg = '401 - Nie posiadasz uparwnień do wykonania tej akcji';
+        break;
       case 403:
-        msg = 'Nie posiadasz uparwnień do wykonania tej akcji'; 
+        msg = '403 - Nie posiadasz uparwnień do wykonania tej akcji';
         break;
-      case 404: 
-        msg = 'Nie odnaleziono danych';
+      case 404:
+        msg = '404 - Nie odnaleziono danych';
         break;
       case 500:
-        msg = 'Wystąpił nieoczekiwany bład na serwerze';
+        msg = '500 - Wystąpił nieoczekiwany bład na serwerze';
         break;
       default:
-        msg = `Wystapił nieznany kod statusu odpowiedzi: ${error.status} - ${error.statusText}`;
+        msg = `Wystąpił nieznany kod statusu odpowiedzi: ${error.status} - ${error.statusText}`;
     }
 
     if (msg) {
@@ -43,6 +45,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   }
 
   private handleError(msg: string) {
-    console.log(msg);
+    console.error(msg);
+    throw msg;
   }
 }

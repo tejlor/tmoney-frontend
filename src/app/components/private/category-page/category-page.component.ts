@@ -5,9 +5,11 @@ import {Category} from 'src/app/model/category';
 import {Account} from 'src/app/model/account';
 import {AccountHttpService} from 'src/app/services/account.http.service';
 import {CategoryHttpService} from 'src/app/services/category.http.service';
-import {bit} from 'src/app/utils/utils';
+import {bit, stringToNumber} from 'src/app/utils/utils';
 import {Path} from 'src/app/app-routing.module';
 import {BaseFormComponent} from '../../common/base-form.component';
+import {DEC_FORMAT} from 'src/app/utils/constants';
+import {formatNumber} from '@angular/common';
 
 @Component({
   selector: 'tm-category-page',
@@ -94,7 +96,7 @@ export class CategoryPageComponent extends BaseFormComponent {
       [this.NAME]: category.name,
       [this.ACCOUNT]: category.account,
       [this.REPORT]: category.report,
-      [this.DEFAULT_AMOUNT]: category.defaultAmount,
+      [this.DEFAULT_AMOUNT]: category.defaultAmount !== undefined ? formatNumber(category.defaultAmount, 'pl-PL', DEC_FORMAT) : '',
       [this.DEFAULT_NAME]: category.defaultName,
       [this.DEFAULT_DESCRIPTION]: category.defaultDescription
     });
@@ -106,7 +108,7 @@ export class CategoryPageComponent extends BaseFormComponent {
     category.name = this.controlValue(this.NAME);
     category.account = this.readAccountInputsValue();
     category.report = this.controlValue(this.REPORT);
-    category.defaultAmount = this.controlValue(this.DEFAULT_AMOUNT);
+    category.defaultAmount = stringToNumber(this.controlValue(this.DEFAULT_AMOUNT));
     category.defaultName = this.controlValue(this.DEFAULT_NAME);
     category.defaultDescription = this.controlValue(this.DEFAULT_DESCRIPTION);
 

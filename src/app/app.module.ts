@@ -39,7 +39,7 @@ import {AccountBadgesComponent} from './components/common/control/account-badges
 import {DatepickerComponent} from './components/common/control/datepicker/datepicker.component';
 import {DatepickerDirective} from './components/common/directive/datepicker.directive';
 import {InputNumberComponent} from './components/common/form/input-number/input-number.component';
-import {NumericDirective} from './components/common/directive/numeric.directive';
+import {DecimalDirective} from './components/common/directive/decimal.directive';
 import {InputRadioGroupComponent} from './components/common/form/input-radio-group/input-radio-group.component';
 
 
@@ -84,7 +84,7 @@ function init(oauthService: OAuthService): () => Promise<void> {
     AccountBadgesComponent,
     DatepickerComponent,
     DatepickerDirective,
-    NumericDirective
+    DecimalDirective
   ],
   imports: [
     BrowserModule,

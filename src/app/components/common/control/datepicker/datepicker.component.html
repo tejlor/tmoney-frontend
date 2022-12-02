@@ -19,7 +19,8 @@
             'sunday': day.isoWeekday() === 7, 
             'saturday': day.isoWeekday() === 6, 
             'other-month': day.month() !== currentMonth,
-            'selected': day.isSame(selectedDate)
+            'selected': day.isSame(selectedDate),
+            'today': day.isSame(today)
           }"  
           (click)="onDayClick(day)"
         >

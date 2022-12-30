@@ -33,6 +33,10 @@ export class EntryHttpService extends HttpService {
       .pipe(map(result => this.deserialize(result)));
   }
 
+  remove(entryId: number): Observable<Entry> {
+    return this.delete(`${this.baseUrl}/${entryId}`);
+  }
+
   saveOrUpdate(entry: Entry): Observable<Entry> {
     return entry.id ? this.update(entry) : this.save(entry);
   }

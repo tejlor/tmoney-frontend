@@ -100,18 +100,23 @@ export class EntryPageComponent extends BaseFormComponent {
   }
 
   private fillDefaultCategoryValues(category: Category) {
-    if (!this.controlValue(this.NAME)) {
+    if (!this.controlValue(this.NAME) && category.defaultName) {
       this.control(this.NAME).setValue(category.defaultName);
     }
-    if (!this.controlValue(this.AMOUNT)) {
+    if (!this.controlValue(this.AMOUNT) && category.defaultAmount) {
       this.control(this.SIGN).setValue(Math.sign(category.defaultAmount));
       if (Math.abs(category.defaultAmount) !== 1) {
-        this.control(this.AMOUNT).setValue(Math.abs(category.defaultAmount));
+        const value = this.formatValueAsAmount(Math.abs(category.defaultAmount));
+        this.control(this.AMOUNT).setValue(value);
       }
     }
-    if (!this.controlValue(this.DESCRIPTION)) {
+    if (!this.controlValue(this.DESCRIPTION) && category.defaultDescription) {
       this.control(this.DESCRIPTION).setValue(category.defaultDescription);
     }
+  }
+
+  private formatValueAsAmount(value: number): string {
+    return formatNumber(value, 'pl-PL', DEC_FORMAT);
   }
 
   private fillForm(entry: Entry): void {

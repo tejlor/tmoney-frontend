@@ -9,6 +9,7 @@ import { TableParams } from 'src/app/model/tableParams';
 import {DialogConfig} from '../../common/dialog/dialog.component';
 import {Path} from 'src/app/app-routing.module';
 import {DEC_FORMAT} from 'src/app/utils/constants';
+import {filter} from 'rxjs';
 
 @Component({
   selector: 'tm-entries-page',
@@ -45,7 +46,7 @@ export class EntriesPageComponent implements OnInit {
     else {
       this.account = Account.summary();
     }
-    console.log(this.route.snapshot.queryParams);
+
     this.tableParams = new TableParams();
     this.tableParams.pageNo = this.queryParam('pageNo') ?? 0;
     this.tableParams.pageSize = this.queryParam('pageSize') ?? 10;
@@ -55,8 +56,11 @@ export class EntriesPageComponent implements OnInit {
     this.reloadTableRows();
   }
 
-  search(filterText: string) {
-    this.tableParams.filter = filterText;
+  search(filterText: any) {
+    if (typeof(filterText) !== 'string') {
+      return;
+    }
+    this.tableParams.filter = filterText as string;
     this.router.navigate([], {
       queryParams: {filterText},
       queryParamsHandling: 'merge'
@@ -86,10 +90,13 @@ export class EntriesPageComponent implements OnInit {
     this.router.navigateByUrl(Path.entry(entry.account.code, entry.id));
   }
 
-  onRemoveEntryClick(entry:Entry): void {
+  onRemoveEntryClick($event: MouseEvent, entry:Entry): void {
+    $event.stopPropagation();
     this.dialogConfig = DialogConfig.confirmation('Uwaga', `Czy na pewno chcesz usunąć wpis ${entry.name}?`,
       () => {
-        console.log('delete ' + entry.id);
+        this.entryService.remove(entry.id).subscribe(() => {
+          this.reloadTableRows();
+        });
       });
   }
 

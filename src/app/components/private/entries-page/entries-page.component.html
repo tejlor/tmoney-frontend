@@ -45,7 +45,7 @@
           <td class="w3-right-align" [ngClass]="{'w3-text-red': entry.amount < 0, 'w3-text-green': entry.amount > 0}">
             {{entry.amount | number: DEC_FORMAT}}</td>
           <td class="w3-right-align">{{entry.balance | number: DEC_FORMAT}}</td>
-          <td class="w3-center-align"><i class="fa-solid fa-trash-can" (click)="onRemoveEntryClick(entry)"></i></td>
+          <td class="w3-center-align"><i class="fa-solid fa-trash-can" (click)="onRemoveEntryClick($event, entry)"></i></td>
         </tr>
       </tbody>
     </table>

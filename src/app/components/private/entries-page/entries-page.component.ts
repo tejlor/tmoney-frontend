@@ -92,7 +92,7 @@ export class EntriesPageComponent implements OnInit {
 
   onRemoveEntryClick($event: MouseEvent, entry:Entry): void {
     $event.stopPropagation();
-    this.dialogConfig = DialogConfig.confirmation('Uwaga', `Czy na pewno chcesz usunąć wpis ${entry.name}?`,
+    this.dialogConfig = DialogConfig.confirmation('Uwaga', `Czy na pewno chcesz usunąć wpis "${entry.name}"?`,
       () => {
         this.entryService.remove(entry.id).subscribe(() => {
           this.reloadTableRows();

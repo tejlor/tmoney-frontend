@@ -140,6 +140,8 @@ export class EntryPageComponent extends BaseFormComponent {
     entry.name = this.controlValue(this.NAME);
     entry.amount = stringToNumber(this.controlValue(this.AMOUNT)) * this.controlValue(this.SIGN);
     entry.description = this.controlValue(this.DESCRIPTION);
+    entry.balance = 0;
+    entry.balanceOverall = 0;
     return entry;
   }
 }

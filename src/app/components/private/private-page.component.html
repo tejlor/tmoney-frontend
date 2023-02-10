@@ -6,8 +6,8 @@
     <p class="w3-text-grey">by Tejlor OLAWA</p>
   </div>
   <div class="w3-bar-block">
-    <a [routerLink]="Path.dashboard" class="w3-bar-item w3-button"><i class="fa-solid fa-money-check-dollar"></i>Dashboard</a> 
-    <a [routerLink]="Path.categories" class="w3-bar-item w3-button"><i class="fa-solid fa-table"></i>Kategorie</a> 
+    <a [routerLink]="Path.dashboard" (click)="closeMenu()" class="w3-bar-item w3-button"><i class="fa-solid fa-money-check-dollar"></i>Dashboard</a> 
+    <a [routerLink]="Path.categories" (click)="closeMenu()" class="w3-bar-item w3-button"><i class="fa-solid fa-table"></i>Kategorie</a> 
     <a (click)="updateBalances()" class="w3-bar-item w3-button"><i class="fa-solid fa-calculator"></i>Przelicz salda</a> 
     <a (click)="generateSummaryPdf()" class="w3-bar-item w3-button"><i class="fa-solid fa-calculator"></i>Generuj PDF</a> 
     <a (click)="generateReportPdf()" class="w3-bar-item w3-button"><i class="fa-solid fa-calculator"></i>Generuj Raport</a> 
@@ -19,7 +19,7 @@
 <span class="w3-button w3-xxlarge tm-mobile" (click)="openMenu()">
   <i class="fa fa-bars"></i>
 </span>
-<a href="#" class="logo">
+<a [routerLink]="Path.dashboard" class="logo">
   <img src="/assets/tmoney-logo.png" class="w3-circle w3-right w3-hover-opacity tm-mobile">
 </a>
 

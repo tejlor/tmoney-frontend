@@ -23,34 +23,32 @@ export class DecimalDirective  {
 
   @HostListener('input', ['$event.target.value'])
   onInput(value: string) {
-    this.value = value.replace(/[^0-9,]/g, '');
+    this.value = this.unformatValue(value);
   }
 
   @HostListener('blur')
   onBlur() {
-    this.formatValue();
+    this.value = this.formatValue(this.value);
   }
 
   @HostListener('focus')
   onFocus() {
-    this.unFormatValue();
+    this.value = this.unformatValue(this.value);
   }
 
-  private formatValue() {
-    if (this.value) {
-      this.value = this.formatValueAsAmount(Number(this.value.replace(',','.')));
+  private formatValue(value: string): string {
+    if (!value) {
+      return '';
     }
-    else {
-      this.value = '';
-    }
-  }
-
-  private unFormatValue() {
-    this.value = this.value.replace(/[^0-9,]/g, '') ?? '';
+    return this.formatValueAsAmount(Number(value.replace(',','.')));
   }
 
   private formatValueAsAmount(value: number): string {
     return formatNumber(value, 'pl-PL', DEC_FORMAT);
+  }
+
+  private unformatValue(value: string): string {
+    return value.replace(/[^0-9,-]/g, '') ?? '';
   }
 
 }

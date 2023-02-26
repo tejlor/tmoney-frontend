@@ -4,8 +4,7 @@ import {BaseInput} from '../base-input/base-input';
 
 @Component({
   selector: 'tm-textarea',
-  templateUrl: './textarea.component.html',
-  styleUrls: ['./textarea.component.scss']
+  templateUrl: './textarea.component.html'
 })
 export class TextareaComponent extends BaseInput {
   @Input() label: string;

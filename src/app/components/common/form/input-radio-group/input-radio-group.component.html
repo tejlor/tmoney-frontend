@@ -1,5 +1,5 @@
 <p>
-  <label class="main" [ngStyle]="labelStyle" [ngClass]="{'tm-text-blue': !labelStyle}">{{label}}</label>
+  <label class="main" [ngStyle]="labelStyle" [ngClass]="{'tm-text-blue': !labelStyle}">{{label}}{{formControl.isRequired() ? '*' : ''}}:</label>
   <br>
   <ng-container *ngFor="let option of options">
     <tm-input-radio [control]="formControl" [value]="option.value" [label]="option.label"></tm-input-radio>

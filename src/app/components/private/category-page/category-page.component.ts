@@ -52,7 +52,7 @@ export class CategoryPageComponent extends BaseFormComponent {
       [this.DEFAULT_DESCRIPTION]
     ]);
 
-    this.accountService.getActive().subscribe(accounts => {
+    this.accountService.getAll(true).subscribe(accounts => {
       this.accounts = [];
       for (let account of accounts) {
         let pos = account.orderNo.split('.');

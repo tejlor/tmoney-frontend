@@ -1,7 +1,9 @@
-import {AsyncValidatorFn, FormControl, FormControlOptions, ValidatorFn} from "@angular/forms";
+import {AsyncValidatorFn, FormControl, FormControlOptions, ValidatorFn, Validators} from "@angular/forms";
 
 export class TFormControl extends FormControl {
+
   name: string;
+  required: boolean;
 
   constructor(
       name: string,
@@ -11,5 +13,9 @@ export class TFormControl extends FormControl {
 
     super(formState, validatorOrOpts, asyncValidator);
     this.name = name;
+  }
+
+  isRequired(): boolean {
+    return this.hasValidator(Validators.required);
   }
 }

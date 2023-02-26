@@ -38,6 +38,8 @@ export class DashboardPageComponent implements OnInit {
 
       const lastEntry = array.reduce((prev, curr) => prev.entry.compareTo(curr.entry) > 0 ? prev : curr).entry;
       this.summary = new AccountSummary(account, lastEntry);
+
+      console.log(this.items);
     });
   }
 }

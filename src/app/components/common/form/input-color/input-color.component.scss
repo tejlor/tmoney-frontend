@@ -1,0 +1,19 @@
+@import '/src/styles/variables.scss';
+
+span.input {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+  span.tester {
+    width: 45px;
+    text-align: center;
+    border-right: none;
+    border-radius: 0px 5px 5px 0px;
+  }
+
+  input {
+    border: none;
+    background-color: transparent;
+  }
+}

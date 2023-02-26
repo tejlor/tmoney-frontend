@@ -9,6 +9,7 @@ export class Account extends AbstractDto {
 	darkColor: string;
 	orderNo: string;
 	icon: string;
+	logo: string;
 
 	static summary() {
 		const account = new Account();

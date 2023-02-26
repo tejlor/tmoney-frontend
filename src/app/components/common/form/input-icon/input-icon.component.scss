@@ -1,0 +1,20 @@
+@import '/src/styles/variables.scss';
+
+span.input {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+  span.tester {
+    padding: 12px 12px 0px 12px;
+    text-align: center;
+    border-right: none;
+    border-radius: 0px 5px 5px 0px;
+    background: themeBlue(8);
+  }
+
+  input {
+    border: none;
+    background-color: transparent;
+  }
+}

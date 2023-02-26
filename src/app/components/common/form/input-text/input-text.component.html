@@ -1,5 +1,5 @@
 <p>
-  <label class="main" [ngStyle]="labelStyle" [ngClass]="{'tm-text-blue': !labelStyle}">{{label}}</label>
+  <label class="main" [ngStyle]="labelStyle" [ngClass]="{'tm-text-blue': !labelStyle}">{{label}}{{formControl.isRequired() ? '*' : ''}}:</label>
   <input type="text" [name]="formControl.name" [formControl]="formControl" class="w3-input w3-border w3-round" [ngClass]="{'w3-pale-red w3-border-red': isInvalid()}">
   <span *ngIf="isInvalid()" class="w3-text-red w3-small">{{getErrorMessage()}}</span>
 </p>

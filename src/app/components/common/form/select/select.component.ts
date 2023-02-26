@@ -4,8 +4,7 @@ import {BaseInput} from '../base-input/base-input';
 
 @Component({
   selector: 'tm-select',
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss']
+  templateUrl: './select.component.html'
 })
 export class SelectComponent extends BaseInput {
   @Input() label: string;

@@ -7,11 +7,13 @@
   </div>
   <div class="w3-bar-block">
     <a [routerLink]="Path.dashboard" (click)="closeMenu()" class="w3-bar-item w3-button"><i class="fa-solid fa-money-check-dollar"></i>Dashboard</a> 
+    <a [routerLink]="Path.accounts" (click)="closeMenu()" class="w3-bar-item w3-button"><i class="fa-solid fa-table"></i>Konta</a> 
     <a [routerLink]="Path.categories" (click)="closeMenu()" class="w3-bar-item w3-button"><i class="fa-solid fa-table"></i>Kategorie</a> 
     <a (click)="updateBalances()" class="w3-bar-item w3-button"><i class="fa-solid fa-calculator"></i>Przelicz salda</a> 
     <a (click)="generateSummaryPdf()" class="w3-bar-item w3-button"><i class="fa-solid fa-calculator"></i>Generuj PDF</a> 
     <a (click)="generateReportPdf()" class="w3-bar-item w3-button"><i class="fa-solid fa-calculator"></i>Generuj Raport</a> 
   </div>
+  <footer class="w3-container w3-margin-top">Wersja: {{version}}</footer>
 </nav>
 
 <div #overlay class="w3-overlay w3-animate-opacity tm-mobile" (click)="closeMenu()"></div>

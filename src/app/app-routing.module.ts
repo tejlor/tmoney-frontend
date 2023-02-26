@@ -10,6 +10,8 @@ import {PrivatePageComponent} from './components/private/private-page.component'
 import {PublicPageComponent} from './components/public/public-page.component';
 import {EntriesPageComponent} from './components/private/entries-page/entries-page.component';
 import {W3Component} from './components/w3/w3.component';
+import {AccountsPageComponent} from './components/private/accounts-page/accounts-page.component';
+import {AccountPageComponent} from './components/private/account-page/account-page.component';
 
 const routes: Routes = [
   {
@@ -30,6 +32,9 @@ const routes: Routes = [
       { path: 'entries/:code', component: EntriesPageComponent },
       { path: 'entry/:code/:id', component: EntryPageComponent },
       { path: 'entry/:code', component: EntryPageComponent },
+      { path: 'accounts', component: AccountsPageComponent },
+      { path: 'account', component: AccountPageComponent },
+      { path: 'account/:id', component: AccountPageComponent },
       { path: 'categories', component: CategoriesPageComponent },
       { path: 'category', component: CategoryPageComponent },
       { path: 'category/:id', component: CategoryPageComponent },
@@ -43,8 +48,12 @@ export const Path = {
   login: 'public/login',
 
   dashboard: '/private/dashboard',
+
   categories: '/private/categories',
   category: (id: number) => `/private/category/${id ?? ''}`,
+
+  accounts: '/private/accounts',
+  account: (id: number) => `/private/account/${id ?? ''}`,
 
   entries: (code: string) => `/private/entries/${code ?? ''}`,
   entry: (code: string, id?: number) => `/private/entry/${code}/${id ?? ''}`

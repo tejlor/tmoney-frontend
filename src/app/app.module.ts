@@ -41,6 +41,15 @@ import {DatepickerDirective} from './components/common/directive/datepicker.dire
 import {InputNumberComponent} from './components/common/form/input-number/input-number.component';
 import {DecimalDirective} from './components/common/directive/decimal.directive';
 import {InputRadioGroupComponent} from './components/common/form/input-radio-group/input-radio-group.component';
+import {AccountPageComponent} from './components/private/account-page/account-page.component';
+import {AccountsPageComponent} from './components/private/accounts-page/accounts-page.component';
+import {AccountColorsComponent} from './components/common/control/account-colors/account-colors.component';
+import {FaIconComponent} from './components/common/control/fa-icon/fa-icon.component';
+import {InputCheckComponent} from './components/common/form/input-check/input-check.component';
+import {InputColorComponent} from './components/common/form/input-color/input-color.component';
+import {InputIconComponent} from './components/common/form/input-icon/input-icon.component';
+import {InputFileComponent} from './components/common/form/input-file/input-file.component';
+import {FileValueAccessor} from './components/common/form/input-file/input-file.directive';
 
 
 function init(oauthService: OAuthService): () => Promise<void> {
@@ -84,7 +93,16 @@ function init(oauthService: OAuthService): () => Promise<void> {
     AccountBadgesComponent,
     DatepickerComponent,
     DatepickerDirective,
-    DecimalDirective
+    DecimalDirective,
+    AccountPageComponent,
+    AccountsPageComponent,
+    AccountColorsComponent,
+    FaIconComponent,
+    InputCheckComponent,
+    InputColorComponent,
+    InputIconComponent,
+    InputFileComponent,
+    FileValueAccessor
   ],
   imports: [
     BrowserModule,

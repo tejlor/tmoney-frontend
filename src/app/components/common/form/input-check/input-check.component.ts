@@ -3,10 +3,10 @@ import {AbstractControl} from '@angular/forms';
 import {BaseInput} from '../base-input/base-input';
 
 @Component({
-  selector: 'tm-textarea',
-  templateUrl: './textarea.component.html'
+  selector: 'tm-input-check',
+  templateUrl: './input-check.component.html'
 })
-export class TextareaComponent extends BaseInput {
+export class InputCheckComponent extends BaseInput {
   @Input() label: string;
   @Input() labelStyle: object;
   @Input() control: AbstractControl;

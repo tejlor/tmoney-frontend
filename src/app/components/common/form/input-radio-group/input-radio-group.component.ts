@@ -4,8 +4,7 @@ import {BaseInput} from '../base-input/base-input';
 
 @Component({
   selector: 'tm-input-radio-group',
-  templateUrl: './input-radio-group.component.html',
-  styleUrls: ['./input-radio-group.component.scss']
+  templateUrl: './input-radio-group.component.html'
 })
 export class InputRadioGroupComponent extends BaseInput {
   @Input() control: AbstractControl;

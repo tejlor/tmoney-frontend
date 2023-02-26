@@ -26,7 +26,7 @@ export class AccountService {
 
     this.activeAccounts$ = this._activeAccounts$.asObservable();
 
-    this.accountHttpSevice.getActive().subscribe(accounts =>
+    this.accountHttpSevice.getAll(false).subscribe(accounts =>
       this.activeAccounts = accounts
     );
   }

@@ -4,8 +4,7 @@ import {BaseInput} from '../base-input/base-input';
 
 @Component({
   selector: 'tm-input-number',
-  templateUrl: './input-number.component.html',
-  styleUrls: ['./input-number.component.scss']
+  templateUrl: './input-number.component.html'
 })
 export class InputNumberComponent extends BaseInput {
   @Input() label: string;

@@ -3,11 +3,16 @@ import {AbstractControl} from '@angular/forms';
 import {BaseInput} from '../base-input/base-input';
 
 @Component({
-  selector: 'tm-textarea',
-  templateUrl: './textarea.component.html'
+  selector: 'tm-input-icon',
+  templateUrl: './input-icon.component.html',
+  styleUrls: ['./input-icon.component.scss']
 })
-export class TextareaComponent extends BaseInput {
+export class InputIconComponent extends BaseInput {
   @Input() label: string;
   @Input() labelStyle: object;
   @Input() control: AbstractControl;
+
+  getIconClass() {
+    return this.formControl.value as string;
+  }
 }

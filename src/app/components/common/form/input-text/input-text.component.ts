@@ -4,8 +4,7 @@ import {BaseInput} from '../base-input/base-input';
 
 @Component({
   selector: 'tm-input-text',
-  templateUrl: './input-text.component.html',
-  styleUrls: ['./input-text.component.scss']
+  templateUrl: './input-text.component.html'
 })
 export class InputTextComponent extends BaseInput {
   @Input() label: string;

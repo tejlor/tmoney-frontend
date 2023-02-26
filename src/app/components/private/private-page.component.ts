@@ -2,6 +2,7 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {EntryHttpService} from 'src/app/services/entry.http.service';
 import {Path} from 'src/app/app-routing.module';
 import {ReportHttpService} from 'src/app/services/report.http.service';
+import packageInfo from 'package.json';
 
 @Component({
   selector: 'tm-private-page',
@@ -11,6 +12,7 @@ import {ReportHttpService} from 'src/app/services/report.http.service';
 export class PrivatePageComponent {
 
   readonly Path = Path;
+  readonly version = packageInfo.version;
 
   @ViewChild('overlay') overlay: ElementRef;
   @ViewChild('nav') nav: ElementRef;

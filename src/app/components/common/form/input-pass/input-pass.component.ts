@@ -4,8 +4,7 @@ import {BaseInput} from '../base-input/base-input';
 
 @Component({
   selector: 'tm-input-pass',
-  templateUrl: './input-pass.component.html',
-  styleUrls: ['./input-pass.component.scss']
+  templateUrl: './input-pass.component.html'
 })
 export class InputPasswordComponent extends BaseInput {
   @Input() label: string;

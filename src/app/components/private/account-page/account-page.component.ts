@@ -52,9 +52,9 @@ export class AccountPageComponent extends BaseFormComponent {
       [this.LOGO]
     ]);
 
-    let accountId = route.snapshot.params['id'];
-    if (accountId) {
-      this.accountService.getById(accountId).subscribe(account => {
+    let accountCode = route.snapshot.params['code'];
+    if (accountCode) {
+      this.accountService.getByCode(accountCode).subscribe(account => {
         this.account = account;
         this.fillForm(account);
       });

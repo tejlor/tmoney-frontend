@@ -34,7 +34,7 @@ const routes: Routes = [
       { path: 'entry/:code', component: EntryPageComponent },
       { path: 'accounts', component: AccountsPageComponent },
       { path: 'account', component: AccountPageComponent },
-      { path: 'account/:id', component: AccountPageComponent },
+      { path: 'account/:code', component: AccountPageComponent },
       { path: 'categories', component: CategoriesPageComponent },
       { path: 'category', component: CategoryPageComponent },
       { path: 'category/:id', component: CategoryPageComponent },
@@ -53,7 +53,7 @@ export const Path = {
   category: (id: number) => `/private/category/${id ?? ''}`,
 
   accounts: '/private/accounts',
-  account: (id: number) => `/private/account/${id ?? ''}`,
+  account: (code: string) => `/private/account/${code ?? ''}`,
 
   entries: (code: string) => `/private/entries/${code ?? ''}`,
   entry: (code: string, id?: number) => `/private/entry/${code}/${id ?? ''}`

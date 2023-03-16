@@ -1,5 +1,5 @@
-import {Component, ElementRef, QueryList, ViewChildren} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {Component, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {FormBuilder} from '@angular/forms';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Category} from 'src/app/model/category';
 import {Account} from 'src/app/model/account';
@@ -10,6 +10,7 @@ import {Path} from 'src/app/app-routing.module';
 import {BaseFormComponent} from '../../common/base-form.component';
 import {DEC_FORMAT} from 'src/app/utils/constants';
 import {formatNumber} from '@angular/common';
+import {SettingService} from 'src/app/services/setting.service';
 
 @Component({
   selector: 'tm-category-page',
@@ -32,13 +33,15 @@ export class CategoryPageComponent extends BaseFormComponent {
 
   category: Category;
   accounts: Account[][];
+  tags: string[];
 
   constructor(el: ElementRef,
               fb: FormBuilder,
               private router: Router,
               route: ActivatedRoute,
               private accountService: AccountHttpService,
-              private categoryService: CategoryHttpService) {
+              private categoryService: CategoryHttpService,
+              private settingService: SettingService) {
 
     super(el, fb);
 
@@ -72,6 +75,18 @@ export class CategoryPageComponent extends BaseFormComponent {
         this.fillForm(category);
       });
     }
+
+    this.settingService.settings.subscribe(settings => {
+      this.tags = settings.tags?.split(' ');
+    });
+  }
+
+  onTagClick(tag: string): void {
+    const textarea = document.getElementsByName(this.DEFAULT_DESCRIPTION)[0] as any;
+    const startPos = textarea.selectionStart;
+    const currentText = this.controlValue(this.DEFAULT_DESCRIPTION);
+    const newText = currentText.substring(0, startPos) + tag + currentText.substring(startPos, currentText.length);
+    this.control(this.DEFAULT_DESCRIPTION).setValue(newText);
   }
 
   onSaveAndGoBack(): void {

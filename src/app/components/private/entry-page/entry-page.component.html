@@ -10,7 +10,11 @@
     <tm-input-text label="Nazwa" [labelStyle]="labelStyle" [control]="control(NAME)"></tm-input-text>
     <tm-input-radio-group label="Typ" [labelStyle]="labelStyle" [control]="control(SIGN)" [options]="signOptions"></tm-input-radio-group>
     <tm-input-number label="Kwota" [labelStyle]="labelStyle" [control]="control(AMOUNT)"></tm-input-number>
-    <tm-textarea label="Opis" [labelStyle]="labelStyle" [control]="control(DESCRIPTION)"></tm-textarea>
+    <tm-textarea label="Opis" [labelStyle]="labelStyle" [control]="control(DESCRIPTION)">
+      <div class="tags">
+        <span *ngFor="let tag of tags" class="w3-tag w3-round" (click)="onTagClick(tag)">{{tag}}</span>
+      </div>
+    </tm-textarea>
   </form>
   <div>
     <button class="w3-btn" [ngStyle]="{'background-color': '#' + summary?.account.color, 'color': 'white'}" (click)="saveAndGoBack()">Zapisz i cofnij</button>

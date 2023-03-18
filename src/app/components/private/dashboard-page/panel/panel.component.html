@@ -1,16 +1,16 @@
-<div class="w3-card w3-text-white" [style.backgroundColor]="'#' + account.color" *ngIf="account && entry">
+<div class="w3-card w3-text-white" [style.backgroundColor]="'#' + account.color" *ngIf="account">
   <h2><i [class]="account.icon"></i> {{account.name}}</h2>
   <div class="w3-container">
     <div class="w3-row">
-      <p class="w3-col s6 date">{{entry.date}}</p>
-      <h3 class="w3-col s6">{{(account.code ? entry.balance : entry.balanceOverall)| number: DEC_FORMAT}} <span>PLN</span></h3>
+      <p class="w3-col s6 date">{{entry?.date}}</p>
+      <h3 class="w3-col s6">{{(account.code ? entry?.balance : entry?.balanceOverall)| number: DEC_FORMAT}} <span>PLN</span></h3>
     </div>
     <div class="w3-row last-transaction">
       <div class="w3-col m6">
-        {{entry.name}}
+        {{entry?.name}}
       </div>
-      <div class="w3-col m6 amount" [class]="{'red': entry.amount < 0, 'green': entry.amount > 0}">
-        {{entry.amount | number: DEC_FORMAT}}
+      <div class="w3-col m6 amount" [class]="{'red': entry?.amount < 0, 'green': entry?.amount > 0}">
+        {{entry?.amount | number: DEC_FORMAT}}
       </div>
     </div>
   </div>

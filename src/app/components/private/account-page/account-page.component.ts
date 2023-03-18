@@ -18,6 +18,7 @@ export class AccountPageComponent extends BaseFormComponent {
   readonly CODE = 'code';
   readonly NAME = 'name';
   readonly ACTIVE = 'active';
+  readonly INCLUDE_IN_SUMMARY = 'includeInSummary';
   readonly COLOR = 'color';
   readonly LIGHT_COLOR = 'lightColor';
   readonly DARK_COLOR = 'darkColor';
@@ -43,7 +44,8 @@ export class AccountPageComponent extends BaseFormComponent {
       [this.ID],
       [this.CODE, [Validators.required, Validators.maxLength(10), Validators.pattern(/[A-Z_]+/)]],
       [this.NAME, [Validators.required, Validators.maxLength(100)]],
-      [this.ACTIVE, Validators.required, this.onActiveChange.bind(this)],
+      [this.ACTIVE, true, this.onActiveChange.bind(this)],
+      [this.INCLUDE_IN_SUMMARY, true],
       [this.COLOR, Validators.pattern("[A-Z0-9]{6}")],
       [this.LIGHT_COLOR, Validators.pattern("[A-Z0-9]{6}")],
       [this.DARK_COLOR, Validators.pattern("[A-Z0-9]{6}")],
@@ -94,6 +96,7 @@ export class AccountPageComponent extends BaseFormComponent {
       [this.CODE]: account.code,
       [this.NAME]: account.name,
       [this.ACTIVE]: account.active,
+      [this.INCLUDE_IN_SUMMARY]: account.includeInSummary,
       [this.COLOR]: account.color,
       [this.LIGHT_COLOR]: account.lightColor,
       [this.DARK_COLOR]: account.darkColor,
@@ -109,6 +112,7 @@ export class AccountPageComponent extends BaseFormComponent {
     account.code = this.controlValue(this.CODE);
     account.name = this.controlValue(this.NAME);
     account.active = this.controlValue(this.ACTIVE);
+    account.includeInSummary = this.controlValue(this.INCLUDE_IN_SUMMARY);
     account.color = this.controlValue(this.COLOR);
     account.lightColor = this.controlValue(this.LIGHT_COLOR);
     account.darkColor = this.controlValue(this.DARK_COLOR);

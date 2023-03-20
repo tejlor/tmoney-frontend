@@ -3,13 +3,13 @@ import {Component, ElementRef} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Path} from 'src/app/app-routing.module';
-import {Account} from 'src/app/model/account';
 import {AccountSummary} from 'src/app/model/accountSummary';
 import {Category} from 'src/app/model/category';
 import {Entry} from 'src/app/model/entry';
 import {AccountHttpService} from 'src/app/services/account.http.service';
 import {CategoryHttpService} from 'src/app/services/category.http.service';
 import {EntryHttpService} from 'src/app/services/entry.http.service';
+import {SettingService} from 'src/app/services/setting.service';
 import {DEC_FORMAT} from 'src/app/utils/constants';
 import {stringToNumber} from 'src/app/utils/utils';
 import {BaseFormComponent} from '../../common/base-form.component';
@@ -36,14 +36,16 @@ export class EntryPageComponent extends BaseFormComponent {
   summary: AccountSummary;
   formGroup: FormGroup;
   labelStyle: object;
+  tags: string[];
 
   constructor(el: ElementRef,
               fb: FormBuilder,
+              route: ActivatedRoute,
               private router: Router,
-              private route: ActivatedRoute,
               private accountService: AccountHttpService,
               private categoryService: CategoryHttpService,
-              private entryService: EntryHttpService) {
+              private entryService: EntryHttpService,
+              private settingService: SettingService) {
 
     super(el, fb);
 
@@ -71,6 +73,18 @@ export class EntryPageComponent extends BaseFormComponent {
         this.fillForm(entry);
       });
     }
+
+    this.settingService.settings.subscribe(settings => {
+      this.tags = settings.tags?.split(' ');
+    });
+  }
+
+  onTagClick(tag: string): void {
+    const textarea = document.getElementsByName(this.DESCRIPTION)[0] as any;
+    const startPos = textarea.selectionStart;
+    const currentText = this.controlValue(this.DESCRIPTION);
+    const newText = currentText.substring(0, startPos) + tag + currentText.substring(startPos, currentText.length);
+    this.control(this.DESCRIPTION).setValue(newText);
   }
 
   saveAndGoBack(): void {

@@ -52,7 +52,7 @@ export class AccountsPageComponent implements OnInit {
   }
 
   onRowClick(account: Account): void {
-    this.router.navigateByUrl(Path.account(account.id));
+    this.router.navigateByUrl(Path.account(account.code));
   }
 
   private reloadTableRows() {

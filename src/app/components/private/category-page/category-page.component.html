@@ -17,7 +17,11 @@
       <tm-input-radio-group label="Do raportów" [control]="control(REPORT)" [options]="reportOptions"></tm-input-radio-group>
       <tm-input-number label="Domyślna kwota" [control]="control(DEFAULT_AMOUNT)" tmDecimal></tm-input-number>
       <tm-input-text label="Domyślna nazwa" [control]="control(DEFAULT_NAME)"></tm-input-text>
-      <tm-textarea label="Domyślny opis" [control]="control(DEFAULT_DESCRIPTION)"></tm-textarea>
+      <tm-textarea label="Domyślny opis" [control]="control(DEFAULT_DESCRIPTION)">
+        <div class="tags">
+          <span *ngFor="let tag of tags" class="w3-tag w3-round" (click)="onTagClick(tag)">{{tag}}</span>
+        </div>
+      </tm-textarea>
       <div>
         <button class="w3-btn w3-blue w3-border w3-border-blue" (click)="onSaveAndGoBack()">Zapisz i cofnij</button>
         &nbsp;

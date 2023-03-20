@@ -50,6 +50,7 @@ import {InputColorComponent} from './components/common/form/input-color/input-co
 import {InputIconComponent} from './components/common/form/input-icon/input-icon.component';
 import {InputFileComponent} from './components/common/form/input-file/input-file.component';
 import {FileValueAccessor} from './components/common/form/input-file/input-file.directive';
+import {AccountBalancingPageComponent} from './components/private/account-balancing-page/account-balancing-page.component';
 
 
 function init(oauthService: OAuthService): () => Promise<void> {
@@ -102,7 +103,8 @@ function init(oauthService: OAuthService): () => Promise<void> {
     InputColorComponent,
     InputIconComponent,
     InputFileComponent,
-    FileValueAccessor
+    FileValueAccessor,
+    AccountBalancingPageComponent
   ],
   imports: [
     BrowserModule,

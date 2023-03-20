@@ -3,6 +3,7 @@ import {plainToClassFromExist, plainToInstance} from "class-transformer";
 import {Observable, map} from "rxjs";
 import {Account} from "../model/account";
 import {AccountSummary} from "../model/accountSummary";
+import {BalanceRequest} from "../model/balanceRequest";
 import {TableData} from "../model/tableData";
 import {TableParams} from "../model/tableParams";
 import {HttpService} from "./http.service";
@@ -49,6 +50,10 @@ export class AccountHttpService extends HttpService {
 
   saveOrUpdate(account: Account): Observable<Account> {
     return account.id ? this.update(account) : this.save(account);
+  }
+
+  balance(request: BalanceRequest): Observable<any> {
+    return this.post(`${this.baseUrl}/${request.accountId}/balance`, request);
   }
 
   private deserialize(account: object): Account {

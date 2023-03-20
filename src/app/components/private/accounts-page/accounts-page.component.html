@@ -14,7 +14,8 @@
     <colgroup>
       <col width="5%">
       <col width="15%">
-      <col width="30%">
+      <col width="20%">
+      <col width="10%">
       <col width="10%">
       <col width="20%">
       <col width="10%">
@@ -26,6 +27,7 @@
         <th>Kod</th>
         <th>Nazwa</th>
         <th class="w3-center-align">Aktywne</th>
+        <th class="w3-center-align">Do podsumowania</th>
         <th>Kolory</th>
         <th class="w3-center-align">Pozycja</th>
         <th class="w3-center-align">Ikona</th>
@@ -37,6 +39,7 @@
         <td>{{account.code}}</td>
         <td>{{account.name}}</td>
         <td class="w3-center-align"><tm-yes-no-icon [value]="account.active"></tm-yes-no-icon></td>
+        <td class="w3-center-align"><tm-yes-no-icon [value]="account.includeInSummary"></tm-yes-no-icon></td>
         <td><tm-account-colors [account]="account"></tm-account-colors></td>
         <td class="w3-center-align">{{account.orderNo}}</td>
         <td class="w3-center-align"><tm-fa-icon [value]="account.icon"></tm-fa-icon></td>

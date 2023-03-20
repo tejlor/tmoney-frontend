@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AccountSummary} from 'src/app/model/accountSummary';
 import {Account} from 'src/app/model/account';
 import {AccountHttpService} from 'src/app/services/account.http.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'tm-dashboard-page',
@@ -36,10 +37,13 @@ export class DashboardPageComponent implements OnInit {
         icon: 'fa-solid fa-wallet'
       } as Account;
 
-      const lastEntry = array.reduce((prev, curr) => prev.entry.compareTo(curr.entry) > 0 ? prev : curr).entry;
-      this.summary = new AccountSummary(account, lastEntry);
+      const lastEntry = _.chain(array)
+        .filter(as => as.account.includeInSummary === true)
+        .map(as => as.entry)
+        .maxBy(entry => entry.date + ':' + entry.id)
+        .value();
 
-      console.log(this.items);
+      this.summary = new AccountSummary(account, lastEntry);
     });
   }
 }

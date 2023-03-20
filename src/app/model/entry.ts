@@ -18,6 +18,10 @@ export class Entry extends AbstractDto {
 	}
 
 	compareTo(other: Entry): number {
+		if (!other) {
+			return 1;
+		}
+
 		const dateCompare = this.date.localeCompare(other.date);
 		if (dateCompare !== 0) {
 			return dateCompare;

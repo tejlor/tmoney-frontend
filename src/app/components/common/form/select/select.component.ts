@@ -13,7 +13,7 @@ export class SelectComponent extends BaseInput {
   @Input() options: Option[];
 
   compareById(element1: Option, element2: Option): boolean {
-    return element1.id === element2.id;
+    return element1?.id === element2?.id;
   }
 }
 

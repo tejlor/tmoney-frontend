@@ -1,9 +1,12 @@
 import { AbstractDto } from "./abstractDto";
+import {Category} from "./category";
 
 export class Account extends AbstractDto {
 	code: string;
 	name: string;
 	active: boolean;
+	includeInSummary: boolean;
+	balancingCategory: Category;
 	color: string;
 	lightColor: string;
 	darkColor: string;

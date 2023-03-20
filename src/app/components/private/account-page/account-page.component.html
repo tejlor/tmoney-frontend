@@ -3,15 +3,23 @@
     <h1>{{account ? account.name : 'Nowe konto'}}</h1>
     <form [formGroup]="formGroup">
       <input type="hidden" [formControlName]="ID" />
-      <tm-input-text label="Kod" [control]="control(CODE)"></tm-input-text>
-      <tm-input-text label="Nazwa" [control]="control(NAME)"></tm-input-text>
-      <tm-input-check label="Aktywne" [control]="control(ACTIVE)"></tm-input-check>
-      <tm-input-color label="Kolor" [control]="control(COLOR)"></tm-input-color>
-      <tm-input-color label="Kolor jasny" [control]="control(LIGHT_COLOR)"></tm-input-color>
-      <tm-input-color label="Kolor ciemny" [control]="control(DARK_COLOR)"></tm-input-color>
-      <tm-input-text label="Pozycja" [control]="control(ORDER_NO)"></tm-input-text>
-      <tm-input-icon label="Ikona" [control]="control(ICON)"></tm-input-icon>
-      <tm-input-file label="Logo" [control]="control(LOGO)" #logo></tm-input-file>
+      <div class="w3-row">
+        <div class="w3-col m6 left">
+          <tm-input-text label="Kod" [control]="control(CODE)"></tm-input-text>
+          <tm-input-text label="Nazwa" [control]="control(NAME)"></tm-input-text>
+          <tm-input-check label="Aktywne" [control]="control(ACTIVE)"></tm-input-check>
+          <tm-input-check label="Do podsumowania" [control]="control(INCLUDE_IN_SUMMARY)"></tm-input-check>
+          <tm-select label="Kategoria do balansowania" [control]="control(BALANCING_CATEGORY)" [options]="categories"></tm-select>
+          <tm-input-text label="Pozycja" [control]="control(ORDER_NO)"></tm-input-text>
+          <tm-input-icon label="Ikona" [control]="control(ICON)"></tm-input-icon>
+        </div>
+        <div class="w3-col m6 right">
+          <tm-input-color label="Kolor" [control]="control(COLOR)"></tm-input-color>
+          <tm-input-color label="Kolor jasny" [control]="control(LIGHT_COLOR)"></tm-input-color>
+          <tm-input-color label="Kolor ciemny" [control]="control(DARK_COLOR)"></tm-input-color>
+          <tm-input-file label="Logo" [control]="control(LOGO)" #logo></tm-input-file>
+        </div>
+      </div>
       <div>
         <button class="w3-btn w3-blue w3-border w3-border-blue" (click)="onSaveAndGoBack()">Zapisz i cofnij</button>
         &nbsp;

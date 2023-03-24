@@ -1,0 +1,13 @@
+@import '/src/styles/variables.scss';
+
+div.header {
+  margin-bottom: 8px;
+}
+
+select {
+  width: 200px;
+}
+
+thead tr {
+  background-color: themeBlue(0); 
+}

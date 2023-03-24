@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {AbstractControl} from '@angular/forms';
 import {BaseInput} from '../base-input/base-input';
+import {TFormControl} from '../form-control';
 
 @Component({
   selector: 'tm-textarea',
@@ -9,5 +9,5 @@ import {BaseInput} from '../base-input/base-input';
 export class TextareaComponent extends BaseInput {
   @Input() label: string;
   @Input() labelStyle: object;
-  @Input() control: AbstractControl;
+  @Input() control: TFormControl;
 }

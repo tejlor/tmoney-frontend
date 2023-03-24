@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {AbstractControl} from '@angular/forms';
 import {BaseInput} from '../base-input/base-input';
+import {TFormControl} from '../form-control';
 
 @Component({
   selector: 'tm-input-color',
@@ -10,10 +10,10 @@ import {BaseInput} from '../base-input/base-input';
 export class InputColorComponent extends BaseInput {
   @Input() label: string;
   @Input() labelStyle: object;
-  @Input() control: AbstractControl;
+  @Input() control: TFormControl;
 
   getColor(): string {
-    let value = this.formControl.value as string;
+    let value = this.control.value as string;
     if (value?.length === 6) {
       return '#' + value;
     }

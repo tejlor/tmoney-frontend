@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {AbstractControl} from '@angular/forms';
 import {BaseInput} from '../base-input/base-input';
+import {TFormControl} from '../form-control';
 
 @Component({
   selector: 'tm-input-file',
@@ -11,7 +11,7 @@ export class InputFileComponent extends BaseInput {
 
   @Input() label: string;
   @Input() labelStyle: object;
-  @Input() control: AbstractControl;
+  @Input() control: TFormControl;
 
   private allowedTypes = ['image/jpeg'];
   private maxSize = 25 * 1024;  // 25 KB

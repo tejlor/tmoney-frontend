@@ -1,11 +1,16 @@
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {Injectable} from "@angular/core";
+import {Router} from "@angular/router";
 import {catchError, Observable, of} from "rxjs";
+import {Path} from "../app-routing.module";
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor(
+    private router: Router) {
+
+  }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request)
@@ -22,8 +27,8 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         msg = '400 -Przesłano błędne dane';
         break;
       case 401:
-        msg = '401 - Nie posiadasz uparwnień do wykonania tej akcji';
-        break;
+        this.router.navigateByUrl(Path.login);
+        throw new Error('Token is invalid');
       case 403:
         msg = '403 - Nie posiadasz uparwnień do wykonania tej akcji';
         break;

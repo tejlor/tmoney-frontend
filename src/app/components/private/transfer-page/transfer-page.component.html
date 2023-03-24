@@ -1,0 +1,18 @@
+<div class="w3-card w3-white w3-margin-top w3-padding form">
+  <h1>{{definition?.name}}</h1>
+  <form [formGroup]="formGroup">
+    <tm-input-date label="Data" [control]="control(DATE)" [tmDatepicker]="datepicker"></tm-input-date>
+    <tm-datepicker #datepicker></tm-datepicker>
+    <tm-input-text label="Nazwa" [control]="control(NAME)"></tm-input-text>
+    <tm-input-number label="Kwota" [control]="control(AMOUNT)"></tm-input-number>
+    <tm-textarea label="Opis" [control]="control(DESCRIPTION)">
+      <div class="tags">
+        <span *ngFor="let tag of tags" class="w3-tag w3-round" (click)="onTagClick(tag)">{{tag}}</span>
+      </div>
+    </tm-textarea>
+  </form>
+  <div>
+    <button class="w3-btn w3-blue w3-border w3-border-blue" (click)="saveAndGoBack()">Zapisz i cofnij</button>
+    &nbsp;
+    <button class="w3-btn w3-border" (click)="onCancel()">Anuluj</button>
+</div>

@@ -1,13 +1,8 @@
-import {AbstractControl} from '@angular/forms';
 import {TFormControl} from '../form-control';
 
 export abstract class BaseInput {
 
-  control: AbstractControl;
-
-  get formControl() {
-    return this.control as TFormControl;
-  }
+  control: TFormControl;
 
   isInvalid(): boolean {
     return this.control.touched && this.control.invalid;

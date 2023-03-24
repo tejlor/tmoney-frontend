@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {AbstractControl} from '@angular/forms';
 import {BaseInput} from '../base-input/base-input';
+import {TFormControl} from '../form-control';
 
 @Component({
   selector: 'tm-input-icon',
@@ -10,9 +10,5 @@ import {BaseInput} from '../base-input/base-input';
 export class InputIconComponent extends BaseInput {
   @Input() label: string;
   @Input() labelStyle: object;
-  @Input() control: AbstractControl;
-
-  getIconClass() {
-    return this.formControl.value as string;
-  }
+  @Input() control: TFormControl;
 }

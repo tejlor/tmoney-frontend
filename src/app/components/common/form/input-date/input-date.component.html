@@ -1,7 +1,7 @@
 <p>
-  <label class="main" [ngStyle]="labelStyle" [ngClass]="{'tm-text-blue': !labelStyle}">{{label}}{{formControl.isRequired() ? '*' : ''}}:</label>
+  <label class="main" [ngStyle]="labelStyle" [ngClass]="{'tm-text-blue': !labelStyle}">{{label}}{{control.isRequired() ? '*' : ''}}:</label>
   <span class="input" [ngClass]="{'w3-pale-red w3-border-red': isInvalid()}">
-    <input type="text" [name]="formControl.name" [formControl]="formControl" class="w3-input" />
+    <input type="text" [name]="control.name" [formControl]="control" class="w3-input" />
     <i #button class="fa-regular fa-calendar-days"></i>
   </span>
   <span *ngIf="isInvalid()" class="w3-text-red w3-small">{{getErrorMessage()}}</span>

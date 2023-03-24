@@ -29,6 +29,8 @@ export class AccountPageComponent extends BaseFormComponent {
   readonly ICON = 'icon';
   readonly LOGO = 'logo';
 
+  readonly yesNoOptions = [{label: "Tak", value: true}, {label: "Nie", value: "false"}];
+
   @ViewChild('logo') logo: InputFileComponent;
 
   private readonly controlsRequiredForActive = [this.COLOR, this.LIGHT_COLOR, this.DARK_COLOR, this.ORDER_NO, this.ICON, this.LOGO];

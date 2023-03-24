@@ -13,6 +13,9 @@ import {W3Component} from './components/w3/w3.component';
 import {AccountsPageComponent} from './components/private/accounts-page/accounts-page.component';
 import {AccountPageComponent} from './components/private/account-page/account-page.component';
 import {AccountBalancingPageComponent} from './components/private/account-balancing-page/account-balancing-page.component';
+import {TransferDefinitionsPageComponent} from './components/private/transfer-definitions-page/transfer-definitions-page.component';
+import {TransferDefinitionPageComponent} from './components/private/transfer-definition-page/transfer-definition-page.component';
+import {TransferPageComponent} from './components/private/transfer-page/transfer-page.component';
 
 const routes: Routes = [
   {
@@ -40,6 +43,10 @@ const routes: Routes = [
       { path: 'categories', component: CategoriesPageComponent },
       { path: 'category', component: CategoryPageComponent },
       { path: 'category/:id', component: CategoryPageComponent },
+      { path: 'transfer/:definitionId', component: TransferPageComponent },
+      { path: 'transfer-definitions', component: TransferDefinitionsPageComponent },
+      { path: 'transfer-definition', component: TransferDefinitionPageComponent },
+      { path: 'transfer-definition/:id', component: TransferDefinitionPageComponent },
       { path: '', pathMatch: 'full', redirectTo: 'dashboard'}
     ]
   },
@@ -59,7 +66,12 @@ export const Path = {
   accountBalancing: (code: string) => `/private/account/${code}/balancing`,
 
   entries: (code: string) => `/private/entries/${code ?? ''}`,
-  entry: (code: string, id?: number) => `/private/entry/${code}/${id ?? ''}`
+  entry: (code: string, id?: number) => `/private/entry/${code}/${id ?? ''}`,
+
+  transfer: (id: number) => `/private/transfer/${id}`,
+
+  transferDefinitions: '/private/transfer-definitions',
+  transferDefinition: (id: number) => `/private/transfer-definition/${id ?? ''}`
 };
 
 @NgModule({

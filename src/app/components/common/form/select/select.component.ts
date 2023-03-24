@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {AbstractControl} from '@angular/forms';
 import {BaseInput} from '../base-input/base-input';
+import {TFormControl} from '../form-control';
 
 @Component({
   selector: 'tm-select',
@@ -9,7 +9,7 @@ import {BaseInput} from '../base-input/base-input';
 export class SelectComponent extends BaseInput {
   @Input() label: string;
   @Input() labelStyle: object;
-  @Input() control: AbstractControl;
+  @Input() control: TFormControl;
   @Input() options: Option[];
 
   compareById(element1: Option, element2: Option): boolean {

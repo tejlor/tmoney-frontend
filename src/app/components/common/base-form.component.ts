@@ -41,12 +41,12 @@ export class BaseFormComponent {
     });
   }
 
-  control(key: string): AbstractControl {
-    return this.formGroup.controls[key];
+  control(key: string): TFormControl {
+    return this.formGroup.controls[key] as TFormControl;
   }
 
   controlValue(key: string): any {
-    return this.control(key).value;
+    return this.control(key).value ?? null;
   }
 
   isValid(): boolean {

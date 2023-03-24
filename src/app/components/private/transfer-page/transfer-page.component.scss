@@ -1,0 +1,32 @@
+@import '/src/styles/variables.scss';
+
+:host {
+  height: 100%;
+}
+
+div.body {
+  padding: 30px 8px 0px 8px;
+}
+
+div.form {
+  @include desktop {
+    width: 450px;
+  }
+  margin: 0px auto;
+}
+
+.w3-input {
+  border-radius: 5px;
+}
+
+div.tags {
+  margin: 8px 0px;
+
+  span {
+    font-size: 13px;
+    margin-right: 4px;
+    padding: 0px 3px;
+    background-color: themeBlue(0);
+    cursor: pointer;
+  }
+}

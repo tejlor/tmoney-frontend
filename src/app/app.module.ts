@@ -23,7 +23,7 @@ import {SelectComponent} from './components/common/form/select/select.component'
 import {DialogComponent} from './components/common/dialog/dialog.component';
 import {CategoriesPageComponent} from './components/private/categories-page/categories-page.component';
 import {CategoryPageComponent} from './components/private/category-page/category-page.component';
-import {InputRadioComponent} from './components/common/form/input-radio/input-radio.component';
+import {InputRadioComponent} from './components/common/form/input-radio-group/input-radio/input-radio.component';
 import {OAuthService} from './services/oauth.service';
 import {environment} from 'src/environments/environment';
 import {LoginPageComponent} from './components/public/login-page/login-page.component';
@@ -45,12 +45,14 @@ import {AccountPageComponent} from './components/private/account-page/account-pa
 import {AccountsPageComponent} from './components/private/accounts-page/accounts-page.component';
 import {AccountColorsComponent} from './components/common/control/account-colors/account-colors.component';
 import {FaIconComponent} from './components/common/control/fa-icon/fa-icon.component';
-import {InputCheckComponent} from './components/common/form/input-check/input-check.component';
 import {InputColorComponent} from './components/common/form/input-color/input-color.component';
 import {InputIconComponent} from './components/common/form/input-icon/input-icon.component';
 import {InputFileComponent} from './components/common/form/input-file/input-file.component';
 import {FileValueAccessor} from './components/common/form/input-file/input-file.directive';
 import {AccountBalancingPageComponent} from './components/private/account-balancing-page/account-balancing-page.component';
+import {TransferDefinitionPageComponent} from './components/private/transfer-definition-page/transfer-definition-page.component';
+import {TransferDefinitionsPageComponent} from './components/private/transfer-definitions-page/transfer-definitions-page.component';
+import {TransferPageComponent} from './components/private/transfer-page/transfer-page.component';
 
 
 function init(oauthService: OAuthService): () => Promise<void> {
@@ -99,12 +101,14 @@ function init(oauthService: OAuthService): () => Promise<void> {
     AccountsPageComponent,
     AccountColorsComponent,
     FaIconComponent,
-    InputCheckComponent,
     InputColorComponent,
     InputIconComponent,
     InputFileComponent,
     FileValueAccessor,
-    AccountBalancingPageComponent
+    AccountBalancingPageComponent,
+    TransferDefinitionPageComponent,
+    TransferDefinitionsPageComponent,
+    TransferPageComponent
   ],
   imports: [
     BrowserModule,

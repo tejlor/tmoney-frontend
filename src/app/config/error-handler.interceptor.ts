@@ -24,11 +24,17 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
     switch(error.status) {
       case 400:
-        msg = '400 -Przesłano błędne dane';
+        if (error.error.error === 'invalid_grant') {
+          this.router.navigateByUrl(Path.login);
+          throw new Error('Refresh token jest nieprawidłowy');
+        }
+        else {
+          msg = '400 - Przesłano błędne dane';
+        }
         break;
       case 401:
         this.router.navigateByUrl(Path.login);
-        throw new Error('Token is invalid');
+        throw new Error('Token jest nieprawidłowy');
       case 403:
         msg = '403 - Nie posiadasz uparwnień do wykonania tej akcji';
         break;

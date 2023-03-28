@@ -1,5 +1,6 @@
 import {ElementRef} from "@angular/core";
-import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
+import {trim} from "lodash";
 import {Observer} from "rxjs";
 import {TFormControl} from "./form/form-control";
 
@@ -28,7 +29,7 @@ export class BaseFormComponent {
         : null;
       const onChange: Partial<Observer<any>> = control.length > 2 ? control[2] : null;
 
-      group[name] = new TFormControl(name, '', validators);
+      group[name] = new TFormControl(name, null, validators);
       if (onChange) {
         subscriptions[name] = onChange;
       }
@@ -46,7 +47,11 @@ export class BaseFormComponent {
   }
 
   controlValue(key: string): any {
-    return this.control(key).value ?? null;
+    let val = this.control(key).value;
+    if (typeof val === 'string') {
+      val = trim(val);
+    }
+    return val ? val : null;
   }
 
   isValid(): boolean {

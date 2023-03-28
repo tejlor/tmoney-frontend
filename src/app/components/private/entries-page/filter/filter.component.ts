@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'tm-filter',
@@ -7,15 +7,15 @@ import {Component, EventEmitter, Output} from '@angular/core';
 })
 export class FilterComponent {
 
+  @Input() value = '';
   @Output() change = new EventEmitter<string>();
 
   private timeoutId: NodeJS.Timeout;
-  private filterText: string;
 
   onKeyUp(event: any) {
-    this.filterText = event.target.value;
+    this.value = event.target.value;
     clearTimeout(this.timeoutId);
-    this.timeoutId = setTimeout(() => this.change.emit(this.filterText), 500);
+    this.timeoutId = setTimeout(() => this.change.emit(this.value), 500);
   }
 
 }

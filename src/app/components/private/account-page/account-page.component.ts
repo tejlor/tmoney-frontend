@@ -54,9 +54,9 @@ export class AccountPageComponent extends BaseFormComponent {
       [this.ACTIVE, true, this.onActiveChange.bind(this)],
       [this.INCLUDE_IN_SUMMARY, true],
       [this.BALANCING_CATEGORY],
-      [this.COLOR, Validators.pattern("[A-Z0-9]{6}")],
-      [this.LIGHT_COLOR, Validators.pattern("[A-Z0-9]{6}")],
-      [this.DARK_COLOR, Validators.pattern("[A-Z0-9]{6}")],
+      [this.COLOR, Validators.pattern("[A-F0-9]{6}")],
+      [this.LIGHT_COLOR, Validators.pattern("[A-F0-9]{6}")],
+      [this.DARK_COLOR, Validators.pattern("[A-F0-9]{6}")],
       [this.ORDER_NO, Validators.pattern("[1-9]\.[1-9]")],
       [this.ICON, Validators.maxLength(50)],
       [this.LOGO]
@@ -133,6 +133,7 @@ export class AccountPageComponent extends BaseFormComponent {
     account.orderNo = this.controlValue(this.ORDER_NO);
     account.icon = this.controlValue(this.ICON);
     account.logo = this.logo.logoBase64;
+    console.log(account);
     return account;
   }
 

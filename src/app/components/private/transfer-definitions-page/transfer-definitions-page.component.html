@@ -40,9 +40,9 @@
         <td>{{definition.name}}</td>
         <td>{{definition.description}}</td>
         <td class="w3-center-align">
-          <i class="fa-solid fa-circle-play" [routerLink]="Path.transfer(definition.id)"></i>
+          <i class="fa-regular fa-circle-play" [routerLink]="Path.transfer(definition.id)"></i>
           &nbsp;
-          <i class="fa-solid fa-trash-can" (click)="onRemoveClick($event, definition)"></i>
+          <i class="fa-regular fa-trash-can" (click)="onRemoveClick($event, definition)"></i>
         </td>
       </tr>
     </tbody>

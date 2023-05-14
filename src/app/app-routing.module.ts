@@ -16,6 +16,7 @@ import {AccountBalancingPageComponent} from './components/private/account-balanc
 import {TransferDefinitionsPageComponent} from './components/private/transfer-definitions-page/transfer-definitions-page.component';
 import {TransferDefinitionPageComponent} from './components/private/transfer-definition-page/transfer-definition-page.component';
 import {TransferPageComponent} from './components/private/transfer-page/transfer-page.component';
+import {ReportPageComponent} from './components/private/report-page/report-page.component';
 
 const routes: Routes = [
   {
@@ -47,6 +48,7 @@ const routes: Routes = [
       { path: 'transfer-definitions', component: TransferDefinitionsPageComponent },
       { path: 'transfer-definition', component: TransferDefinitionPageComponent },
       { path: 'transfer-definition/:id', component: TransferDefinitionPageComponent },
+      { path: 'report', component: ReportPageComponent },
       { path: '', pathMatch: 'full', redirectTo: 'dashboard'}
     ]
   },
@@ -71,7 +73,9 @@ export const Path = {
   transfer: (id: number) => `/private/transfer/${id}`,
 
   transferDefinitions: '/private/transfer-definitions',
-  transferDefinition: (id: number) => `/private/transfer-definition/${id ?? ''}`
+  transferDefinition: (id: number) => `/private/transfer-definition/${id ?? ''}`,
+
+  report: '/private/report',
 };
 
 @NgModule({

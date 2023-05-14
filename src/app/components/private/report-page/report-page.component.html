@@ -1,1 +1,11 @@
-<p>report-page works!</p>
+<h1>Raporty</h1>
+
+<div class="w3-card w3-white w3-margin-top w3-padding form">
+  <form [formGroup]="formGroup">
+    <tm-input-date label="Data początkowa" [control]="control(DATE_FROM)" [tmDatepicker]="datepickerFrom"></tm-input-date>
+    <tm-datepicker #datepickerFrom></tm-datepicker>
+    <tm-input-date label="Data końcowa" [control]="control(DATE_TO)" [tmDatepicker]="datepickerTo"></tm-input-date>
+    <tm-datepicker #datepickerTo></tm-datepicker>
+  </form>
+  <button class="w3-btn w3-blue w3-border w3-border-blue" (click)="generateReportPdf()">Generuj PDF</button>
+</div>

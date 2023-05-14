@@ -9,7 +9,6 @@ import { TableParams } from 'src/app/model/tableParams';
 import {DialogConfig} from '../../common/dialog/dialog.component';
 import {Path} from 'src/app/app-routing.module';
 import {DEC_FORMAT} from 'src/app/utils/constants';
-import {filter} from 'rxjs';
 
 @Component({
   selector: 'tm-entries-page',
@@ -27,7 +26,7 @@ export class EntriesPageComponent implements OnInit {
   dialogConfig = new DialogConfig();
 
   private accountCode: string;
-  private tableParams: TableParams;
+  tableParams: TableParams;
 
   constructor(
     private router: Router,
@@ -48,8 +47,8 @@ export class EntriesPageComponent implements OnInit {
     }
 
     this.tableParams = new TableParams();
-    this.tableParams.pageNo = this.queryParam('pageNo') ?? 0;
-    this.tableParams.pageSize = this.queryParam('pageSize') ?? 10;
+    this.tableParams.pageNo = Number(this.queryParam('pageNo') ?? 0);
+    this.tableParams.pageSize = Number(this.queryParam('pageSize') ?? 10);
     this.tableParams.sortBy = 'date DESC, id DESC';
     this.tableParams.filter = this.queryParam('filterText') ?? '';
 

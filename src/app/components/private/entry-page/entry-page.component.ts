@@ -12,6 +12,7 @@ import {EntryHttpService} from 'src/app/services/entry.http.service';
 import {SettingService} from 'src/app/services/setting.service';
 import {DEC_FORMAT} from 'src/app/utils/constants';
 import {stringToNumber} from 'src/app/utils/utils';
+import {threadId} from 'worker_threads';
 import {BaseFormComponent} from '../../common/base-form.component';
 
 @Component({
@@ -65,11 +66,14 @@ export class EntryPageComponent extends BaseFormComponent {
     this.loadSummary(accountCode);
 
     this.categoryService.getByAccountCode(accountCode).subscribe(categories => {
-      this.categories = categories;
+      this.categories = categories.filter(cat => cat.report === true);
+      this.addCurrentCategoryToSelect();
     });
 
     if (entryId) {
       this.entryService.getById(entryId).subscribe(entry => {
+        this.entry = entry;
+        this.addCurrentCategoryToSelect();
         this.fillForm(entry);
       });
     }
@@ -79,10 +83,18 @@ export class EntryPageComponent extends BaseFormComponent {
     });
   }
 
+  private addCurrentCategoryToSelect(): void {
+    if (this.categories && this.entry) {
+      if (!this.categories.find(cat => cat.id === this.entry.category.id)) {
+        this.categories.splice(0, 0, this.entry.category);
+      }
+    }
+  }
+
   onTagClick(tag: string): void {
     const textarea = document.getElementsByName(this.DESCRIPTION)[0] as any;
     const startPos = textarea.selectionStart;
-    const currentText = this.controlValue(this.DESCRIPTION);
+    const currentText = this.controlValue(this.DESCRIPTION) ?? '';
     const newText = currentText.substring(0, startPos) + tag + currentText.substring(startPos, currentText.length);
     this.control(this.DESCRIPTION).setValue(newText);
   }

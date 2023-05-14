@@ -6,10 +6,14 @@ import { TableInfo } from 'src/app/model/tableInfo';
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss']
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent {
 
   private static DELTA = 1;
 
+  readonly pageSizeOptions = [10, 20, 50, 100];
+
+  @Input() pageNo = 0;
+  @Input() pageSize = 10;
   @Input() color = '#0d76cd';
 
   private _tableInfo: TableInfo;
@@ -23,13 +27,8 @@ export class PaginationComponent implements OnInit {
   @Output() pageSizeChange = new EventEmitter<number>();
   @Output() pageChange = new EventEmitter<number>();
 
-  pageNo = 0;
   visiblePages: (number | null)[];
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
   onPageSizeChange(event: any): void {
     this.pageSizeChange.emit(event.target.value);

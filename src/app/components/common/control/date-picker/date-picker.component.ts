@@ -4,16 +4,16 @@ import {DATE_FORMAT} from 'src/app/utils/constants';
 import {firstUpperCase} from 'src/app/utils/utils';
 
 @Component({
-  selector: 'tm-datepicker',
-  templateUrl: './datepicker.component.html',
-  styleUrls: ['./datepicker.component.scss']
+  selector: 'tm-date-picker',
+  templateUrl: './date-picker.component.html',
+  styleUrls: ['./date-picker.component.scss']
 })
-export class DatepickerComponent {
-
-  @Output('select') onSelect = new EventEmitter<moment.Moment>();
+export class DatePickerComponent {
 
   readonly dayNames = ['Pn', 'Wt', 'Śr', 'Cz', 'Pt', 'So', 'N'];
   readonly monthNames = moment.months().map(m => firstUpperCase(m));
+
+  @Output('select') onSelect = new EventEmitter<moment.Moment>();
 
   selectedDate: moment.Moment;
   today: moment.Moment;

@@ -17,6 +17,7 @@ export class LoginPageComponent extends BaseFormComponent implements OnInit {
 
   errorMessage: string;
 
+
   constructor(el: ElementRef,
               fb: FormBuilder,
               private router: Router,
@@ -34,13 +35,13 @@ export class LoginPageComponent extends BaseFormComponent implements OnInit {
     this.ouathService.logout();
   }
 
-  onLoginClick(): void {
+  onLogin(): void {
     if (this.isValid()) {
       const login = this.controlValue(this.LOGIN);
       const password = this.controlValue(this.PASSWORD);
       this.ouathService.generateAccessToken(login, password).subscribe((result: boolean) => {
         if (result) {
-          this.router.navigateByUrl(Path.dashboard);
+          this.router.navigateByUrl(Path.dashboard());
         }
         else {
           this.errorMessage = 'Login i/lub hasło jest nieprawidłowe';

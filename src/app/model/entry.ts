@@ -1,10 +1,14 @@
+import {Type} from "class-transformer";
 import {AbstractDto} from "./abstractDto";
 import {Account} from "./account";
 import {Category} from "./category";
 
 export class Entry extends AbstractDto {
+
+	@Type(() => Account)
 	account: Account;
 	date: string;
+	@Type(() => Category)
 	category: Category;
 	name: string;
 	amount: number;

@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Entry } from 'src/app/model/entry';
-import { Account } from 'src/app/model/account';
-import { AccountHttpService } from 'src/app/services/account.http.service';
-import { EntryHttpService } from 'src/app/services/entry.http.service';
-import { TableData } from 'src/app/model/tableData';
-import { TableParams } from 'src/app/model/tableParams';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Entry} from 'src/app/model/entry';
+import {Account} from 'src/app/model/account';
+import {AccountHttpService} from 'src/app/services/account.http.service';
+import {EntryHttpService} from 'src/app/services/entry.http.service';
+import {TableData} from 'src/app/model/tableData';
+import {TableParams} from 'src/app/model/tableParams';
 import {DialogConfig} from '../../common/dialog/dialog.component';
 import {Path} from 'src/app/app-routing.module';
 import {DEC_FORMAT} from 'src/app/utils/constants';
@@ -22,23 +22,22 @@ export class EntriesPageComponent implements OnInit {
 
   account: Account;
   tableData: TableData<Entry>;
-
+  tableParams: TableParams;
   dialogConfig = new DialogConfig();
 
   private accountCode: string;
-  tableParams: TableParams;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private accountService: AccountHttpService,
-    private entryService: EntryHttpService) {
+
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private accountHttpService: AccountHttpService,
+              private entryHttpService: EntryHttpService) {
   }
 
   ngOnInit(): void {
-    this.accountCode = this.route.snapshot.params['code'];
+    this.accountCode = this.route.snapshot.params[Path.params.accountCode];
     if (this.accountCode) {
-      this.accountService.getByCode(this.accountCode).subscribe(result => {
+      this.accountHttpService.getByCode(this.accountCode).subscribe(result => {
         this.account = result;
       });
     }
@@ -47,41 +46,32 @@ export class EntriesPageComponent implements OnInit {
     }
 
     this.tableParams = new TableParams();
-    this.tableParams.pageNo = Number(this.queryParam('pageNo') ?? 0);
-    this.tableParams.pageSize = Number(this.queryParam('pageSize') ?? 10);
+    this.tableParams.pageNo = Number(this.queryParam('pageNo') ?? 0); // if param is empty, Number return NaN and ?? doesn't work
+    this.tableParams.pageSize = Number(this.queryParam('pageSize') ?? 20);
     this.tableParams.sortBy = 'date DESC, id DESC';
     this.tableParams.filter = this.queryParam('filterText') ?? '';
 
     this.reloadTableRows();
   }
 
-  search(filterText: any) {
-    if (typeof(filterText) !== 'string') {
+  onFilterChange(filterText: any) {
+    if (typeof(filterText) !== 'string') { // may be object
       return;
     }
     this.tableParams.filter = filterText as string;
-    this.router.navigate([], {
-      queryParams: {filterText},
-      queryParamsHandling: 'merge'
-    });
+    this.addParamToUrlQuery({filterText});
     this.reloadTableRows();
   }
 
   onPageSizeChange(pageSize: number): void {
     this.tableParams.pageSize = pageSize;
-    this.router.navigate([], {
-      queryParams: {pageSize},
-      queryParamsHandling: 'merge'
-    });
+    this.addParamToUrlQuery({pageSize});
     this.reloadTableRows();
   }
 
-  onPageChange(pageNo: number): void {
+  onPageNoChange(pageNo: number): void {
     this.tableParams.pageNo = pageNo;
-    this.router.navigate([], {
-      queryParams: {pageNo},
-      queryParamsHandling: 'merge'
-    });
+    this.addParamToUrlQuery({pageNo});
     this.reloadTableRows();
   }
 
@@ -93,14 +83,14 @@ export class EntriesPageComponent implements OnInit {
     $event.stopPropagation();
     this.dialogConfig = DialogConfig.confirmation('Uwaga', `Czy na pewno chcesz usunąć wpis "${entry.name}"?`,
       () => {
-        this.entryService.remove(entry.id).subscribe(() => {
+        this.entryHttpService.remove(entry.id).subscribe(() => {
           this.reloadTableRows();
         });
       });
   }
 
   private reloadTableRows() {
-    this.entryService.getTableByAccountCode(this.accountCode, this.tableParams).subscribe(result => {
+    this.entryHttpService.getTableByAccountCode(this.accountCode, this.tableParams).subscribe(result => {
       this.tableData = result;
     });
   }
@@ -109,4 +99,10 @@ export class EntriesPageComponent implements OnInit {
     return this.route.snapshot.queryParams[name];
   }
 
+  private addParamToUrlQuery(param: any) {
+    this.router.navigate([], {
+      queryParams: param,
+      queryParamsHandling: 'merge'
+    });
+  }
 }

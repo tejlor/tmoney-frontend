@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {DialogMode} from 'src/app/enums/dialog-mode';
 
 @Component({
   selector: 'tm-dialog',
@@ -8,21 +7,20 @@ import {DialogMode} from 'src/app/enums/dialog-mode';
 })
 export class DialogComponent {
 
-  readonly DialogMode = DialogMode;
-
   @Input() config: DialogConfig;
 
-  onCloseClick(): void {
+
+  onClose(): void {
     this.closeDialog();
   }
 
-  onAcceptClick(): void {
+  onAccept(): void {
     this.config.onAccept();
     this.closeDialog();
   }
 
   private closeDialog(): void {
-    this.config.mode = DialogMode.HIDDEN;
+    this.config.visible = false;
   }
 }
 
@@ -31,13 +29,13 @@ export class DialogConfig {
   message: string;
   acceptText: string = 'OK';
   closeText: string = 'Anuluj';
-  mode: DialogMode = DialogMode.HIDDEN;
+  visible: boolean = false;
   width: string = '500px';
   onAccept: (param?: any) => void;
 
   static confirmation(header: string, message: string, onAccept: (param?: any) => void, params?: object) {
     const config = new DialogConfig();
-    config.mode = DialogMode.PREVIEW;
+    config.visible = true;
     config.header = header;
     config.message = message;
     config.onAccept = onAccept;

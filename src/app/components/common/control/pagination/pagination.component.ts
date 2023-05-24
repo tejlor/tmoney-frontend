@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TableInfo } from 'src/app/model/tableInfo';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {TableInfo} from 'src/app/model/tableInfo';
+import {environment} from 'src/environments/environment';
 
 @Component({
   selector: 'tm-pagination',
@@ -8,15 +9,12 @@ import { TableInfo } from 'src/app/model/tableInfo';
 })
 export class PaginationComponent {
 
-  private static DELTA = 1;
-
-  readonly pageSizeOptions = [10, 20, 50, 100];
+  readonly pageSizeOptions = [10, 20, 50, 1000];
 
   @Input() pageNo = 0;
-  @Input() pageSize = 10;
-  @Input() color = '#0d76cd';
+  @Input() pageSize = 20;
+  @Input() color = environment.blueThemeColor;
 
-  private _tableInfo: TableInfo;
   @Input() set tableInfo(value: TableInfo) {
     this._tableInfo = value;
     if (value) {
@@ -24,10 +22,12 @@ export class PaginationComponent {
     }
   }
 
+  visiblePages: (number | null)[];
+
+  private _tableInfo: TableInfo;
+
   @Output() pageSizeChange = new EventEmitter<number>();
   @Output() pageChange = new EventEmitter<number>();
-
-  visiblePages: (number | null)[];
 
 
   onPageSizeChange(event: any): void {
@@ -35,8 +35,8 @@ export class PaginationComponent {
   }
 
   calcVisiblePages(current: number, total: number): number[] {
-    let left = current - PaginationComponent.DELTA;
-    let right = current + PaginationComponent.DELTA + 1;
+    let left = current - 1;
+    let right = current + 2;
     let range = [];
 
     for (let i = 0; i < total; i++) {

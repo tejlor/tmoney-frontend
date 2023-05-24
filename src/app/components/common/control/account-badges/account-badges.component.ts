@@ -15,15 +15,15 @@ export class AccountBadgesComponent implements OnInit {
 
   accountNames: string[];
 
-  constructor(
-    private accountService: AccountService) {
+
+  constructor(private accountService: AccountService) {
   }
 
   ngOnInit(): void {
-    this.accountService.activeAccounts$.subscribe(accounts => {
+    this.accountService.accounts$.subscribe(accounts => {
       this.accountNames = accounts
-      .filter(account => this.isAccountSelected(account))
-      .map(account => account.name);
+        .filter(account => this.isAccountSelected(account))
+        .map(account => account.name);
     });
   }
 

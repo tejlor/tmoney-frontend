@@ -1,3 +1,3 @@
-export class AbstractDto {
+export abstract class AbstractDto {
   id: number;
 }

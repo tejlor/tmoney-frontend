@@ -12,6 +12,7 @@ import {HttpService} from "./http.service";
 export class CategoryHttpService extends HttpService {
 
   private readonly baseUrl = 'categories';
+  
 
   getById(id: number): Observable<Category> {
     return this.get(`${this.baseUrl}/${id}`)

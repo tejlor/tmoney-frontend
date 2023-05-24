@@ -2,17 +2,16 @@
   <div class="w3-container">
     <span class="w3-right w3-xxlarge w3-padding tm-mobile" (click)="closeMenu()"><i class="fa fa-remove"></i></span>
     <img src="/assets/tmoney-logo.png" class="logo">
-    <h3>TMoney 3.1</h3>
+    <h3>TMoney v3</h3>
     <p class="w3-text-grey">by Tejlor OLAWA</p>
   </div>
   <div class="w3-bar-block">
-    <a [routerLink]="Path.dashboard" (click)="closeMenu()" class="w3-bar-item w3-button"><i class="fa-solid fa-money-check-dollar"></i>Dashboard</a> 
-    <a [routerLink]="Path.accounts" (click)="closeMenu()" class="w3-bar-item w3-button"><i class="fa-solid fa-table"></i>Konta</a> 
-    <a [routerLink]="Path.categories" (click)="closeMenu()" class="w3-bar-item w3-button"><i class="fa-solid fa-table"></i>Kategorie</a> 
-    <a [routerLink]="Path.transferDefinitions" (click)="closeMenu()" class="w3-bar-item w3-button"><i class="fa-solid fa-table"></i>Definicje przelewów</a> 
-    <a [routerLink]="Path.report" (click)="closeMenu()" class="w3-bar-item w3-button"><i class="fa-solid fa-calculator"></i>Raporty</a> 
-    <a (click)="updateBalances()" class="w3-bar-item w3-button"><i class="fa-solid fa-calculator"></i>Przelicz salda</a> 
-    <a (click)="generateSummaryPdf()" class="w3-bar-item w3-button"><i class="fa-solid fa-calculator"></i>Generuj PDF</a> 
+    <a [routerLink]="Path.dashboard()" (click)="closeMenu()" class="w3-bar-item w3-button"><i class="fa-solid fa-money-check-dollar"></i>Dashboard</a> 
+    <a [routerLink]="Path.accounts()" (click)="closeMenu()" class="w3-bar-item w3-button"><i class="fa-solid fa-building-columns"></i>Konta</a> 
+    <a [routerLink]="Path.categories()" (click)="closeMenu()" class="w3-bar-item w3-button"><i class="fa-solid fa-cart-shopping"></i>Kategorie</a> 
+    <a [routerLink]="Path.transferDefinitions()" (click)="closeMenu()" class="w3-bar-item w3-button"><i class="fa-solid fa-right-left"></i>Definicje przelewów</a> 
+    <a [routerLink]="Path.report()" (click)="closeMenu()" class="w3-bar-item w3-button"><i class="fa-solid fa-calculator"></i>Raporty</a> 
+    <a (click)="onGenerateSummaryPdf()" class="w3-bar-item w3-button"><i class="fa-solid fa-file-pdf"></i>Podsumowanie PDF</a> 
   </div>
   <footer class="w3-container w3-margin-top">Wersja: {{version}}</footer>
 </nav>
@@ -22,7 +21,7 @@
 <span class="w3-button w3-xxlarge tm-mobile" (click)="openMenu()">
   <i class="fa fa-bars"></i>
 </span>
-<a [routerLink]="Path.dashboard" class="logo">
+<a [routerLink]="Path.dashboard()" class="logo">
   <img src="/assets/tmoney-logo.png" class="w3-circle w3-right w3-hover-opacity tm-mobile">
 </a>
 

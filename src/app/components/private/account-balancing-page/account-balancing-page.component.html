@@ -1,17 +1,15 @@
 <tm-account-summary [summary]="summary"></tm-account-summary>
 
-<div class="body">
-  <div class="w3-card w3-white w3-margin-top w3-padding form">
-    <h1>Balansowanie konta {{account?.name}}</h1>
-    <form [formGroup]="formGroup">
-      <tm-input-date label="Data" [control]="control(DATE)" [tmDatepicker]="datepicker"></tm-input-date>
-      <tm-input-number label="Saldo" [control]="control(BALANCE)"></tm-input-number>
-      <tm-datepicker #datepicker></tm-datepicker>
-      <div>
-        <button class="w3-btn w3-blue w3-border w3-border-blue" (click)="onSaveAndGoBack()">Zapisz i cofnij</button>
-        &nbsp;
-        <button class="w3-btn w3-border" (click)="onCancel()">Anuluj</button>
-      </div>
-    </form>
-  </div>
+<div class="w3-card w3-white w3-margin-top w3-padding form">
+  <h1>Balansowanie konta {{account?.name}}</h1>
+  <form [formGroup]="formGroup">
+    <tm-input-date label="Data" [control]="control(DATE)" [tmDatePicker]="datePicker"></tm-input-date>
+    <tm-input-number label="Saldo" [control]="control(BALANCE)"></tm-input-number>
+    <tm-date-picker #datePicker></tm-date-picker>
+    <div>
+      <button class="w3-btn w3-blue w3-border w3-border-blue" (click)="onSaveAndGoBack()">Zapisz i cofnij</button>
+      &nbsp;
+      <button class="w3-btn w3-border" (click)="onCancel()">Anuluj</button>
+    </div>
+  </form>
 </div>

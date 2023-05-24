@@ -11,6 +11,7 @@ import {HttpService} from "./http.service";
 export class TransferHttpService extends HttpService {
 
   private readonly baseUrl = 'transfers';
+  
 
   getById(id: number): Observable<TransferDefinition> {
     return this.get(`${this.baseUrl}/definition/${id}`)

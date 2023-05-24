@@ -1,4 +1,4 @@
-<div *ngIf="summary" class="w3-card w3-text-white">
+<div *ngIf="summary" class="w3-card w3-text-white" [ngStyle]="{backgroundColor: summary.account.colorCss}">
   <h2 [routerLink]="Path.entries(summary.account.code)"><i [ngClass]="summary.account.icon"></i> {{summary.account.name}}</h2>
 
   <div class="last-transaction">
@@ -11,5 +11,5 @@
     </div>
   </div>
 
-  <h3>{{(summary.account.code ? summary.entry?.balance : summary.entry?.balanceOverall) | number: DEC_FORMAT}} <span>PLN</span></h3>
+  <h3>{{(summary.account.code === null ? summary.entry?.balance : summary.entry?.balanceOverall) | number: DEC_FORMAT}} <span>PLN</span></h3>
 </div>

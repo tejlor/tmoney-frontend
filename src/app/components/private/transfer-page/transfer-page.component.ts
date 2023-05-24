@@ -8,7 +8,7 @@ import {TransferRequest} from 'src/app/model/transferRequest';
 import {SettingService} from 'src/app/services/setting.service';
 import {TransferHttpService} from 'src/app/services/transfer.http.service';
 import {DEC_FORMAT} from 'src/app/utils/constants';
-import {stringToNumber} from 'src/app/utils/utils';
+import {parseAmount} from 'src/app/utils/utils';
 import {BaseFormComponent} from '../../common/base-form.component';
 
 @Component({
@@ -42,14 +42,14 @@ export class TransferPageComponent extends BaseFormComponent {
       [this.DESCRIPTION]
     ]);
 
-    const definitionId = route.snapshot.params['definitionId'];
+    const definitionId = route.snapshot.params[Path.params.definitionId];
 
     this.transferService.getById(definitionId).subscribe(definition => {
       this.definition = definition;
       this.fillDefaultDefinitionValues(definition);
     });
 
-    this.settingService.settings.subscribe(settings => {
+    this.settingService.settings$.subscribe(settings => {
       this.tags = settings.tags?.split(' ');
     });
   }
@@ -62,16 +62,16 @@ export class TransferPageComponent extends BaseFormComponent {
     this.control(this.DESCRIPTION).setValue(newText);
   }
 
-  saveAndGoBack(): void {
+  onSaveAndGoBack(): void {
     if (this.isValid()) {
-      this.transferService.createTransfer(this.readObjectFromForm()).subscribe(() => {
-        this.router.navigateByUrl(Path.dashboard);
+      this.transferService.createTransfer(this.readForm()).subscribe(() => {
+        this.router.navigateByUrl(Path.dashboard());
       });
     }
   }
 
   onCancel(): void {
-    this.router.navigateByUrl(Path.dashboard);
+    this.router.navigateByUrl(Path.dashboard());
   }
 
   private fillDefaultDefinitionValues(definition: TransferDefinition) {
@@ -79,16 +79,12 @@ export class TransferPageComponent extends BaseFormComponent {
     this.control(this.DESCRIPTION).setValue(definition.description);
   }
 
-  private formatValueAsAmount(value: number): string {
-    return formatNumber(value, 'pl-PL', DEC_FORMAT);
-  }
-
-  private readObjectFromForm(): TransferRequest {
+  private readForm(): TransferRequest {
     const transfer = new TransferRequest();
     transfer.transferDefinitionId = this.definition.id;
     transfer.date = this.controlValue(this.DATE);
     transfer.name = this.controlValue(this.NAME);
-    transfer.amount = stringToNumber(this.controlValue(this.AMOUNT));
+    transfer.amount = parseAmount(this.controlValue(this.AMOUNT));
     transfer.description = this.controlValue(this.DESCRIPTION);
     return transfer;
   }

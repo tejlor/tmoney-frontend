@@ -11,6 +11,8 @@ import {CategoryHttpService} from 'src/app/services/category.http.service';
 })
 export class CategoryDeleteDialogComponent extends BaseFormComponent implements OnInit {
 
+  readonly NEW_CATEGORY_ID = 'newCategoryId';
+
   @Input() set config(config: CategoryDeleteDialogComponent.Config) {
     if (config.visible) {
       this.show(config.category);
@@ -19,11 +21,10 @@ export class CategoryDeleteDialogComponent extends BaseFormComponent implements 
 
   @Output() onConfirm = new EventEmitter<void>();
 
-  readonly NEW_CATEGORY_ID = 'newCategoryId';
-
   formGroup: FormGroup;
   categories: Category[];
   dialogConfig = new DialogConfig();
+
 
   constructor(el: ElementRef,
               fb: FormBuilder,

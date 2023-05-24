@@ -7,14 +7,12 @@ import * as moment from 'moment';
 import '@angular/common/locales/global/pl';
 import 'moment/locale/pl';
 import {DashboardPageComponent} from './components/private/dashboard-page/dashboard-page.component';
-import {W3Component} from './components/w3/w3.component';
 import {DashboardPanelComponent} from './components/private/dashboard-page/panel/panel.component';
 import {EntriesPageComponent} from './components/private/entries-page/entries-page.component';
 import {EntryPageComponent} from './components/private/entry-page/entry-page.component';
-import {ChartPageComponent} from './components/private/chart-page/chart-page.component';
 import {ReportPageComponent} from './components/private/report-page/report-page.component';
-import {PaginationComponent} from './components/private/entries-page/pagination/pagination.component';
-import {FilterComponent} from './components/private/entries-page/filter/filter.component';
+import {PaginationComponent} from './components/common/control/pagination/pagination.component';
+import {FilterComponent} from './components/common/control/filter/filter.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {InputTextComponent} from './components/common/form/input-text/input-text.component';
 import {InputDateComponent} from './components/common/form/input-date/input-date.component';
@@ -36,19 +34,18 @@ import {OAuthInterceptor} from './config/auth.interceptor';
 import {ErrorHandlerInterceptor} from './config/error-handler.interceptor';
 import {YesNoIconComponent} from './components/common/control/yes-no-icon/yes-no-icon.component';
 import {AccountBadgesComponent} from './components/common/control/account-badges/account-badges.component';
-import {DatepickerComponent} from './components/common/control/datepicker/datepicker.component';
-import {DatepickerDirective} from './components/common/directive/datepicker.directive';
+import {DatePickerComponent} from './components/common/control/date-picker/date-picker.component';
+import {DatePickerDirective} from './components/common/control/date-picker/date-picker.directive';
 import {InputNumberComponent} from './components/common/form/input-number/input-number.component';
 import {DecimalDirective} from './components/common/directive/decimal.directive';
 import {InputRadioGroupComponent} from './components/common/form/input-radio-group/input-radio-group.component';
 import {AccountPageComponent} from './components/private/account-page/account-page.component';
 import {AccountsPageComponent} from './components/private/accounts-page/accounts-page.component';
-import {AccountColorsComponent} from './components/common/control/account-colors/account-colors.component';
-import {FaIconComponent} from './components/common/control/fa-icon/fa-icon.component';
+import {AccountColorsComponent} from './components/private/accounts-page/account-colors/account-colors.component';
 import {InputColorComponent} from './components/common/form/input-color/input-color.component';
 import {InputIconComponent} from './components/common/form/input-icon/input-icon.component';
-import {InputFileComponent} from './components/common/form/input-file/input-file.component';
-import {FileValueAccessor} from './components/common/form/input-file/input-file.directive';
+import {InputImageComponent} from './components/common/form/input-image/input-image.component';
+import {FileValueAccessor} from './components/common/directive/input-file.directive';
 import {AccountBalancingPageComponent} from './components/private/account-balancing-page/account-balancing-page.component';
 import {TransferDefinitionPageComponent} from './components/private/transfer-definition-page/transfer-definition-page.component';
 import {TransferDefinitionsPageComponent} from './components/private/transfer-definitions-page/transfer-definitions-page.component';
@@ -68,11 +65,9 @@ function init(oauthService: OAuthService): () => Promise<void> {
   declarations: [
     AppComponent,
     DashboardPageComponent,
-    W3Component,
     DashboardPanelComponent,
     EntriesPageComponent,
     EntryPageComponent,
-    ChartPageComponent,
     ReportPageComponent,
     PaginationComponent,
     FilterComponent,
@@ -94,16 +89,15 @@ function init(oauthService: OAuthService): () => Promise<void> {
     AccountSummaryComponent,
     YesNoIconComponent,
     AccountBadgesComponent,
-    DatepickerComponent,
-    DatepickerDirective,
+    DatePickerComponent,
+    DatePickerDirective,
     DecimalDirective,
     AccountPageComponent,
     AccountsPageComponent,
     AccountColorsComponent,
-    FaIconComponent,
     InputColorComponent,
     InputIconComponent,
-    InputFileComponent,
+    InputImageComponent,
     FileValueAccessor,
     AccountBalancingPageComponent,
     TransferDefinitionPageComponent,

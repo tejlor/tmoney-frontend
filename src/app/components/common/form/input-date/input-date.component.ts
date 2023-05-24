@@ -8,6 +8,7 @@ import {TFormControl} from '../form-control';
   styleUrls: ['./input-date.component.scss']
 })
 export class InputDateComponent extends BaseInput {
+
   @Input() label: string;
   @Input() labelStyle: object;
   @Input() control: TFormControl;

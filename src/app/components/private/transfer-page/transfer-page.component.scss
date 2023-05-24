@@ -1,22 +1,10 @@
 @import '/src/styles/variables.scss';
 
-:host {
-  height: 100%;
-}
-
-div.body {
-  padding: 30px 8px 0px 8px;
-}
-
 div.form {
   @include desktop {
     width: 450px;
   }
   margin: 0px auto;
-}
-
-.w3-input {
-  border-radius: 5px;
 }
 
 div.tags {

@@ -14,6 +14,7 @@ export class DashboardPageComponent implements OnInit {
   items: AccountSummary[][];
   summary: AccountSummary;
 
+  
   constructor(private accountHttpService: AccountHttpService) {
 
   }
@@ -31,19 +32,13 @@ export class DashboardPageComponent implements OnInit {
         this.items[row][col] = item;
       }
 
-      const account = {
-        name: 'Podsumowanie',
-        color: '#0d76cd',
-        icon: 'fa-solid fa-wallet'
-      } as Account;
-
       const lastEntry = _.chain(array)
         .filter(as => as.account.includeInSummary === true)
         .map(as => as.entry)
         .maxBy(entry => entry.date + ':' + entry.id)
         .value();
 
-      this.summary = new AccountSummary(account, lastEntry);
+      this.summary = new AccountSummary(Account.summary(), lastEntry);
     });
   }
 }

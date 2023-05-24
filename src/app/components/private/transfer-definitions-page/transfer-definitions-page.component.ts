@@ -17,9 +17,9 @@ export class TransferDefinitionsPageComponent implements OnInit {
   readonly Path = Path;
 
   tableData: TableData<TransferDefinition>;
+  tableParams: TableParams;
   dialogConfig = new DialogConfig();
 
-  private tableParams: TableParams;
 
   constructor(private router: Router,
               private transferHttpService: TransferHttpService) {
@@ -29,29 +29,31 @@ export class TransferDefinitionsPageComponent implements OnInit {
   ngOnInit(): void {
     this.tableParams = new TableParams();
     this.tableParams.pageNo = 0;
-    this.tableParams.pageSize = 10;
+    this.tableParams.pageSize = 20;
     this.tableParams.sortBy = 'name ASC';
     this.tableParams.filter = '';
     this.reloadTableRows();
   }
 
-  search(filterText: string) {
-    this.tableParams.filter = filterText;
+  onFilterChange(filterText: any) {
+    if (typeof(filterText) !== 'string') { // may be object
+      return;
+    }
+    this.tableParams.filter = filterText as string;
+    this.addParamToUrlQuery({filterText});
     this.reloadTableRows();
   }
 
   onPageSizeChange(pageSize: number): void {
     this.tableParams.pageSize = pageSize;
+    this.addParamToUrlQuery({pageSize});
     this.reloadTableRows();
   }
 
-  onPageChange(pageNo: number): void {
+  onPageNoChange(pageNo: number): void {
     this.tableParams.pageNo = pageNo;
+    this.addParamToUrlQuery({pageNo});
     this.reloadTableRows();
-  }
-
-  onAddClick(): void {
-    this.router.navigateByUrl(Path.transferDefinition(null));
   }
 
   onRowClick(definition: TransferDefinition): void {
@@ -71,6 +73,13 @@ export class TransferDefinitionsPageComponent implements OnInit {
   private reloadTableRows() {
     this.transferHttpService.getTable(this.tableParams).subscribe(result => {
       this.tableData = result;
+    });
+  }
+
+  private addParamToUrlQuery(param: any) {
+    this.router.navigate([], {
+      queryParams: param,
+      queryParamsHandling: 'merge'
     });
   }
 

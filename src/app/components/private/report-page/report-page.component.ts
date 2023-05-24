@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import moment from 'moment';
 import {ReportHttpService} from 'src/app/services/report.http.service';
@@ -30,11 +30,11 @@ export class ReportPageComponent extends BaseFormComponent implements OnInit {
   ngOnInit(): void {
     const dateFromStr = moment().startOf('year').format(DATE_FORMAT);
     const dateToStr = moment().endOf('year').format(DATE_FORMAT);
-    this.control(this.DATE_FROM).setValue(dateFromStr);
-    this.control(this.DATE_TO).setValue(dateToStr);
+    this.setControlValue(this.DATE_FROM, dateFromStr);
+    this.setControlValue(this.DATE_TO, dateToStr);
   }
 
-  generateReportPdf(): void {
+  onGenerateReportPdf(): void {
     if (this.isValid()) {
       const dateFrom = this.controlValue(this.DATE_FROM);
       const dateTo = this.controlValue(this.DATE_TO);

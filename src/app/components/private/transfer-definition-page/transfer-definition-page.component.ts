@@ -10,6 +10,7 @@ import {TransferDefinition} from 'src/app/model/transferDefinition';
 import {TransferHttpService} from 'src/app/services/transfer.http.service';
 import {AccountHttpService} from 'src/app/services/account.http.service';
 import {SettingService} from 'src/app/services/setting.service';
+import {AccountService} from 'src/app/services/account.service';
 
 @Component({
   selector: 'tm-transfer-definition-page',
@@ -34,11 +35,11 @@ export class TransferDefinitionPageComponent extends BaseFormComponent {
 
   constructor(el: ElementRef,
               fb: FormBuilder,
-              private router: Router,
               route: ActivatedRoute,
-              private transferService: TransferHttpService,
-              private accountService: AccountHttpService,
-              private categoryService: CategoryHttpService,
+              private router: Router,
+              private transferHttpService: TransferHttpService,
+              private accountService: AccountService,
+              private categoryHttpService: CategoryHttpService,
               private settingService: SettingService) {
 
     super(el, fb);
@@ -51,23 +52,23 @@ export class TransferDefinitionPageComponent extends BaseFormComponent {
       [this.DESCRIPTION, Validators.maxLength(255)]
     ]);
 
-    let definitionId = route.snapshot.params['id'];
+    let definitionId = route.snapshot.params[Path.params.id];
     if (definitionId) {
-      this.transferService.getById(definitionId).subscribe(definition => {
+      this.transferHttpService.getById(definitionId).subscribe(definition => {
         this.definition = definition;
         this.fillForm(definition);
       });
     }
 
-    this.accountService.getAll(true).subscribe(accounts => {
+    this.accountService.accounts$.subscribe(accounts => {
       this.accounts = accounts;
     });
 
-    this.categoryService.getAll().subscribe(categories => {
+    this.categoryHttpService.getAll().subscribe(categories => {
       this.categories = categories;
     });
 
-    this.settingService.settings.subscribe(settings => {
+    this.settingService.settings$.subscribe(settings => {
       this.tags = settings.tags?.split(' ');
     });
   }
@@ -82,14 +83,14 @@ export class TransferDefinitionPageComponent extends BaseFormComponent {
 
   onSaveAndGoBack(): void {
     if (this.isValid()) {
-      this.transferService.saveOrUpdate(this.readObjectFromForm()).subscribe(account => {
-        this.router.navigateByUrl(Path.transferDefinitions);
+      this.transferHttpService.saveOrUpdate(this.readForm()).subscribe(account => {
+        this.router.navigateByUrl(Path.transferDefinitions());
       });
     }
   }
 
   onCancel() {
-    this.router.navigateByUrl(Path.transferDefinitions);
+    this.router.navigateByUrl(Path.transferDefinitions());
   }
 
   private fillForm(definition: TransferDefinition): void {
@@ -102,7 +103,7 @@ export class TransferDefinitionPageComponent extends BaseFormComponent {
     });
   }
 
-  private readObjectFromForm(): TransferDefinition {
+  private readForm(): TransferDefinition {
     const definition = new TransferDefinition();
     definition.id = this.definition?.id;
     definition.sourceAccount = this.controlValue(this.SOURCE_ACCOUNT);

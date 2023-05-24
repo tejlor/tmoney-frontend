@@ -7,7 +7,8 @@ import {Path} from 'src/app/app-routing.module';
 import {BaseFormComponent} from '../../common/base-form.component';
 import {BalanceRequest} from 'src/app/model/balanceRequest';
 import {AccountSummary} from 'src/app/model/accountSummary';
-import {stringToNumber} from 'src/app/utils/utils';
+import {parseAmount} from 'src/app/utils/utils';
+import {HttpParams} from '@angular/common/http';
 
 @Component({
   selector: 'tm-account-balancing-page',
@@ -25,9 +26,9 @@ export class AccountBalancingPageComponent extends BaseFormComponent {
 
   constructor(el: ElementRef,
               fb: FormBuilder,
-              private router: Router,
               route: ActivatedRoute,
-              private accountService: AccountHttpService) {
+              private router: Router,
+              private accountHttpService: AccountHttpService) {
 
     super(el, fb);
 
@@ -36,35 +37,35 @@ export class AccountBalancingPageComponent extends BaseFormComponent {
       [this.BALANCE, true]
     ]);
 
-    let accountCode = route.snapshot.params['code'];
+    let accountCode = route.snapshot.params[Path.params.code];
     if (accountCode) {
-      this.accountService.getByCode(accountCode).subscribe(account => {
+      this.accountHttpService.getByCode(accountCode).subscribe(account => {
         this.account = account;
       });
     }
 
-    this.accountService.getSummary(accountCode).subscribe(summaries => {
+    this.accountHttpService.getSummary(accountCode).subscribe(summaries => {
       this.summary = summaries[0];
     });
   }
 
   onSaveAndGoBack(): void {
     if (this.isValid()) {
-      this.accountService.balance(this.readObjectFromForm()).subscribe(() => {
-        this.router.navigateByUrl(Path.dashboard);
+      this.accountHttpService.balance(this.readForm()).subscribe(() => {
+        this.router.navigateByUrl(Path.dashboard());
       });
     }
   }
 
   onCancel() {
-    this.router.navigateByUrl(Path.dashboard);
+    this.router.navigateByUrl(Path.dashboard());
   }
 
-  private readObjectFromForm(): BalanceRequest {
+  private readForm(): BalanceRequest {
     const request = new BalanceRequest();
     request.accountId = this.account.id;
     request.date = this.controlValue(this.DATE);
-    request.balance = stringToNumber(this.controlValue(this.BALANCE));
+    request.balance = parseAmount(this.controlValue(this.BALANCE));
     return request;
   }
 

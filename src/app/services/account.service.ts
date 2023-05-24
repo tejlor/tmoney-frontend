@@ -1,34 +1,18 @@
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 import {Account} from "../model/account";
 import {AccountHttpService} from "./account.http.service";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class AccountService {
 
-  activeAccounts$: Observable<Account[]>;
-
-  private _activeAccounts: Account[];
-  get activeAccounts() {
-    return this._activeAccounts;
-  }
-  set activeAccounts(value: Account[]) {
-    this._activeAccounts = value;
-    this._activeAccounts$.next(value);
-  }
-  private _activeAccounts$ = new BehaviorSubject<Account[]>([]);
+  accounts$ = new BehaviorSubject<Account[]>([]);
 
 
-  constructor(
-    private accountHttpSevice: AccountHttpService) {
-
-    this.activeAccounts$ = this._activeAccounts$.asObservable();
-
-    this.accountHttpSevice.getAll(false).subscribe(accounts =>
-      this.activeAccounts = accounts
-    );
+  constructor(private accountHttpSevice: AccountHttpService) {
+    this.accountHttpSevice.getAll(false).subscribe(accounts => {
+      this.accounts$.next(accounts);
+    });
   }
 
 }

@@ -1,6 +1,7 @@
 import {Expose} from "class-transformer";
 
 export class TokenInfo {
+  
   @Expose({name: 'access_token'})
   accessToken: string;
 
@@ -10,6 +11,7 @@ export class TokenInfo {
   @Expose({name: 'token_type'})
   tokenType: string;
 
+  @Expose({name: 'scope'})
   scope: string;
 
   @Expose({name: 'expires_in'})

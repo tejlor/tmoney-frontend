@@ -4,13 +4,13 @@ import {trim} from "lodash";
 import {Observer} from "rxjs";
 import {TFormControl} from "./form/form-control";
 
-export class BaseFormComponent {
+export abstract class BaseFormComponent {
 
   formGroup: FormGroup;
 
-  constructor(
-      private el: ElementRef,
-      private fb: FormBuilder) {
+
+  constructor(private el: ElementRef,
+              private fb: FormBuilder) {
   }
 
   /**
@@ -27,9 +27,12 @@ export class BaseFormComponent {
       const validators: ValidatorFn|ValidatorFn[]|null = control.length > 1
         ? control[1] === true ? Validators.required : control[1]
         : null;
-      const onChange: Partial<Observer<any>> = control.length > 2 ? control[2] : null;
+      const onChange: Partial<Observer<any>> = control.length > 2
+        ? control[2]
+        : null;
 
       group[name] = new TFormControl(name, null, validators);
+
       if (onChange) {
         subscriptions[name] = onChange;
       }
@@ -52,6 +55,10 @@ export class BaseFormComponent {
       val = trim(val);
     }
     return val ? val : null;
+  }
+
+  setControlValue(key: string, value: any): void {
+    this.control(key).setValue(value);
   }
 
   isValid(): boolean {

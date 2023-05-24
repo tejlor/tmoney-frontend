@@ -1,7 +1,6 @@
-import {formatNumber} from '@angular/common';
 import {Directive, ElementRef, HostListener, Input} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
-import {DEC_FORMAT} from 'src/app/utils/constants';
+import {formatAmount} from 'src/app/utils/utils';
 
 @Directive({
   selector: '[tmDecimal]'
@@ -17,8 +16,8 @@ export class DecimalDirective  {
     this.elementRef.nativeElement.value = val;
   }
 
-  constructor(
-    private elementRef: ElementRef<HTMLInputElement>) {
+
+  constructor(private elementRef: ElementRef<HTMLInputElement>) {
   }
 
   @HostListener('input', ['$event.target.value'])
@@ -40,11 +39,7 @@ export class DecimalDirective  {
     if (!value) {
       return '';
     }
-    return this.formatValueAsAmount(Number(value.replace(',','.')));
-  }
-
-  private formatValueAsAmount(value: number): string {
-    return formatNumber(value, 'pl-PL', DEC_FORMAT);
+    return formatAmount(Number(value.replace(',','.')));
   }
 
   private unformatValue(value: string): string {

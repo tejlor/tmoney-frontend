@@ -1,5 +1,5 @@
-import { Directive, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import {Directive, EventEmitter, HostListener, Output} from '@angular/core';
+import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 
 @Directive({
   selector: 'input[type=file]',
@@ -31,7 +31,6 @@ export class FileValueAccessor implements ControlValueAccessor {
   }
 
   registerOnChange(fn: (_: any) => void) {
-    console.log('register');
     this.onChange = fn;
   }
 

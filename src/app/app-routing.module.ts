@@ -9,7 +9,6 @@ import {LoginPageComponent} from './components/public/login-page/login-page.comp
 import {PrivatePageComponent} from './components/private/private-page.component';
 import {PublicPageComponent} from './components/public/public-page.component';
 import {EntriesPageComponent} from './components/private/entries-page/entries-page.component';
-import {W3Component} from './components/w3/w3.component';
 import {AccountsPageComponent} from './components/private/accounts-page/accounts-page.component';
 import {AccountPageComponent} from './components/private/account-page/account-page.component';
 import {AccountBalancingPageComponent} from './components/private/account-balancing-page/account-balancing-page.component';
@@ -23,7 +22,6 @@ const routes: Routes = [
     path: 'public',
     component: PublicPageComponent,
     children: [
-      { path: 'w3', component: W3Component },
       { path: 'login', component: LoginPageComponent },
     ]
   },
@@ -33,10 +31,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: 'dashboard', component: DashboardPageComponent },
-      { path: 'entries', component: EntriesPageComponent },
-      { path: 'entries/:code', component: EntriesPageComponent },
-      { path: 'entry/:code/:id', component: EntryPageComponent },
-      { path: 'entry/:code', component: EntryPageComponent },
       { path: 'accounts', component: AccountsPageComponent },
       { path: 'account', component: AccountPageComponent },
       { path: 'account/:code', component: AccountPageComponent },
@@ -44,6 +38,10 @@ const routes: Routes = [
       { path: 'categories', component: CategoriesPageComponent },
       { path: 'category', component: CategoryPageComponent },
       { path: 'category/:id', component: CategoryPageComponent },
+      { path: 'entries', component: EntriesPageComponent },
+      { path: 'entries/:accountCode', component: EntriesPageComponent },
+      { path: 'entry/:accountCode/:id', component: EntryPageComponent },
+      { path: 'entry/:accountCode', component: EntryPageComponent },
       { path: 'transfer/:definitionId', component: TransferPageComponent },
       { path: 'transfer-definitions', component: TransferDefinitionsPageComponent },
       { path: 'transfer-definition', component: TransferDefinitionPageComponent },
@@ -56,26 +54,33 @@ const routes: Routes = [
 ];
 
 export const Path = {
-  login: 'public/login',
+  login: () => 'public/login',
 
-  dashboard: '/private/dashboard',
+  dashboard: () => '/private/dashboard',
 
-  categories: '/private/categories',
-  category: (id: number) => `/private/category/${id ?? ''}`,
-
-  accounts: '/private/accounts',
-  account: (code: string) => `/private/account/${code ?? ''}`,
+  accounts: () => '/private/accounts',
+  account: (code?: string) => `/private/account/${code ?? ''}`,
   accountBalancing: (code: string) => `/private/account/${code}/balancing`,
 
-  entries: (code: string) => `/private/entries/${code ?? ''}`,
-  entry: (code: string, id?: number) => `/private/entry/${code}/${id ?? ''}`,
+  categories: () => '/private/categories',
+  category: (id?: number) => `/private/category/${id ?? ''}`,
 
-  transfer: (id: number) => `/private/transfer/${id}`,
+  entries: (accountCode: string) => `/private/entries/${accountCode ?? ''}`,
+  entry: (accountCode: string, id?: number) => `/private/entry/${accountCode}/${id ?? ''}`,
 
-  transferDefinitions: '/private/transfer-definitions',
-  transferDefinition: (id: number) => `/private/transfer-definition/${id ?? ''}`,
+  transfer: (definitionId: number) => `/private/transfer/${definitionId}`,
 
-  report: '/private/report',
+  transferDefinitions: () => '/private/transfer-definitions',
+  transferDefinition: (id?: number) => `/private/transfer-definition/${id ?? ''}`,
+
+  report: () => '/private/report',
+
+  params: {
+    id: 'id',
+    code: 'code',
+    accountCode: 'accountCode',
+    definitionId: 'definitionId'
+  }
 };
 
 @NgModule({

@@ -12,6 +12,7 @@ export class FilterComponent {
 
   private timeoutId: NodeJS.Timeout;
 
+
   onKeyUp(event: any) {
     this.value = event.target.value;
     clearTimeout(this.timeoutId);

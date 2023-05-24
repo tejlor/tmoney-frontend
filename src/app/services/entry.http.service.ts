@@ -6,12 +6,11 @@ import {TableData} from "../model/tableData";
 import {TableParams} from "../model/tableParams";
 import {HttpService} from "./http.service";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class EntryHttpService extends HttpService {
 
   private readonly baseUrl = 'entries';
+
 
   getById(id: number): Observable<Entry> {
     return this.get(`${this.baseUrl}/${id}`)

@@ -15,12 +15,13 @@ import {DEC_FORMAT} from 'src/app/utils/constants';
 })
 export class CategoriesPageComponent implements OnInit {
 
+  readonly Path = Path;
   readonly DEC_FORMAT = DEC_FORMAT;
 
   tableData: TableData<Category>;
+  tableParams: TableParams;
   dialogConfig = new CategoryDeleteDialogComponent.Config();
 
-  private tableParams: TableParams;
 
   constructor(private router: Router,
               private categoryHttpService: CategoryHttpService) {
@@ -30,29 +31,31 @@ export class CategoriesPageComponent implements OnInit {
   ngOnInit(): void {
     this.tableParams = new TableParams();
     this.tableParams.pageNo = 0;
-    this.tableParams.pageSize = 10;
+    this.tableParams.pageSize = 20;
     this.tableParams.sortBy = 'name ASC';
     this.tableParams.filter = '';
     this.reloadTableRows();
   }
 
-  search(filterText: string) {
-    this.tableParams.filter = filterText;
+  onFilterChange(filterText: any) {
+    if (typeof(filterText) !== 'string') { // may be object
+      return;
+    }
+    this.tableParams.filter = filterText as string;
+    this.addParamToUrlQuery({filterText});
     this.reloadTableRows();
   }
 
   onPageSizeChange(pageSize: number): void {
     this.tableParams.pageSize = pageSize;
+    this.addParamToUrlQuery({pageSize});
     this.reloadTableRows();
   }
 
-  onPageChange(pageNo: number): void {
+  onPageNoChange(pageNo: number): void {
     this.tableParams.pageNo = pageNo;
+    this.addParamToUrlQuery({pageNo});
     this.reloadTableRows();
-  }
-
-  onAddClick(): void {
-    this.router.navigateByUrl(Path.category(null));
   }
 
   onRowClick(category: Category): void {
@@ -73,6 +76,13 @@ export class CategoriesPageComponent implements OnInit {
   private reloadTableRows() {
     this.categoryHttpService.getTable(this.tableParams).subscribe(result => {
       this.tableData = result;
+    });
+  }
+
+  private addParamToUrlQuery(param: any) {
+    this.router.navigate([], {
+      queryParams: param,
+      queryParamsHandling: 'merge'
     });
   }
 

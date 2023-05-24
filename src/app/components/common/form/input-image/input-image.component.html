@@ -1,8 +1,8 @@
 <p>
   <label class="main" [ngStyle]="labelStyle" [ngClass]="{'tm-text-blue': !labelStyle}">{{label}}{{control.isRequired() ? '*' : ''}}:</label>
   <br>
-  <img *ngIf="logoBase64" [src]="logoBase64" height="60px" class="logo"/>
-  <br *ngIf="logoBase64">
+  <img *ngIf="fileBase64" [src]="fileBase64" height="60px" class="logo"/>
+  <br *ngIf="fileBase64">
   <input type="file" [name]="control.name" [formControl]="control" class="w3-input" [ngClass]="{'w3-pale-red w3-border-red': isInvalid()}" 
         (change)="onFileSelected($event)" (value)="onSetFileBase64($event)">
   <span *ngIf="isInvalid()" class="w3-text-red w3-small">{{getErrorMessage()}}</span>

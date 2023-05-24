@@ -1,27 +1,10 @@
 @import '/src/styles/variables.scss';
 
-tm-account-page {
-  height: 100%;
-}
-
-div.body {
-  height: 100%;
-  padding-top: 30px;
-}
-
 div.form {
   @include desktop {
     width: 450px;
   }
   margin: 0px auto;
-}
-
-.w3-input {
-  border-radius: 5px;
-}
-
-p {
-  margin: 24px 0px;
 }
 
 div.tags {

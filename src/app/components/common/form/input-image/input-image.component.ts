@@ -3,11 +3,11 @@ import {BaseInput} from '../base-input/base-input';
 import {TFormControl} from '../form-control';
 
 @Component({
-  selector: 'tm-input-file',
-  templateUrl: './input-file.component.html',
-  styleUrls: ['./input-file.component.scss']
+  selector: 'tm-input-image',
+  templateUrl: './input-image.component.html',
+  styleUrls: ['./input-image.component.scss']
 })
-export class InputFileComponent extends BaseInput {
+export class InputImageComponent extends BaseInput {
 
   @Input() label: string;
   @Input() labelStyle: object;
@@ -17,7 +17,7 @@ export class InputFileComponent extends BaseInput {
   private maxSize = 25 * 1024;  // 25 KB
   private requiredHeight = 60;  // 60px
 
-  logoBase64: string;
+  fileBase64: string;
 
 
   onFileSelected($event: Event): boolean {
@@ -75,13 +75,13 @@ export class InputFileComponent extends BaseInput {
       }
       else {
         const imgBase64Path = event.target.result;
-        this.logoBase64 = imgBase64Path;
+        this.fileBase64 = imgBase64Path;
         return true;
       }
     };
   }
 
   onSetFileBase64(base64: string): void {
-    this.logoBase64 = base64;
+    this.fileBase64 = base64;
   }
 }

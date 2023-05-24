@@ -70,11 +70,34 @@ form > p {
   }
 }
 
-.w3-col.tm-right {
+.w3-col.tm-right-align {
   text-align: right;
-  @media (max-width: 600px) {
+
+  @include mobile {
     padding-top: 8px;
     text-align: left;
+  }
+}
+
+div.w3-col {
+
+  &.tm-left {
+    padding-right: 8px;
+  }
+  
+  &.tm-right {
+    padding-left: 8px;
+  }
+
+  @include mobile {
+    &.tm-left {
+      padding-right: 0px;
+    }
+    
+    &.tm-right {
+      margin-top: -15px;
+      padding-left: 0px;
+    }   
   }
 }
 

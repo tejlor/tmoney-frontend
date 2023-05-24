@@ -13,6 +13,7 @@ export class AccountHttpService extends HttpService {
 
   private readonly baseUrl = 'bank-accounts';
 
+
   getById(id: number): Observable<Account> {
     return this.get(`${this.baseUrl}/${id}`)
       .pipe(map(result => this.deserialize(result)));

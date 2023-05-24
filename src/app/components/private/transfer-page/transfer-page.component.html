@@ -1,8 +1,8 @@
 <div class="w3-card w3-white w3-margin-top w3-padding form">
   <h1>{{definition?.name}}</h1>
   <form [formGroup]="formGroup">
-    <tm-input-date label="Data" [control]="control(DATE)" [tmDatepicker]="datepicker"></tm-input-date>
-    <tm-datepicker #datepicker></tm-datepicker>
+    <tm-input-date label="Data" [control]="control(DATE)" [tmDatePicker]="datepicker"></tm-input-date>
+    <tm-date-picker #datepicker></tm-date-picker>
     <tm-input-text label="Nazwa" [control]="control(NAME)"></tm-input-text>
     <tm-input-number label="Kwota" [control]="control(AMOUNT)"></tm-input-number>
     <tm-textarea label="Opis" [control]="control(DESCRIPTION)">
@@ -12,7 +12,8 @@
     </tm-textarea>
   </form>
   <div>
-    <button class="w3-btn w3-blue w3-border w3-border-blue" (click)="saveAndGoBack()">Zapisz i cofnij</button>
+    <button class="w3-btn w3-blue w3-border w3-border-blue" (click)="onSaveAndGoBack()">Zapisz i cofnij</button>
     &nbsp;
     <button class="w3-btn w3-border" (click)="onCancel()">Anuluj</button>
+  </div>
 </div>

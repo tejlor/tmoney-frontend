@@ -4,7 +4,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {Account} from 'src/app/model/account';
 import {AccountHttpService} from 'src/app/services/account.http.service';
 import {Path} from 'src/app/app-routing.module';
-import {BaseFormComponent} from '../../common/base-form.component';
+import {BaseForm} from '../../common/base-form';
 import {BalanceRequest} from 'src/app/model/balanceRequest';
 import {AccountSummary} from 'src/app/model/accountSummary';
 import {parseAmount} from 'src/app/utils/utils';
@@ -15,7 +15,7 @@ import {HttpParams} from '@angular/common/http';
   templateUrl: './account-balancing-page.component.html',
   styleUrls: ['./account-balancing-page.component.scss']
 })
-export class AccountBalancingPageComponent extends BaseFormComponent {
+export class AccountBalancingPageComponent extends BaseForm {
 
   readonly DATE = 'date';
   readonly BALANCE = 'balance';

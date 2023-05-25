@@ -3,14 +3,14 @@ import {FormBuilder} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Path} from 'src/app/app-routing.module';
 import {OAuthService} from 'src/app/services/oauth.service';
-import {BaseFormComponent} from '../../common/base-form.component';
+import {BaseForm} from '../../common/base-form';
 
 @Component({
   selector: 'tm-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
-export class LoginPageComponent extends BaseFormComponent implements OnInit {
+export class LoginPageComponent extends BaseForm implements OnInit {
 
   readonly LOGIN = 'login';
   readonly PASSWORD = 'password';

@@ -2,13 +2,12 @@ import {Component, ElementRef} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Path} from 'src/app/app-routing.module';
-import {BaseFormComponent} from '../../common/base-form.component';
+import {BaseForm} from '../../common/base-form';
 import {CategoryHttpService} from 'src/app/services/category.http.service';
 import {Category} from 'src/app/model/category';
 import {Account} from 'src/app/model/account';
 import {TransferDefinition} from 'src/app/model/transferDefinition';
 import {TransferHttpService} from 'src/app/services/transfer.http.service';
-import {AccountHttpService} from 'src/app/services/account.http.service';
 import {SettingService} from 'src/app/services/setting.service';
 import {AccountService} from 'src/app/services/account.service';
 
@@ -17,7 +16,7 @@ import {AccountService} from 'src/app/services/account.service';
   templateUrl: './transfer-definition-page.component.html',
   styleUrls: ['./transfer-definition-page.component.scss']
 })
-export class TransferDefinitionPageComponent extends BaseFormComponent {
+export class TransferDefinitionPageComponent extends BaseForm {
 
   readonly SOURCE_ACCOUNT = 'sourceAccount';
   readonly DESTINATION_ACCOUNT = 'destinationAccount';

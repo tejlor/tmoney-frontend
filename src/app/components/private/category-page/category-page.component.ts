@@ -3,11 +3,10 @@ import {FormBuilder} from '@angular/forms';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Category} from 'src/app/model/category';
 import {Account} from 'src/app/model/account';
-import {AccountHttpService} from 'src/app/services/account.http.service';
 import {CategoryHttpService} from 'src/app/services/category.http.service';
 import {bit, parseAmount} from 'src/app/utils/utils';
 import {Path} from 'src/app/app-routing.module';
-import {BaseFormComponent} from '../../common/base-form.component';
+import {BaseForm} from '../../common/base-form';
 import {DEC_FORMAT} from 'src/app/utils/constants';
 import {formatNumber} from '@angular/common';
 import {SettingService} from 'src/app/services/setting.service';
@@ -18,7 +17,7 @@ import {AccountService} from 'src/app/services/account.service';
   templateUrl: './category-page.component.html',
   styleUrls: ['./category-page.component.scss']
 })
-export class CategoryPageComponent extends BaseFormComponent {
+export class CategoryPageComponent extends BaseForm {
 
   readonly NAME = 'name';
   readonly ACCOUNT = 'account';

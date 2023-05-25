@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {BaseFormComponent} from 'src/app/components/common/base-form.component';
+import {BaseForm} from 'src/app/components/common/base-form';
 import {DialogConfig} from 'src/app/components/common/dialog/dialog.component';
 import {Category} from 'src/app/model/category';
 import {CategoryHttpService} from 'src/app/services/category.http.service';
@@ -9,7 +9,7 @@ import {CategoryHttpService} from 'src/app/services/category.http.service';
   selector: 'tm-category-delete-dialog',
   templateUrl: './delete-dialog.component.html'
 })
-export class CategoryDeleteDialogComponent extends BaseFormComponent implements OnInit {
+export class CategoryDeleteDialogComponent extends BaseForm implements OnInit {
 
   readonly NEW_CATEGORY_ID = 'newCategoryId';
 

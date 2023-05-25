@@ -10,14 +10,14 @@ import {CategoryHttpService} from 'src/app/services/category.http.service';
 import {EntryHttpService} from 'src/app/services/entry.http.service';
 import {SettingService} from 'src/app/services/setting.service';
 import {formatAmount, parseAmount} from 'src/app/utils/utils';
-import {BaseFormComponent} from '../../common/base-form.component';
+import {BaseForm} from '../../common/base-form';
 
 @Component({
   selector: 'tm-entry-page',
   templateUrl: './entry-page.component.html',
   styleUrls: ['./entry-page.component.scss']
 })
-export class EntryPageComponent extends BaseFormComponent {
+export class EntryPageComponent extends BaseForm {
 
   readonly CATEGORY = 'category';
   readonly DATE = 'date';

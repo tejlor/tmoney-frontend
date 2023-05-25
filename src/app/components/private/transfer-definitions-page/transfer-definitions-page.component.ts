@@ -1,18 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {TableData} from 'src/app/model/tableData';
 import {TableParams} from 'src/app/model/tableParams';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Path} from 'src/app/app-routing.module';
 import {TransferDefinition} from 'src/app/model/transferDefinition';
 import {TransferHttpService} from 'src/app/services/transfer.http.service';
 import {DialogConfig} from '../../common/dialog/dialog.component';
+import {TablePage} from '../_common/table-page';
 
 @Component({
   selector: 'tm-transfer-definitions-page',
   templateUrl: './transfer-definitions-page.component.html',
   styleUrls: ['./transfer-definitions-page.component.scss']
 })
-export class TransferDefinitionsPageComponent implements OnInit {
+export class TransferDefinitionsPageComponent extends TablePage implements OnInit {
 
   readonly Path = Path;
 
@@ -21,38 +22,15 @@ export class TransferDefinitionsPageComponent implements OnInit {
   dialogConfig = new DialogConfig();
 
 
-  constructor(private router: Router,
+  constructor(router: Router,
+              route: ActivatedRoute,
               private transferHttpService: TransferHttpService) {
 
+    super( router, route);
   }
 
   ngOnInit(): void {
-    this.tableParams = new TableParams();
-    this.tableParams.pageNo = 0;
-    this.tableParams.pageSize = 20;
-    this.tableParams.sortBy = 'name ASC';
-    this.tableParams.filter = '';
-    this.reloadTableRows();
-  }
-
-  onFilterChange(filterText: any) {
-    if (typeof(filterText) !== 'string') { // may be object
-      return;
-    }
-    this.tableParams.filter = filterText as string;
-    this.addParamToUrlQuery({filterText});
-    this.reloadTableRows();
-  }
-
-  onPageSizeChange(pageSize: number): void {
-    this.tableParams.pageSize = pageSize;
-    this.addParamToUrlQuery({pageSize});
-    this.reloadTableRows();
-  }
-
-  onPageNoChange(pageNo: number): void {
-    this.tableParams.pageNo = pageNo;
-    this.addParamToUrlQuery({pageNo});
+    this.initTableParams('name ASC');
     this.reloadTableRows();
   }
 
@@ -70,16 +48,9 @@ export class TransferDefinitionsPageComponent implements OnInit {
       });
   }
 
-  private reloadTableRows() {
+  protected reloadTableRows() {
     this.transferHttpService.getTable(this.tableParams).subscribe(result => {
       this.tableData = result;
-    });
-  }
-
-  private addParamToUrlQuery(param: any) {
-    this.router.navigate([], {
-      queryParams: param,
-      queryParamsHandling: 'merge'
     });
   }
 

@@ -9,13 +9,14 @@ import {TableParams} from 'src/app/model/tableParams';
 import {DialogConfig} from '../../common/dialog/dialog.component';
 import {Path} from 'src/app/app-routing.module';
 import {DEC_FORMAT} from 'src/app/utils/constants';
+import {TablePage} from '../_common/table-page';
 
 @Component({
   selector: 'tm-entries-page',
   templateUrl: './entries-page.component.html',
   styleUrls: ['./entries-page.component.scss']
 })
-export class EntriesPageComponent implements OnInit {
+export class EntriesPageComponent extends TablePage implements OnInit {
 
   readonly Path = Path;
   readonly DEC_FORMAT = DEC_FORMAT;
@@ -28,10 +29,12 @@ export class EntriesPageComponent implements OnInit {
   private accountCode: string;
 
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
+  constructor(router: Router,
+              route: ActivatedRoute,
               private accountHttpService: AccountHttpService,
               private entryHttpService: EntryHttpService) {
+
+    super(router, route);
   }
 
   ngOnInit(): void {
@@ -45,33 +48,7 @@ export class EntriesPageComponent implements OnInit {
       this.account = Account.summary();
     }
 
-    this.tableParams = new TableParams();
-    this.tableParams.pageNo = Number(this.queryParam('pageNo') ?? 0); // if param is empty, Number return NaN and ?? doesn't work
-    this.tableParams.pageSize = Number(this.queryParam('pageSize') ?? 20);
-    this.tableParams.sortBy = 'date DESC, id DESC';
-    this.tableParams.filter = this.queryParam('filterText') ?? '';
-
-    this.reloadTableRows();
-  }
-
-  onFilterChange(filterText: any) {
-    if (typeof(filterText) !== 'string') { // may be object
-      return;
-    }
-    this.tableParams.filter = filterText as string;
-    this.addParamToUrlQuery({filterText});
-    this.reloadTableRows();
-  }
-
-  onPageSizeChange(pageSize: number): void {
-    this.tableParams.pageSize = pageSize;
-    this.addParamToUrlQuery({pageSize});
-    this.reloadTableRows();
-  }
-
-  onPageNoChange(pageNo: number): void {
-    this.tableParams.pageNo = pageNo;
-    this.addParamToUrlQuery({pageNo});
+    this.initTableParams('date DESC, id DESC');
     this.reloadTableRows();
   }
 
@@ -89,20 +66,10 @@ export class EntriesPageComponent implements OnInit {
       });
   }
 
-  private reloadTableRows() {
+  protected reloadTableRows() {
     this.entryHttpService.getTableByAccountCode(this.accountCode, this.tableParams).subscribe(result => {
       this.tableData = result;
     });
   }
 
-  private queryParam(name: string) {
-    return this.route.snapshot.queryParams[name];
-  }
-
-  private addParamToUrlQuery(param: any) {
-    this.router.navigate([], {
-      queryParams: param,
-      queryParamsHandling: 'merge'
-    });
-  }
 }

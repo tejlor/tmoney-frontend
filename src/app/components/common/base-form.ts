@@ -4,7 +4,7 @@ import {trim} from "lodash";
 import {Observer} from "rxjs";
 import {TFormControl} from "./form/form-control";
 
-export abstract class BaseFormComponent {
+export abstract class BaseForm {
 
   formGroup: FormGroup;
 

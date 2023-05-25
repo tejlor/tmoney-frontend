@@ -3,14 +3,14 @@ import {FormBuilder} from '@angular/forms';
 import moment from 'moment';
 import {ReportHttpService} from 'src/app/services/report.http.service';
 import {DATE_FORMAT} from 'src/app/utils/constants';
-import {BaseFormComponent} from '../../common/base-form.component';
+import {BaseForm} from '../../common/base-form';
 
 @Component({
   selector: 'tm-report-page',
   templateUrl: './report-page.component.html',
   styleUrls: ['./report-page.component.scss']
 })
-export class ReportPageComponent extends BaseFormComponent implements OnInit {
+export class ReportPageComponent extends BaseForm implements OnInit {
 
   readonly DATE_FROM = 'DATE_FROM';
   readonly DATE_TO = 'DATE_TO';

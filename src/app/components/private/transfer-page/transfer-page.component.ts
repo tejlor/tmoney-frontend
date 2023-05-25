@@ -1,22 +1,21 @@
-import {formatNumber} from '@angular/common';
+
 import {Component, ElementRef} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Path} from 'src/app/app-routing.module';
 import {TransferDefinition} from 'src/app/model/transferDefinition';
 import {TransferRequest} from 'src/app/model/transferRequest';
 import {SettingService} from 'src/app/services/setting.service';
 import {TransferHttpService} from 'src/app/services/transfer.http.service';
-import {DEC_FORMAT} from 'src/app/utils/constants';
 import {parseAmount} from 'src/app/utils/utils';
-import {BaseFormComponent} from '../../common/base-form.component';
+import {BaseForm} from '../../common/base-form';
 
 @Component({
   selector: 'tm-transfer-page',
   templateUrl: './transfer-page.component.html',
   styleUrls: ['./transfer-page.component.scss']
 })
-export class TransferPageComponent extends BaseFormComponent {
+export class TransferPageComponent extends BaseForm {
 
   readonly DATE = 'date';
   readonly NAME = 'name';

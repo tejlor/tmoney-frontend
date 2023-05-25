@@ -4,7 +4,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {Account} from 'src/app/model/account';
 import {AccountHttpService} from 'src/app/services/account.http.service';
 import {Path} from 'src/app/app-routing.module';
-import {BaseFormComponent} from '../../common/base-form.component';
+import {BaseForm} from '../../common/base-form';
 import {InputImageComponent} from '../../common/form/input-image/input-image.component';
 import {CategoryHttpService} from 'src/app/services/category.http.service';
 import {Category} from 'src/app/model/category';
@@ -14,7 +14,7 @@ import {Category} from 'src/app/model/category';
   templateUrl: './account-page.component.html',
   styleUrls: ['./account-page.component.scss']
 })
-export class AccountPageComponent extends BaseFormComponent {
+export class AccountPageComponent extends BaseForm {
 
   readonly CODE = 'code';
   readonly NAME = 'name';

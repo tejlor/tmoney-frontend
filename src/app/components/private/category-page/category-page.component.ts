@@ -1,4 +1,4 @@
-import {Component, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, ElementRef, QueryList, ViewChildren} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Category} from 'src/app/model/category';
@@ -9,7 +9,6 @@ import {Path} from 'src/app/app-routing.module';
 import {BaseForm} from '../../common/base-form';
 import {DEC_FORMAT} from 'src/app/utils/constants';
 import {formatNumber} from '@angular/common';
-import {SettingService} from 'src/app/services/setting.service';
 import {AccountService} from 'src/app/services/account.service';
 
 @Component({
@@ -33,7 +32,6 @@ export class CategoryPageComponent extends BaseForm {
 
   category: Category;
   accounts: Account[][];
-  tags: string[];
 
 
   constructor(el: ElementRef,
@@ -41,8 +39,7 @@ export class CategoryPageComponent extends BaseForm {
               route: ActivatedRoute,
               private router: Router,
               private accountService: AccountService,
-              private categoryHttpService: CategoryHttpService,
-              private settingService: SettingService) {
+              private categoryHttpService: CategoryHttpService) {
 
     super(el, fb);
 
@@ -75,22 +72,10 @@ export class CategoryPageComponent extends BaseForm {
         this.fillForm(category);
       });
     }
-
-    this.settingService.settings$.subscribe(settings => {
-      this.tags = settings.tags?.split(' ');
-    });
   }
 
   isAccountSelected(account: Account): boolean {
     return (this.category?.account & bit(account.id)) !== 0;
-  }
-
-  onTagClick(tag: string): void {
-    const textarea = document.getElementsByName(this.DEFAULT_DESCRIPTION)[0] as any;
-    const startPos = textarea.selectionStart;
-    const currentText = this.controlValue(this.DEFAULT_DESCRIPTION);
-    const newText = currentText.substring(0, startPos) + tag + currentText.substring(startPos, currentText.length);
-    this.control(this.DEFAULT_DESCRIPTION).setValue(newText);
   }
 
   onSaveAndGoBack(): void {

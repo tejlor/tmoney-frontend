@@ -5,7 +5,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Path} from 'src/app/app-routing.module';
 import {TransferDefinition} from 'src/app/model/transferDefinition';
 import {TransferRequest} from 'src/app/model/transferRequest';
-import {SettingService} from 'src/app/services/setting.service';
 import {TransferHttpService} from 'src/app/services/transfer.http.service';
 import {parseAmount} from 'src/app/utils/utils';
 import {BaseForm} from '../../common/base-form';
@@ -23,13 +22,12 @@ export class TransferPageComponent extends BaseForm {
   readonly DESCRIPTION = 'description';
 
   definition: TransferDefinition;
-  tags: string[];
+
 
   constructor(el: ElementRef,
               fb: FormBuilder,
               route: ActivatedRoute,
               private router: Router,
-              private settingService: SettingService,
               private transferService: TransferHttpService) {
 
     super(el, fb);
@@ -47,18 +45,6 @@ export class TransferPageComponent extends BaseForm {
       this.definition = definition;
       this.fillDefaultDefinitionValues(definition);
     });
-
-    this.settingService.settings$.subscribe(settings => {
-      this.tags = settings.tags?.split(' ');
-    });
-  }
-
-  onTagClick(tag: string): void {
-    const textarea = document.getElementsByName(this.DESCRIPTION)[0] as any;
-    const startPos = textarea.selectionStart;
-    const currentText = this.controlValue(this.DESCRIPTION);
-    const newText = currentText.substring(0, startPos) + tag + currentText.substring(startPos, currentText.length);
-    this.control(this.DESCRIPTION).setValue(newText);
   }
 
   onSaveAndGoBack(): void {

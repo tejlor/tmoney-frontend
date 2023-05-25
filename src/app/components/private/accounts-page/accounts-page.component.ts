@@ -4,14 +4,14 @@ import {Account} from 'src/app/model/account';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Path} from 'src/app/app-routing.module';
 import {AccountHttpService} from 'src/app/services/account.http.service';
-import {TablePage} from '../_common/table-page';
+import {BaseTablePage} from '../_common/base-table-page';
 
 @Component({
   selector: 'tm-accounts-page',
   templateUrl: './accounts-page.component.html',
   styleUrls: ['./accounts-page.component.scss']
 })
-export class AccountsPageComponent extends TablePage implements OnInit {
+export class AccountsPageComponent extends BaseTablePage implements OnInit {
 
   readonly Path = Path;
 

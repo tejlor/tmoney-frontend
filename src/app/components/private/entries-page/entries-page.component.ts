@@ -9,14 +9,14 @@ import {TableParams} from 'src/app/model/tableParams';
 import {DialogConfig} from '../../common/dialog/dialog.component';
 import {Path} from 'src/app/app-routing.module';
 import {DEC_FORMAT} from 'src/app/utils/constants';
-import {TablePage} from '../_common/table-page';
+import {BaseTablePage} from '../_common/base-table-page';
 
 @Component({
   selector: 'tm-entries-page',
   templateUrl: './entries-page.component.html',
   styleUrls: ['./entries-page.component.scss']
 })
-export class EntriesPageComponent extends TablePage implements OnInit {
+export class EntriesPageComponent extends BaseTablePage implements OnInit {
 
   readonly Path = Path;
   readonly DEC_FORMAT = DEC_FORMAT;

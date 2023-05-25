@@ -1,7 +1,7 @@
 import {ActivatedRoute, Router} from "@angular/router";
 import {TableParams} from "src/app/model/tableParams";
 
-export abstract class TablePage {
+export abstract class BaseTablePage {
 
   tableParams: TableParams;
 

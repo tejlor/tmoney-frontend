@@ -6,14 +6,14 @@ import {Path} from 'src/app/app-routing.module';
 import {TransferDefinition} from 'src/app/model/transferDefinition';
 import {TransferHttpService} from 'src/app/services/transfer.http.service';
 import {DialogConfig} from '../../common/dialog/dialog.component';
-import {TablePage} from '../_common/table-page';
+import {BaseTablePage} from '../_common/base-table-page';
 
 @Component({
   selector: 'tm-transfer-definitions-page',
   templateUrl: './transfer-definitions-page.component.html',
   styleUrls: ['./transfer-definitions-page.component.scss']
 })
-export class TransferDefinitionsPageComponent extends TablePage implements OnInit {
+export class TransferDefinitionsPageComponent extends BaseTablePage implements OnInit {
 
   readonly Path = Path;
 

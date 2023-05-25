@@ -8,7 +8,6 @@ import {Category} from 'src/app/model/category';
 import {Account} from 'src/app/model/account';
 import {TransferDefinition} from 'src/app/model/transferDefinition';
 import {TransferHttpService} from 'src/app/services/transfer.http.service';
-import {SettingService} from 'src/app/services/setting.service';
 import {AccountService} from 'src/app/services/account.service';
 
 @Component({
@@ -29,7 +28,6 @@ export class TransferDefinitionPageComponent extends BaseForm {
   definition: TransferDefinition;
   accounts: Account[];
   categories: Category[];
-  tags: string[];
 
 
   constructor(el: ElementRef,
@@ -38,8 +36,7 @@ export class TransferDefinitionPageComponent extends BaseForm {
               private router: Router,
               private transferHttpService: TransferHttpService,
               private accountService: AccountService,
-              private categoryHttpService: CategoryHttpService,
-              private settingService: SettingService) {
+              private categoryHttpService: CategoryHttpService) {
 
     super(el, fb);
 
@@ -66,18 +63,6 @@ export class TransferDefinitionPageComponent extends BaseForm {
     this.categoryHttpService.getAll().subscribe(categories => {
       this.categories = categories;
     });
-
-    this.settingService.settings$.subscribe(settings => {
-      this.tags = settings.tags?.split(' ');
-    });
-  }
-
-  onTagClick(tag: string): void {
-    const textarea = document.getElementsByName(this.DESCRIPTION)[0] as any;
-    const startPos = textarea.selectionStart;
-    const currentText = this.controlValue(this.DESCRIPTION);
-    const newText = currentText.substring(0, startPos) + tag + currentText.substring(startPos, currentText.length);
-    this.control(this.DESCRIPTION).setValue(newText);
   }
 
   onSaveAndGoBack(): void {

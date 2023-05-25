@@ -7,14 +7,14 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {CategoryDeleteDialogComponent} from './delete-dialog/delete-dialog.component';
 import {Path} from 'src/app/app-routing.module';
 import {DEC_FORMAT} from 'src/app/utils/constants';
-import {TablePage} from '../_common/table-page';
+import {BaseTablePage} from '../_common/base-table-page';
 
 @Component({
   selector: 'tm-categories-page',
   templateUrl: './categories-page.component.html',
   styleUrls: ['./categories-page.component.scss']
 })
-export class CategoriesPageComponent extends TablePage implements OnInit {
+export class CategoriesPageComponent extends BaseTablePage implements OnInit {
 
   readonly Path = Path;
   readonly DEC_FORMAT = DEC_FORMAT;

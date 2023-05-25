@@ -29,11 +29,11 @@ import {PublicPageComponent} from './components/public/public-page.component';
 import {PrivatePageComponent} from './components/private/private-page.component';
 import {InputPasswordComponent} from './components/common/form/input-pass/input-pass.component';
 import {CategoryDeleteDialogComponent} from './components/private/categories-page/delete-dialog/delete-dialog.component';
-import {AccountSummaryComponent} from './components/common/panel/account-summary/summary.component';
+import {AccountSummaryComponent} from './components/private/_common/account-summary/summary.component';
 import {OAuthInterceptor} from './config/auth.interceptor';
 import {ErrorHandlerInterceptor} from './config/error-handler.interceptor';
 import {YesNoIconComponent} from './components/common/control/yes-no-icon/yes-no-icon.component';
-import {AccountBadgesComponent} from './components/common/control/account-badges/account-badges.component';
+import {AccountBadgesComponent} from './components/private/_common/account-badges/account-badges.component';
 import {DatePickerComponent} from './components/common/control/date-picker/date-picker.component';
 import {DatePickerDirective} from './components/common/control/date-picker/date-picker.directive';
 import {InputNumberComponent} from './components/common/form/input-number/input-number.component';
@@ -50,6 +50,7 @@ import {AccountBalancingPageComponent} from './components/private/account-balanc
 import {TransferDefinitionPageComponent} from './components/private/transfer-definition-page/transfer-definition-page.component';
 import {TransferDefinitionsPageComponent} from './components/private/transfer-definitions-page/transfer-definitions-page.component';
 import {TransferPageComponent} from './components/private/transfer-page/transfer-page.component';
+import {TaggedTextareaComponent} from './components/private/_common/tagged-description/tagged-textarea.component';
 
 
 function init(oauthService: OAuthService): () => Promise<void> {
@@ -77,6 +78,7 @@ function init(oauthService: OAuthService): () => Promise<void> {
     InputNumberComponent,
     InputRadioGroupComponent,
     TextareaComponent,
+    TaggedTextareaComponent,
     SelectComponent,
     InputRadioComponent,
     DialogComponent,

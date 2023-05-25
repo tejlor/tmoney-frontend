@@ -5,11 +5,7 @@
     <tm-date-picker #datepicker></tm-date-picker>
     <tm-input-text label="Nazwa" [control]="control(NAME)"></tm-input-text>
     <tm-input-number label="Kwota" [control]="control(AMOUNT)"></tm-input-number>
-    <tm-textarea label="Opis" [control]="control(DESCRIPTION)">
-      <div class="tags">
-        <span *ngFor="let tag of tags" class="w3-tag w3-round" (click)="onTagClick(tag)">{{tag}}</span>
-      </div>
-    </tm-textarea>
+    <tm-tagged-textarea label="Opis" [control]="control(DESCRIPTION)"></tm-tagged-textarea>
   </form>
   <div>
     <button class="w3-btn w3-blue w3-border w3-border-blue" (click)="onSaveAndGoBack()">Zapisz i cofnij</button>

@@ -8,7 +8,6 @@ import {Entry} from 'src/app/model/entry';
 import {AccountHttpService} from 'src/app/services/account.http.service';
 import {CategoryHttpService} from 'src/app/services/category.http.service';
 import {EntryHttpService} from 'src/app/services/entry.http.service';
-import {SettingService} from 'src/app/services/setting.service';
 import {formatAmount, parseAmount} from 'src/app/utils/utils';
 import {BaseForm} from '../../common/base-form';
 
@@ -33,7 +32,7 @@ export class EntryPageComponent extends BaseForm {
   summary: AccountSummary;
   formGroup: FormGroup;
   labelStyle: object;
-  tags: string[];
+
 
   constructor(el: ElementRef,
               fb: FormBuilder,
@@ -41,8 +40,7 @@ export class EntryPageComponent extends BaseForm {
               private router: Router,
               private accountHttpService: AccountHttpService,
               private categoryHttpService: CategoryHttpService,
-              private entryHttpService: EntryHttpService,
-              private settingService: SettingService) {
+              private entryHttpService: EntryHttpService) {
 
     super(el, fb);
 
@@ -72,10 +70,6 @@ export class EntryPageComponent extends BaseForm {
         this.fillForm(entry);
       });
     }
-
-    this.settingService.settings$.subscribe(settings => {
-      this.tags = settings.tags?.split(' ');
-    });
   }
 
   private addCurrentCategoryToSelect(): void {
@@ -84,14 +78,6 @@ export class EntryPageComponent extends BaseForm {
         this.categories.splice(0, 0, this.entry.category); // if can't find, add at the beginning
       }
     }
-  }
-
-  onTagClick(tag: string): void {
-    const textarea = document.getElementsByName(this.DESCRIPTION)[0] as any;
-    const startPos = textarea.selectionStart;
-    const currentText = this.controlValue(this.DESCRIPTION) ?? '';
-    const newText = currentText.substring(0, startPos) + tag + currentText.substring(startPos, currentText.length);
-    this.setControlValue(this.DESCRIPTION, newText);
   }
 
   onSaveAndGoBack(): void {

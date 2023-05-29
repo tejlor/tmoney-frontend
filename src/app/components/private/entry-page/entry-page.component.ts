@@ -1,5 +1,6 @@
 import {Component, ElementRef} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Path} from 'src/app/app-routing.module';
 import {AccountSummary} from 'src/app/model/accountSummary';
@@ -8,6 +9,7 @@ import {Entry} from 'src/app/model/entry';
 import {AccountHttpService} from 'src/app/services/account.http.service';
 import {CategoryHttpService} from 'src/app/services/category.http.service';
 import {EntryHttpService} from 'src/app/services/entry.http.service';
+import {DATE_PATTERN, TITLE_POSTFIX} from 'src/app/utils/constants';
 import {formatAmount, parseAmount} from 'src/app/utils/utils';
 import {BaseForm} from '../../common/base-form';
 
@@ -38,6 +40,7 @@ export class EntryPageComponent extends BaseForm {
               fb: FormBuilder,
               route: ActivatedRoute,
               private router: Router,
+              private titleService: Title,
               private accountHttpService: AccountHttpService,
               private categoryHttpService: CategoryHttpService,
               private entryHttpService: EntryHttpService) {
@@ -46,11 +49,11 @@ export class EntryPageComponent extends BaseForm {
 
     this.buildForm([
       [this.CATEGORY, true, this.fillDefaultCategoryValues.bind(this)],
-      [this.DATE, true],
-      [this.NAME, true],
+      [this.DATE, [Validators.required, Validators.pattern(DATE_PATTERN)]],
+      [this.NAME, [Validators.required, Validators.maxLength(100)]],
       [this.SIGN, true],
-      [this.AMOUNT, true],
-      [this.DESCRIPTION]
+      [this.AMOUNT, [Validators.required, Validators.min(0)]],
+      [this.DESCRIPTION, [Validators.maxLength(255)]]
     ]);
 
     let accountCode = route.snapshot.params[Path.params.accountCode];
@@ -68,7 +71,11 @@ export class EntryPageComponent extends BaseForm {
         this.entry = entry;
         this.addCurrentCategoryToSelect();
         this.fillForm(entry);
+        this.titleService.setTitle(`Wpis ${entry.name} ${TITLE_POSTFIX}`);
       });
+    }
+    else {
+      this.titleService.setTitle(`Nowy wpis ${TITLE_POSTFIX}`);
     }
   }
 

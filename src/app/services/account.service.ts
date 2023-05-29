@@ -6,12 +6,20 @@ import {AccountHttpService} from "./account.http.service";
 @Injectable({providedIn: 'root'})
 export class AccountService {
 
-  accounts$ = new BehaviorSubject<Account[]>([]);
+  allAccounts$ = new BehaviorSubject<Account[]>([]);
 
 
   constructor(private accountHttpSevice: AccountHttpService) {
+    this.loadAllAccounts();
+  }
+
+  clearCache(): void {
+    this.loadAllAccounts();
+  }
+
+  private loadAllAccounts() {
     this.accountHttpSevice.getAll(false).subscribe(accounts => {
-      this.accounts$.next(accounts);
+      this.allAccounts$.next(accounts);
     });
   }
 

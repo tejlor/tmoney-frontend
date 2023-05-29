@@ -20,7 +20,7 @@ export class TaggedTextareaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.settingService.settings$.subscribe(settings => {
+    this.settingService.allSettings$.subscribe(settings => {
       this.tags = settings.tags?.split(' ');
     });
   }

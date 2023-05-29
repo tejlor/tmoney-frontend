@@ -20,7 +20,7 @@ export class AccountBadgesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.accountService.accounts$.subscribe(accounts => {
+    this.accountService.allAccounts$.subscribe(accounts => {
       this.accountNames = accounts
         .filter(account => this.isAccountSelected(account))
         .map(account => account.name);

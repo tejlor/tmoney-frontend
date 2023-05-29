@@ -8,6 +8,9 @@ import {BaseForm} from '../../common/base-form';
 import {InputImageComponent} from '../../common/form/input-image/input-image.component';
 import {CategoryHttpService} from 'src/app/services/category.http.service';
 import {Category} from 'src/app/model/category';
+import {COLOR_PATTERN, TITLE_POSTFIX} from 'src/app/utils/constants';
+import {AccountService} from 'src/app/services/account.service';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'tm-account-page',
@@ -42,6 +45,8 @@ export class AccountPageComponent extends BaseForm {
               fb: FormBuilder,
               route: ActivatedRoute,
               private router: Router,
+              private titleService: Title,
+              private accountService: AccountService,
               private accountHttpService: AccountHttpService,
               private categoryHttpService: CategoryHttpService) {
 
@@ -53,10 +58,10 @@ export class AccountPageComponent extends BaseForm {
       [this.ACTIVE, true, this.onActiveChange.bind(this)],
       [this.INCLUDE_IN_SUMMARY, true],
       [this.BALANCING_CATEGORY],
-      [this.COLOR, Validators.pattern("[A-F0-9]{6}")],
-      [this.LIGHT_COLOR, Validators.pattern("[A-F0-9]{6}")],
-      [this.DARK_COLOR, Validators.pattern("[A-F0-9]{6}")],
-      [this.ORDER_NO, Validators.pattern("[1-9]\.[1-9]")],
+      [this.COLOR, Validators.pattern(COLOR_PATTERN)],
+      [this.LIGHT_COLOR, Validators.pattern(COLOR_PATTERN)],
+      [this.DARK_COLOR, Validators.pattern(COLOR_PATTERN)],
+      [this.ORDER_NO, Validators.pattern(/[1-9]\.[1-9]/)],
       [this.ICON, Validators.maxLength(50)],
       [this.LOGO]
     ]);
@@ -66,7 +71,11 @@ export class AccountPageComponent extends BaseForm {
       this.accountHttpService.getByCode(accountCode).subscribe(account => {
         this.account = account;
         this.fillForm(account);
+        this.titleService.setTitle(`Konto ${account.name} ${TITLE_POSTFIX}`);
       });
+    }
+    else {
+      this.titleService.setTitle(`Nowe konto ${TITLE_POSTFIX}`);
     }
 
     this.categoryHttpService.getByAccountCode(accountCode).subscribe(categories => {
@@ -92,6 +101,7 @@ export class AccountPageComponent extends BaseForm {
   onSaveAndGoBack(): void {
     if (this.isValid()) {
       this.accountHttpService.saveOrUpdate(this.readForm()).subscribe(account => {
+        this.accountService.clearCache();
         this.router.navigateByUrl(Path.accounts());
       });
     }

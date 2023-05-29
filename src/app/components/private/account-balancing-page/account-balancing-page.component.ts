@@ -1,5 +1,5 @@
 import {Component, ElementRef} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Account} from 'src/app/model/account';
 import {AccountHttpService} from 'src/app/services/account.http.service';
@@ -8,7 +8,9 @@ import {BaseForm} from '../../common/base-form';
 import {BalanceRequest} from 'src/app/model/balanceRequest';
 import {AccountSummary} from 'src/app/model/accountSummary';
 import {parseAmount} from 'src/app/utils/utils';
-import {HttpParams} from '@angular/common/http';
+import {DATE_PATTERN, TITLE_POSTFIX} from 'src/app/utils/constants';
+import {Title} from '@angular/platform-browser';
+
 
 @Component({
   selector: 'tm-account-balancing-page',
@@ -28,19 +30,21 @@ export class AccountBalancingPageComponent extends BaseForm {
               fb: FormBuilder,
               route: ActivatedRoute,
               private router: Router,
+              private titleService: Title,
               private accountHttpService: AccountHttpService) {
 
     super(el, fb);
 
     this.buildForm([
-      [this.DATE, true],
-      [this.BALANCE, true]
+      [this.DATE, [Validators.required, Validators.pattern(DATE_PATTERN)]],
+      [this.BALANCE, [Validators.required, Validators.min(0)]]
     ]);
 
     let accountCode = route.snapshot.params[Path.params.code];
     if (accountCode) {
       this.accountHttpService.getByCode(accountCode).subscribe(account => {
         this.account = account;
+        this.titleService.setTitle(`Bilansowanie konta ${account.name} ${TITLE_POSTFIX}`);
       });
     }
 

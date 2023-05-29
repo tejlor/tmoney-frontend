@@ -3,6 +3,8 @@ import {AccountSummary} from 'src/app/model/accountSummary';
 import {Account} from 'src/app/model/account';
 import {AccountHttpService} from 'src/app/services/account.http.service';
 import * as _ from 'lodash';
+import {Title} from '@angular/platform-browser';
+import {TITLE_POSTFIX} from 'src/app/utils/constants';
 
 @Component({
   selector: 'tm-dashboard-page',
@@ -14,12 +16,15 @@ export class DashboardPageComponent implements OnInit {
   items: AccountSummary[][];
   summary: AccountSummary;
 
-  
-  constructor(private accountHttpService: AccountHttpService) {
+
+  constructor(private titleService: Title,
+              private accountHttpService: AccountHttpService) {
 
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle(`Panel zarządzający ${TITLE_POSTFIX}`);
+
     this.accountHttpService.getSummary().subscribe((array: AccountSummary[]) => {
       this.items = [];
       for (let item of array) {

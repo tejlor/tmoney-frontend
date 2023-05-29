@@ -14,8 +14,23 @@ export abstract class BaseInput {
       return null;
     }
 
+    console.log(this.control.errors);
+    
+
     if (this.control.hasError('required')) {
       return 'Pole wymagane';
+    }
+
+    if (this.control.hasError('min')) {
+      return `Minimalna wartość to: ${this.control.errors['min'].min}`;
+    }
+
+    if (this.control.hasError('max')) {
+      return `Maksymalna wartość to: ${this.control.errors['max'].max}`;
+    }
+
+    if (this.control.hasError('minlength')) {
+      return `Minimalna długość tekstu to: ${this.control.errors['minlength'].requiredLength} znaków`;
     }
 
     if (this.control.hasError('maxlength')) {

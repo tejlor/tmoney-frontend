@@ -1,5 +1,5 @@
 import {Component, ElementRef, QueryList, ViewChildren} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Category} from 'src/app/model/category';
 import {Account} from 'src/app/model/account';
@@ -7,9 +7,10 @@ import {CategoryHttpService} from 'src/app/services/category.http.service';
 import {bit, parseAmount} from 'src/app/utils/utils';
 import {Path} from 'src/app/app-routing.module';
 import {BaseForm} from '../../common/base-form';
-import {DEC_FORMAT} from 'src/app/utils/constants';
+import {DEC_FORMAT, TITLE_POSTFIX} from 'src/app/utils/constants';
 import {formatNumber} from '@angular/common';
 import {AccountService} from 'src/app/services/account.service';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'tm-category-page',
@@ -27,7 +28,7 @@ export class CategoryPageComponent extends BaseForm {
 
   readonly reportOptions = [{label: "Tak", value: true}, {label: "Nie", value: false}];
 
-  @ViewChildren('accountInput') 
+  @ViewChildren('accountInput')
   private accountInputs: QueryList<ElementRef<HTMLInputElement>>;
 
   category: Category;
@@ -38,21 +39,22 @@ export class CategoryPageComponent extends BaseForm {
               fb: FormBuilder,
               route: ActivatedRoute,
               private router: Router,
+              private titleService: Title,
               private accountService: AccountService,
               private categoryHttpService: CategoryHttpService) {
 
     super(el, fb);
 
     this.buildForm([
-      [this.NAME, true],
+      [this.NAME, [Validators.required, Validators.maxLength(100)]],
       [this.ACCOUNT],
       [this.REPORT, true],
       [this.DEFAULT_AMOUNT],
-      [this.DEFAULT_NAME],
-      [this.DEFAULT_DESCRIPTION]
+      [this.DEFAULT_NAME, [Validators.maxLength(100)]],
+      [this.DEFAULT_DESCRIPTION, [Validators.maxLength(255)]]
     ]);
 
-    this.accountService.accounts$.subscribe(accounts => {
+    this.accountService.allAccounts$.subscribe(accounts => {
       this.accounts = [];
       for (let account of accounts) {
         let pos = account.orderNo.split('.');
@@ -70,7 +72,11 @@ export class CategoryPageComponent extends BaseForm {
       this.categoryHttpService.getById(categoryId).subscribe(category => {
         this.category = category;
         this.fillForm(category);
+        this.titleService.setTitle(`Kategoria ${category.name} ${TITLE_POSTFIX}`);
       });
+    }
+    else {
+      this.titleService.setTitle(`Nowa kategoria ${TITLE_POSTFIX}`);
     }
   }
 

@@ -8,8 +8,9 @@ import {TableData} from 'src/app/model/tableData';
 import {TableParams} from 'src/app/model/tableParams';
 import {DialogConfig} from '../../common/dialog/dialog.component';
 import {Path} from 'src/app/app-routing.module';
-import {DEC_FORMAT} from 'src/app/utils/constants';
+import {DEC_FORMAT, TITLE_POSTFIX} from 'src/app/utils/constants';
 import {BaseTablePage} from '../_common/base-table-page';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'tm-entries-page',
@@ -31,6 +32,7 @@ export class EntriesPageComponent extends BaseTablePage implements OnInit {
 
   constructor(router: Router,
               route: ActivatedRoute,
+              private titleService: Title,
               private accountHttpService: AccountHttpService,
               private entryHttpService: EntryHttpService) {
 
@@ -42,10 +44,12 @@ export class EntriesPageComponent extends BaseTablePage implements OnInit {
     if (this.accountCode) {
       this.accountHttpService.getByCode(this.accountCode).subscribe(result => {
         this.account = result;
+        this.titleService.setTitle(`Wpisy konta ${this.account.name} ${TITLE_POSTFIX}`);
       });
     }
     else {
       this.account = Account.summary();
+      this.titleService.setTitle(`Wszystkie wpisy ${TITLE_POSTFIX}`);
     }
 
     this.initTableParams('date DESC, id DESC');

@@ -1,11 +1,14 @@
 
 import {Component, ElementRef} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
+import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Path} from 'src/app/app-routing.module';
 import {TransferDefinition} from 'src/app/model/transferDefinition';
 import {TransferRequest} from 'src/app/model/transferRequest';
+import {TransferDefinitionHttpService} from 'src/app/services/transfer-definition.http.service';
 import {TransferHttpService} from 'src/app/services/transfer.http.service';
+import {TITLE_POSTFIX} from 'src/app/utils/constants';
 import {parseAmount} from 'src/app/utils/utils';
 import {BaseForm} from '../../common/base-form';
 
@@ -28,7 +31,9 @@ export class TransferPageComponent extends BaseForm {
               fb: FormBuilder,
               route: ActivatedRoute,
               private router: Router,
-              private transferService: TransferHttpService) {
+              private titleService: Title,
+              private transferHttpService: TransferHttpService,
+              private transferDefinitionHttpService: TransferDefinitionHttpService) {
 
     super(el, fb);
 
@@ -41,15 +46,16 @@ export class TransferPageComponent extends BaseForm {
 
     const definitionId = route.snapshot.params[Path.params.definitionId];
 
-    this.transferService.getById(definitionId).subscribe(definition => {
+    this.transferDefinitionHttpService.getById(definitionId).subscribe(definition => {
       this.definition = definition;
       this.fillDefaultDefinitionValues(definition);
+      this.titleService.setTitle(`Przelew ${definition.name} ${TITLE_POSTFIX}`);
     });
   }
 
   onSaveAndGoBack(): void {
     if (this.isValid()) {
-      this.transferService.createTransfer(this.readForm()).subscribe(() => {
+      this.transferHttpService.createTransfer(this.readForm()).subscribe(() => {
         this.router.navigateByUrl(Path.dashboard());
       });
     }

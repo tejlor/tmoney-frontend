@@ -1,8 +1,9 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
+import {Title} from '@angular/platform-browser';
 import moment from 'moment';
 import {ReportHttpService} from 'src/app/services/report.http.service';
-import {DATE_FORMAT} from 'src/app/utils/constants';
+import {DATE_FORMAT, TITLE_POSTFIX} from 'src/app/utils/constants';
 import {BaseForm} from '../../common/base-form';
 
 @Component({
@@ -17,6 +18,7 @@ export class ReportPageComponent extends BaseForm implements OnInit {
 
   constructor(el: ElementRef,
               fb: FormBuilder,
+              private titleService: Title,
               private reportHttpService: ReportHttpService) {
 
     super(el, fb);
@@ -28,6 +30,8 @@ export class ReportPageComponent extends BaseForm implements OnInit {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle(`Raporty ${TITLE_POSTFIX}`);
+
     const dateFromStr = moment().startOf('year').format(DATE_FORMAT);
     const dateToStr = moment().endOf('year').format(DATE_FORMAT);
     this.setControlValue(this.DATE_FROM, dateFromStr);

@@ -7,8 +7,10 @@ import {CategoryHttpService} from 'src/app/services/category.http.service';
 import {Category} from 'src/app/model/category';
 import {Account} from 'src/app/model/account';
 import {TransferDefinition} from 'src/app/model/transferDefinition';
-import {TransferHttpService} from 'src/app/services/transfer.http.service';
 import {AccountService} from 'src/app/services/account.service';
+import {TransferDefinitionHttpService} from 'src/app/services/transfer-definition.http.service';
+import {Title} from '@angular/platform-browser';
+import {TITLE_POSTFIX} from 'src/app/utils/constants';
 
 @Component({
   selector: 'tm-transfer-definition-page',
@@ -34,7 +36,8 @@ export class TransferDefinitionPageComponent extends BaseForm {
               fb: FormBuilder,
               route: ActivatedRoute,
               private router: Router,
-              private transferHttpService: TransferHttpService,
+              private titleService: Title,
+              private transferDefinitionHttpService: TransferDefinitionHttpService,
               private accountService: AccountService,
               private categoryHttpService: CategoryHttpService) {
 
@@ -50,13 +53,17 @@ export class TransferDefinitionPageComponent extends BaseForm {
 
     let definitionId = route.snapshot.params[Path.params.id];
     if (definitionId) {
-      this.transferHttpService.getById(definitionId).subscribe(definition => {
+      this.transferDefinitionHttpService.getById(definitionId).subscribe(definition => {
         this.definition = definition;
         this.fillForm(definition);
+        this.titleService.setTitle(`Definicja przelewu ${definition.name} ${TITLE_POSTFIX}`);
       });
     }
+    else {
+      this.titleService.setTitle(`Nowa definicja przelewu ${TITLE_POSTFIX}`);
+    }
 
-    this.accountService.accounts$.subscribe(accounts => {
+    this.accountService.allAccounts$.subscribe(accounts => {
       this.accounts = accounts;
     });
 
@@ -67,7 +74,7 @@ export class TransferDefinitionPageComponent extends BaseForm {
 
   onSaveAndGoBack(): void {
     if (this.isValid()) {
-      this.transferHttpService.saveOrUpdate(this.readForm()).subscribe(account => {
+      this.transferDefinitionHttpService.saveOrUpdate(this.readForm()).subscribe(account => {
         this.router.navigateByUrl(Path.transferDefinitions());
       });
     }

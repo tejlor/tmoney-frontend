@@ -6,8 +6,9 @@ import {CategoryHttpService} from 'src/app/services/category.http.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CategoryDeleteDialogComponent} from './delete-dialog/delete-dialog.component';
 import {Path} from 'src/app/app-routing.module';
-import {DEC_FORMAT} from 'src/app/utils/constants';
+import {DEC_FORMAT, TITLE_POSTFIX} from 'src/app/utils/constants';
 import {BaseTablePage} from '../_common/base-table-page';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'tm-categories-page',
@@ -26,12 +27,14 @@ export class CategoriesPageComponent extends BaseTablePage implements OnInit {
 
   constructor(router: Router,
               route: ActivatedRoute,
+              private titleService: Title,
               private categoryHttpService: CategoryHttpService) {
 
     super(router, route);
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle(`Kategorie ${TITLE_POSTFIX}`);
     this.initTableParams('name ASC');
     this.reloadTableRows();
   }

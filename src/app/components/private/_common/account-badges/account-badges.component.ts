@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Account} from 'src/app/model/account';
 import {Category} from 'src/app/model/category';
 import {AccountService} from 'src/app/services/account.service';
-import {bit} from 'src/app/utils/utils';
+
 
 @Component({
   selector: 'tm-account-badges',
@@ -28,6 +28,6 @@ export class AccountBadgesComponent implements OnInit {
   }
 
   isAccountSelected(account: Account): boolean {
-    return (this.category.account & bit(account.id)) !== 0;
+    return this.category.accountIds.includes(account.id);
   }
 }

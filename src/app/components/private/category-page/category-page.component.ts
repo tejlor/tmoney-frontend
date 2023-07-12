@@ -4,7 +4,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {Category} from 'src/app/model/category';
 import {Account} from 'src/app/model/account';
 import {CategoryHttpService} from 'src/app/services/category.http.service';
-import {bit, parseAmount} from 'src/app/utils/utils';
+import {parseAmount} from 'src/app/utils/utils';
 import {Path} from 'src/app/app-routing.module';
 import {BaseForm} from '../../common/base-form';
 import {DEC_FORMAT, TITLE_POSTFIX} from 'src/app/utils/constants';
@@ -20,7 +20,7 @@ import {Title} from '@angular/platform-browser';
 export class CategoryPageComponent extends BaseForm {
 
   readonly NAME = 'name';
-  readonly ACCOUNT = 'account';
+  readonly ACCOUNTS = 'accounts';
   readonly REPORT = 'report';
   readonly DEFAULT_AMOUNT = 'defaultAmount';
   readonly DEFAULT_NAME = 'defaultName';
@@ -47,7 +47,7 @@ export class CategoryPageComponent extends BaseForm {
 
     this.buildForm([
       [this.NAME, [Validators.required, Validators.maxLength(100)]],
-      [this.ACCOUNT],
+      [this.ACCOUNTS],
       [this.REPORT, true],
       [this.DEFAULT_AMOUNT],
       [this.DEFAULT_NAME, [Validators.maxLength(100)]],
@@ -57,6 +57,9 @@ export class CategoryPageComponent extends BaseForm {
     this.accountService.allAccounts$.subscribe(accounts => {
       this.accounts = [];
       for (let account of accounts) {
+        if (!account.active) {
+          continue;
+        }
         let pos = account.orderNo.split('.');
         let row = Number(pos[0]) - 1;
         let col = Number(pos[1]) - 1;
@@ -81,7 +84,7 @@ export class CategoryPageComponent extends BaseForm {
   }
 
   isAccountSelected(account: Account): boolean {
-    return (this.category?.account & bit(account.id)) !== 0;
+    return this.category?.accountIds.includes(account.id);
   }
 
   onSaveAndGoBack(): void {
@@ -99,7 +102,7 @@ export class CategoryPageComponent extends BaseForm {
   private fillForm(category: Category): void {
     this.formGroup.patchValue({
       [this.NAME]: category.name,
-      [this.ACCOUNT]: category.account,
+      [this.ACCOUNTS]: category.accountIds,
       [this.REPORT]: category.report,
       [this.DEFAULT_AMOUNT]: category.defaultAmount !== undefined ? formatNumber(category.defaultAmount, 'pl-PL', DEC_FORMAT) : '',
       [this.DEFAULT_NAME]: category.defaultName,
@@ -111,13 +114,13 @@ export class CategoryPageComponent extends BaseForm {
     const category = new Category();
     category.id = this.category?.id;
     category.name = this.controlValue(this.NAME);
-    category.account = this.readAccountInputsValue();
+    category.accountIds = this.readAccountInputsValue();
     category.report = this.controlValue(this.REPORT);
     category.defaultAmount = parseAmount(this.controlValue(this.DEFAULT_AMOUNT));
     category.defaultName = this.controlValue(this.DEFAULT_NAME);
     category.defaultDescription = this.controlValue(this.DEFAULT_DESCRIPTION);
 
-    if (category.account === 0) {
+    if (category.accountIds.length === 0) {
       category.defaultName = null;
       category.defaultAmount = null;
       category.defaultDescription = null;
@@ -126,15 +129,12 @@ export class CategoryPageComponent extends BaseForm {
     return category;
   }
 
-  private readAccountInputsValue(): number {
+  private readAccountInputsValue(): number[] {
     const result = this.accountInputs
       .filter(ref => ref.nativeElement.checked)
-      .reduce((result, ref) => {
-        const accountId = bit(Number(ref.nativeElement.attributes.getNamedItem('accountId').value));
-        return result | accountId;
-      }, 0);
+      .map(ref => Number(ref.nativeElement.attributes.getNamedItem('accountId').value));
 
-    this.setControlValue(this.ACCOUNT, result);
+    //this.setControlValue(this.ACCOUNTS, result);
     return result;
   }
 

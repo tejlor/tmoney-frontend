@@ -52,9 +52,9 @@ export abstract class BaseForm {
   controlValue(key: string): any {
     let val = this.control(key).value;
     if (typeof val === 'string') {
-      val = trim(val);
+      val = val ? trim(val) : null;
     }
-    return val ? val : null;
+    return val;
   }
 
   setControlValue(key: string, value: any): void {

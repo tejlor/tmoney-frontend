@@ -7,7 +7,8 @@ import {TFormControl} from '../../form-control';
   templateUrl: './input-radio.component.html'
 })
 export class InputRadioComponent extends BaseInput {
+
+  @Input() label: string;
   @Input() control: TFormControl;
   @Input() value: any;
-  @Input() label: string;
 }

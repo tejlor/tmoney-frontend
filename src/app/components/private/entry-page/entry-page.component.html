@@ -3,22 +3,17 @@
 <div class="w3-card w3-white w3-margin-top w3-padding form">
   <h1>{{summary?.account.name}}</h1>
   <form [formGroup]="formGroup">
-    <input type="hidden" [formControlName]="ID" />
     <tm-select label="Kategoria" [labelStyle]="labelStyle" [control]="control(CATEGORY)" [options]="categories"></tm-select>
-    <tm-input-date label="Data" [labelStyle]="labelStyle" [control]="control(DATE)" [tmDatepicker]="datepicker"></tm-input-date>
-    <tm-datepicker #datepicker></tm-datepicker>
+    <tm-input-date label="Data" [labelStyle]="labelStyle" [control]="control(DATE)" [tmDatePicker]="datePicker"></tm-input-date>
+    <tm-date-picker #datePicker></tm-date-picker>
     <tm-input-text label="Nazwa" [labelStyle]="labelStyle" [control]="control(NAME)"></tm-input-text>
     <tm-input-radio-group label="Typ" [labelStyle]="labelStyle" [control]="control(SIGN)" [options]="signOptions"></tm-input-radio-group>
     <tm-input-number label="Kwota" [labelStyle]="labelStyle" [control]="control(AMOUNT)"></tm-input-number>
-    <tm-textarea label="Opis" [labelStyle]="labelStyle" [control]="control(DESCRIPTION)">
-      <div class="tags">
-        <span *ngFor="let tag of tags" class="w3-tag w3-round" (click)="onTagClick(tag)">{{tag}}</span>
-      </div>
-    </tm-textarea>
+    <tm-tagged-textarea label="Opis" [labelStyle]="labelStyle" [control]="control(DESCRIPTION)"></tm-tagged-textarea>
   </form>
   <div>
-    <button class="w3-btn" [ngStyle]="{'background-color': '#' + summary?.account.color, 'color': 'white'}" (click)="saveAndGoBack()">Zapisz i cofnij</button>
+    <button class="w3-btn" [ngStyle]="{'background-color': '#' + summary?.account.color, 'color': 'white'}" (click)="onSaveAndGoBack()">Zapisz i cofnij</button>
     &nbsp;
-    <button class="w3-btn" [ngStyle]="{'background-color': '#' + summary?.account.color, 'color': 'white'}" (click)="saveAndClear()">Zapisz i dodaj kolejny</button>
+    <button class="w3-btn" [ngStyle]="{'background-color': '#' + summary?.account.color, 'color': 'white'}" (click)="onSaveAndClear()">Zapisz i dodaj kolejny</button>
   </div>
 </div>

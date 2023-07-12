@@ -1,63 +1,65 @@
-import {Component, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
+import {Component, ElementRef, QueryList, ViewChildren} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Category} from 'src/app/model/category';
 import {Account} from 'src/app/model/account';
-import {AccountHttpService} from 'src/app/services/account.http.service';
 import {CategoryHttpService} from 'src/app/services/category.http.service';
-import {bit, stringToNumber} from 'src/app/utils/utils';
+import {parseAmount} from 'src/app/utils/utils';
 import {Path} from 'src/app/app-routing.module';
-import {BaseFormComponent} from '../../common/base-form.component';
-import {DEC_FORMAT} from 'src/app/utils/constants';
+import {BaseForm} from '../../common/base-form';
+import {DEC_FORMAT, TITLE_POSTFIX} from 'src/app/utils/constants';
 import {formatNumber} from '@angular/common';
-import {SettingService} from 'src/app/services/setting.service';
+import {AccountService} from 'src/app/services/account.service';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'tm-category-page',
   templateUrl: './category-page.component.html',
   styleUrls: ['./category-page.component.scss']
 })
-export class CategoryPageComponent extends BaseFormComponent {
+export class CategoryPageComponent extends BaseForm {
 
-  readonly ID = 'id';
   readonly NAME = 'name';
-  readonly ACCOUNT = 'account';
+  readonly ACCOUNTS = 'accounts';
   readonly REPORT = 'report';
   readonly DEFAULT_AMOUNT = 'defaultAmount';
   readonly DEFAULT_NAME = 'defaultName';
   readonly DEFAULT_DESCRIPTION = 'defaultDescription';
 
-  readonly reportOptions = [{label: "Tak", value: true}, {label: "Nie", value: "false"}];
+  readonly reportOptions = [{label: "Tak", value: true}, {label: "Nie", value: false}];
 
-  @ViewChildren('accountInput') accountInputs: QueryList<ElementRef<HTMLInputElement>>;
+  @ViewChildren('accountInput')
+  private accountInputs: QueryList<ElementRef<HTMLInputElement>>;
 
   category: Category;
   accounts: Account[][];
-  tags: string[];
+
 
   constructor(el: ElementRef,
               fb: FormBuilder,
-              private router: Router,
               route: ActivatedRoute,
-              private accountService: AccountHttpService,
-              private categoryService: CategoryHttpService,
-              private settingService: SettingService) {
+              private router: Router,
+              private titleService: Title,
+              private accountService: AccountService,
+              private categoryHttpService: CategoryHttpService) {
 
     super(el, fb);
 
     this.buildForm([
-      [this.ID],
-      [this.NAME, true],
-      [this.ACCOUNT],
+      [this.NAME, [Validators.required, Validators.maxLength(100)]],
+      [this.ACCOUNTS],
       [this.REPORT, true],
       [this.DEFAULT_AMOUNT],
-      [this.DEFAULT_NAME],
-      [this.DEFAULT_DESCRIPTION]
+      [this.DEFAULT_NAME, [Validators.maxLength(100)]],
+      [this.DEFAULT_DESCRIPTION, [Validators.maxLength(255)]]
     ]);
 
-    this.accountService.getAll(true).subscribe(accounts => {
+    this.accountService.allAccounts$.subscribe(accounts => {
       this.accounts = [];
       for (let account of accounts) {
+        if (!account.active) {
+          continue;
+        }
         let pos = account.orderNo.split('.');
         let row = Number(pos[0]) - 1;
         let col = Number(pos[1]) - 1;
@@ -70,46 +72,37 @@ export class CategoryPageComponent extends BaseFormComponent {
 
     let categoryId = route.snapshot.params['id'];
     if (categoryId) {
-      this.categoryService.getById(categoryId).subscribe(category => {
+      this.categoryHttpService.getById(categoryId).subscribe(category => {
         this.category = category;
         this.fillForm(category);
+        this.titleService.setTitle(`Kategoria ${category.name} ${TITLE_POSTFIX}`);
       });
     }
-
-    this.settingService.settings.subscribe(settings => {
-      this.tags = settings.tags?.split(' ');
-    });
+    else {
+      this.titleService.setTitle(`Nowa kategoria ${TITLE_POSTFIX}`);
+    }
   }
 
-  onTagClick(tag: string): void {
-    const textarea = document.getElementsByName(this.DEFAULT_DESCRIPTION)[0] as any;
-    const startPos = textarea.selectionStart;
-    const currentText = this.controlValue(this.DEFAULT_DESCRIPTION);
-    const newText = currentText.substring(0, startPos) + tag + currentText.substring(startPos, currentText.length);
-    this.control(this.DEFAULT_DESCRIPTION).setValue(newText);
+  isAccountSelected(account: Account): boolean {
+    return this.category?.accountIds.includes(account.id);
   }
 
   onSaveAndGoBack(): void {
     if (this.isValid()) {
-      this.categoryService.saveOrUpdate(this.readObjectFromForm()).subscribe(category => {
-        this.router.navigateByUrl(Path.categories);
+      this.categoryHttpService.saveOrUpdate(this.readForm()).subscribe(category => {
+        this.router.navigateByUrl(Path.categories());
       });
     }
   }
 
   onCancel() {
-    this.router.navigateByUrl(Path.categories);
-  }
-
-  isAccountSelected(account: Account): boolean {
-    return (this.category?.account & bit(account.id)) !== 0;
+    this.router.navigateByUrl(Path.categories());
   }
 
   private fillForm(category: Category): void {
     this.formGroup.patchValue({
-      [this.ID]: category.id,
       [this.NAME]: category.name,
-      [this.ACCOUNT]: category.account,
+      [this.ACCOUNTS]: category.accountIds,
       [this.REPORT]: category.report,
       [this.DEFAULT_AMOUNT]: category.defaultAmount !== undefined ? formatNumber(category.defaultAmount, 'pl-PL', DEC_FORMAT) : '',
       [this.DEFAULT_NAME]: category.defaultName,
@@ -117,17 +110,17 @@ export class CategoryPageComponent extends BaseFormComponent {
     });
   }
 
-  private readObjectFromForm(): Category {
+  private readForm(): Category {
     const category = new Category();
-    category.id = this.controlValue(this.ID);
+    category.id = this.category?.id;
     category.name = this.controlValue(this.NAME);
-    category.account = this.readAccountInputsValue();
+    category.accountIds = this.readAccountInputsValue();
     category.report = this.controlValue(this.REPORT);
-    category.defaultAmount = stringToNumber(this.controlValue(this.DEFAULT_AMOUNT));
+    category.defaultAmount = parseAmount(this.controlValue(this.DEFAULT_AMOUNT));
     category.defaultName = this.controlValue(this.DEFAULT_NAME);
     category.defaultDescription = this.controlValue(this.DEFAULT_DESCRIPTION);
 
-    if (category.account === 0) {
+    if (category.accountIds.length === 0) {
       category.defaultName = null;
       category.defaultAmount = null;
       category.defaultDescription = null;
@@ -136,15 +129,12 @@ export class CategoryPageComponent extends BaseFormComponent {
     return category;
   }
 
-  private readAccountInputsValue(): number {
+  private readAccountInputsValue(): number[] {
     const result = this.accountInputs
       .filter(ref => ref.nativeElement.checked)
-      .reduce((result, ref) => {
-        const accountId = bit(Number(ref.nativeElement.attributes.getNamedItem('accountId').value));
-        return result | accountId;
-      }, 0);
+      .map(ref => Number(ref.nativeElement.attributes.getNamedItem('accountId').value));
 
-    this.control(this.ACCOUNT).setValue(result);
+    //this.setControlValue(this.ACCOUNTS, result);
     return result;
   }
 

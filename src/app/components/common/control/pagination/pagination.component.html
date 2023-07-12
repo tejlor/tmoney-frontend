@@ -1,0 +1,31 @@
+<div class="w3-row pagination">
+  <div class="w3-col m6">
+    <div>
+      <label class="inline">Pokaż</label>
+      <select class="w3-select w3-border" (change)="onPageSizeChange($event)">
+        <option *ngFor="let size of pageSizeOptions" [value]="size" [selected]="pageSize === size">{{size}}</option>
+      </select>
+      <label>wierszy</label>
+    </div>
+  </div>
+  <div class="w3-col m6 tm-right-align">
+    <div class="w3-show-inline-block">
+      <div class="w3-bar w3-border w3-round">
+        <button class="w3-button" (click)="goPrev()" [disabled]="!canPrev()">
+          Wstecz
+        </button>
+        <ng-container *ngFor="let item of visiblePages">
+          <span *ngIf="item === null">...</span>
+          <button *ngIf="item !== null" class="w3-button"
+            [ngStyle]="{'backgroundColor': (item === pageNo) ? color : null, 'color': (item === pageNo) ? 'white' : null}"
+            (click)="changePage(item)">
+            {{item + 1}}
+          </button>
+        </ng-container>
+        <button class="w3-button" (click)="goNext()" [disabled]="!canNext()">
+          Dalej
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

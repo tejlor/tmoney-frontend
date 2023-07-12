@@ -7,7 +7,9 @@ import {TFormControl} from '../form-control';
   templateUrl: './input-pass.component.html'
 })
 export class InputPasswordComponent extends BaseInput {
+
   @Input() label: string;
   @Input() labelStyle: object;
   @Input() control: TFormControl;
+
 }

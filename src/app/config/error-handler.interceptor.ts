@@ -7,9 +7,7 @@ import {Path} from "../app-routing.module";
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
 
-  constructor(
-    private router: Router) {
-
+  constructor(private router: Router) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -25,7 +23,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     switch(error.status) {
       case 400:
         if (error.error.error === 'invalid_grant') {
-          this.router.navigateByUrl(Path.login);
+          this.router.navigateByUrl(Path.login());
           throw new Error('Refresh token jest nieprawidłowy');
         }
         else {
@@ -33,7 +31,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         }
         break;
       case 401:
-        this.router.navigateByUrl(Path.login);
+        this.router.navigateByUrl(Path.login());
         throw new Error('Token jest nieprawidłowy');
       case 403:
         msg = '403 - Nie posiadasz uparwnień do wykonania tej akcji';
@@ -42,7 +40,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         msg = '404 - Nie odnaleziono danych';
         break;
       case 500:
-        msg = '500 - Wystąpił nieoczekiwany bład na serwerze';
+        msg = '500 - Wystąpił nieoczekiwany błąd na serwerze';
         break;
       default:
         msg = `Wystąpił nieznany kod statusu odpowiedzi: ${error.status} - ${error.statusText}`;

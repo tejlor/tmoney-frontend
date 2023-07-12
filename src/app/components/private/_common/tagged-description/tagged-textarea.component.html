@@ -1,0 +1,5 @@
+<tm-textarea label="Opis" [labelStyle]="labelStyle" [control]="control">
+  <div class="tags">
+    <span *ngFor="let tag of tags" class="w3-tag w3-round" (click)="onTagClick(tag)">{{tag}}</span>
+  </div>
+</tm-textarea>

@@ -2,26 +2,26 @@ import {Injectable} from "@angular/core";
 import {BehaviorSubject} from "rxjs";
 import {SettingHttpService} from "./setting.http.service";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class SettingService {
 
-  settings = new BehaviorSubject<any>({});
+  allSettings$ = new BehaviorSubject<any>({});
 
-  constructor(
-    private settingHttpService: SettingHttpService) {
-
-    this.loadAll();
+  constructor(private settingHttpService: SettingHttpService) {
+    this.loadAllSettings();
   }
 
-  private loadAll(): void {
+  clearCache(): void {
+    this.loadAllSettings();
+  }
+
+  private loadAllSettings(): void {
     this.settingHttpService.getAll().subscribe(result => {
       const settings: any = {};
       result.forEach(setting => {
         settings[setting.name] = setting.value;
       });
-      this.settings.next(settings);
+      this.allSettings$.next(settings);
     });
   }
 }

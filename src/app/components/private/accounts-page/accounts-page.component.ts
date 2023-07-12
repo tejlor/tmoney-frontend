@@ -1,61 +1,44 @@
 import {Component, OnInit} from '@angular/core';
 import {TableData} from 'src/app/model/tableData';
-import {TableParams} from 'src/app/model/tableParams';
-import {Category} from 'src/app/model/category';
 import {Account} from 'src/app/model/account';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Path} from 'src/app/app-routing.module';
 import {AccountHttpService} from 'src/app/services/account.http.service';
+import {BaseTablePage} from '../_common/base-table-page';
+import {Title} from '@angular/platform-browser';
+import {TITLE_POSTFIX} from 'src/app/utils/constants';
 
 @Component({
   selector: 'tm-accounts-page',
   templateUrl: './accounts-page.component.html',
   styleUrls: ['./accounts-page.component.scss']
 })
-export class AccountsPageComponent implements OnInit {
+export class AccountsPageComponent extends BaseTablePage implements OnInit {
+
+  readonly Path = Path;
 
   tableData: TableData<Account>;
 
-  private tableParams: TableParams;
 
-  constructor(private router: Router,
+  constructor(router: Router,
+              route: ActivatedRoute,
+              private titleService: Title,
               private accountHttpService: AccountHttpService) {
 
+    super(router, route);
   }
 
   ngOnInit(): void {
-    this.tableParams = new TableParams();
-    this.tableParams.pageNo = 0;
-    this.tableParams.pageSize = 10;
-    this.tableParams.sortBy = 'orderNo ASC';
-    this.tableParams.filter = '';
+    this.titleService.setTitle(`Konta ${TITLE_POSTFIX}`);
+    this.initTableParams('orderNo ASC');
     this.reloadTableRows();
-  }
-
-  search(filterText: string) {
-    this.tableParams.filter = filterText;
-    this.reloadTableRows();
-  }
-
-  onPageSizeChange(pageSize: number): void {
-    this.tableParams.pageSize = pageSize;
-    this.reloadTableRows();
-  }
-
-  onPageChange(pageNo: number): void {
-    this.tableParams.pageNo = pageNo;
-    this.reloadTableRows();
-  }
-
-  onAddClick(): void {
-    this.router.navigateByUrl(Path.account(null));
   }
 
   onRowClick(account: Account): void {
     this.router.navigateByUrl(Path.account(account.code));
   }
 
-  private reloadTableRows() {
+  protected reloadTableRows() {
     this.accountHttpService.getTable(this.tableParams).subscribe(result => {
       this.tableData = result;
     });

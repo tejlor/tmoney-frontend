@@ -7,7 +7,9 @@ import {TFormControl} from '../form-control';
   templateUrl: './textarea.component.html'
 })
 export class TextareaComponent extends BaseInput {
+
   @Input() label: string;
   @Input() labelStyle: object;
   @Input() control: TFormControl;
+
 }

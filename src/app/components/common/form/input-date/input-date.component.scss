@@ -7,15 +7,16 @@ span.input {
 
   i {
     padding: 12px 12px 0px 12px;
-    background: themeBlue(8);
+    background: #ccc;
     text-align: center;
-    border-right: none;
     border-radius: 0px 5px 5px 0px;
     cursor: pointer;
   }
 
   input {
     border: none;
-    background-color: transparent;
+    background-color: white;
+    border-radius: 5px 0px 0px 5px;
+    z-index: 1;
   }
 }

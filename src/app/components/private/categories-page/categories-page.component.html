@@ -1,11 +1,11 @@
 <h1>Kategorie</h1>
 
 <div class="w3-row header">
-  <div class="w3-col m6 tm-left">
-    <button class="w3-btn tm-blue" (click)="onAddClick()"><i class="fa-solid fa-plus"></i> Nowy</button>
+  <div class="w3-col m6">
+    <button class="w3-btn tm-blue" [routerLink]="Path.category()"><i class="fa-solid fa-plus"></i> Nowa</button>
   </div>
-  <div class="w3-col m6 tm-right">
-    <tm-filter (change)="search($event)"></tm-filter>
+  <div class="w3-col m6 tm-right-align">
+    <tm-filter [value]="tableParams.filter" (change)="onFilterChange($event)"></tm-filter>
   </div>
 </div>
 
@@ -49,7 +49,7 @@
   </table>
 </div>
 
-<tm-pagination [tableInfo]="tableData?.tableInfo" (pageSizeChange)="onPageSizeChange($event)"
-  (pageChange)="onPageChange($event)"></tm-pagination>
+<tm-pagination [tableInfo]="tableData?.tableInfo" [pageSize]="tableParams.pageSize" [pageNo]="tableParams.pageNo"
+  (pageChange)="onPageNoChange($event)" (pageSizeChange)="onPageSizeChange($event)"></tm-pagination>
 
 <tm-category-delete-dialog [config]="dialogConfig" (onConfirm)="onDeleteConfirm()"></tm-category-delete-dialog>

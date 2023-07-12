@@ -1,5 +1,4 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {EntryHttpService} from 'src/app/services/entry.http.service';
 import {Path} from 'src/app/app-routing.module';
 import {ReportHttpService} from 'src/app/services/report.http.service';
 import packageInfo from 'package.json';
@@ -14,19 +13,22 @@ export class PrivatePageComponent {
   readonly Path = Path;
   readonly version = packageInfo.version;
 
-  @ViewChild('overlay') overlay: ElementRef;
-  @ViewChild('nav') nav: ElementRef;
+  @ViewChild('overlay')
+  private overlay: ElementRef;
 
-  constructor(
-    private entryHttpService: EntryHttpService,
-    private reportHttpService: ReportHttpService) {
+  @ViewChild('nav')
+  private nav: ElementRef;
+
+
+  constructor(private reportHttpService: ReportHttpService) {
+
   }
 
   openMenu(): void {
     if (this.nav.nativeElement.style.display === 'block') {
       this.nav.nativeElement.style.display = 'none';
       this.overlay.nativeElement.style.display = "none";
-    } 
+    }
     else {
       this.nav.nativeElement.style.display = 'block';
       this.overlay.nativeElement.style.display = "block";
@@ -38,13 +40,9 @@ export class PrivatePageComponent {
     this.overlay.nativeElement.style.display = "none";
   }
 
-  updateBalances(): void {
-    this.entryHttpService.updateBalances().subscribe(() => window.location.reload());
-  }
-
-  generateSummaryPdf(): void {
+  onGenerateSummaryPdf(): void {
     this.reportHttpService.generateTable().subscribe(result => {
-      const url= window.URL.createObjectURL(result);
+      const url = window.URL.createObjectURL(result);
       window.open(url);
     });
   }

@@ -1,32 +1,24 @@
-<div class="body">
-  <div class="w3-card w3-white w3-margin-top w3-padding form">
-    <h1>{{category ? category.name : 'Nowa kategoria'}}</h1>
-    <form [formGroup]="formGroup">
-      <input type="hidden" [formControlName]="ID" />
-      <tm-input-text label="Nazwa" [control]="control(NAME)"></tm-input-text>
-      <div>
-        <label class="main tm-text-blue">Konta:</label>
-        <div class="w3-row" *ngFor="let row of accounts">
-          <div *ngFor="let account of row" class="w3-col m6">
-            <input type="checkbox" class="w3-check" #accountInput [attr.accountId]="account.id" [checked]="isAccountSelected(account)">
-            <label> {{account.name}}</label>
-          </div>
+<div class="w3-card w3-white w3-margin-top w3-padding form">
+  <h1>{{category ? category.name : 'Nowa kategoria'}}</h1>
+  <form [formGroup]="formGroup">
+    <tm-input-text label="Nazwa" [control]="control(NAME)"></tm-input-text>
+    <div>
+      <label class="main tm-text-blue">Konta:</label>
+      <div class="w3-row" *ngFor="let row of accounts">
+        <div *ngFor="let account of row" class="w3-col m6">
+          <input type="checkbox" class="w3-check" #accountInput [attr.accountId]="account.id" [checked]="isAccountSelected(account)">
+          <label> {{account.name}}</label>
         </div>
-        <input type="hidden" [formControlName]="ACCOUNT" />
       </div>
-      <tm-input-radio-group label="Do raportów" [control]="control(REPORT)" [options]="reportOptions"></tm-input-radio-group>
-      <tm-input-number label="Domyślna kwota" [control]="control(DEFAULT_AMOUNT)" tmDecimal></tm-input-number>
-      <tm-input-text label="Domyślna nazwa" [control]="control(DEFAULT_NAME)"></tm-input-text>
-      <tm-textarea label="Domyślny opis" [control]="control(DEFAULT_DESCRIPTION)">
-        <div class="tags">
-          <span *ngFor="let tag of tags" class="w3-tag w3-round" (click)="onTagClick(tag)">{{tag}}</span>
-        </div>
-      </tm-textarea>
-      <div>
-        <button class="w3-btn w3-blue w3-border w3-border-blue" (click)="onSaveAndGoBack()">Zapisz i cofnij</button>
-        &nbsp;
-        <button class="w3-btn w3-border" (click)="onCancel()">Anuluj</button>
-      </div>
-    </form>
-  </div>
+    </div>
+    <tm-input-radio-group label="Do raportów" [control]="control(REPORT)" [options]="reportOptions"></tm-input-radio-group>
+    <tm-input-number label="Domyślna kwota" [control]="control(DEFAULT_AMOUNT)"></tm-input-number>
+    <tm-input-text label="Domyślna nazwa" [control]="control(DEFAULT_NAME)"></tm-input-text>
+    <tm-tagged-textarea label="Domyślny opis" [control]="control(DEFAULT_DESCRIPTION)"></tm-tagged-textarea>
+    <div>
+      <button class="w3-btn w3-blue w3-border w3-border-blue" (click)="onSaveAndGoBack()">Zapisz i cofnij</button>
+      &nbsp;
+      <button class="w3-btn w3-border" (click)="onCancel()">Anuluj</button>
+    </div>
+  </form>
 </div>

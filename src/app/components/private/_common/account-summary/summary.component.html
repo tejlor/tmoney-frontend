@@ -1,0 +1,15 @@
+<div *ngIf="summary" class="w3-card w3-text-white" [ngStyle]="{backgroundColor: summary.account.colorCss}">
+  <h2 [routerLink]="Path.entries(summary.account.code)"><i [ngClass]="summary.account.icon"></i> {{summary.account.name}}</h2>
+
+  <div class="last-transaction">
+    <div>{{summary.entry?.date}}</div>
+    <div class="gap">|</div>
+    <div class="name">{{summary.entry?.name}}</div>
+    <div class="gap">|</div>
+    <div [class]="{'red': summary.entry?.amount < 0, 'green': summary.entry?.amount > 0}">
+      {{summary.entry?.amount | number: DEC_FORMAT}}
+    </div>
+  </div>
+
+  <h3>{{(summary.account.code === null ? summary.entry?.balance : summary.entry?.balanceOverall) | number: DEC_FORMAT}} <span>PLN</span></h3>
+</div>

@@ -1,8 +1,8 @@
-import { AbstractDto } from "./abstractDto";
+import {AbstractDto} from "./abstractDto";
 
 export class Category extends AbstractDto {
 	name: string;
-	account: number;
+	accountIds: number[];
 	report: boolean;
 	defaultName: number;
 	defaultAmount: number;

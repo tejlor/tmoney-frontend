@@ -1,7 +1,7 @@
-<div class="w3-modal" [ngClass]="{'none': config.mode === DialogMode.HIDDEN, 'block': config.mode !== DialogMode.HIDDEN}">
+<div class="w3-modal" [style.display]="config.visible ? 'block' : 'none'">
   <div class="w3-modal-content w3-animate-top w3-card" [ngStyle]="{'width': config.width}">
     <header class="w3-container tm-blue"> 
-      <span class="w3-button w3-display-topright" (click)="onCloseClick()">&times;</span>
+      <span class="w3-button w3-display-topright" (click)="onClose()">&times;</span>
       <h2>{{config.header}}</h2>
     </header>
     <div class="w3-container">
@@ -10,9 +10,9 @@
     </div>
     <footer class="w3-padding w3-border-top">
       <div class="w3-bar w3-right-align" >
-        <button class="w3-button w3-round w3-white" (click)="onCloseClick()">{{config.closeText}}</button>
+        <button class="w3-button w3-round w3-white" (click)="onClose()">{{config.closeText}}</button>
         &nbsp;
-        <button class="w3-button w3-round tm-green" (click)="onAcceptClick()">{{config.acceptText}}</button>      
+        <button class="w3-button w3-round tm-green" (click)="onAccept()">{{config.acceptText}}</button>      
       </div>
     </footer>
   </div>

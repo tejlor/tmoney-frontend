@@ -8,9 +8,11 @@ import {TFormControl} from '../form-control';
   styleUrls: ['./input-color.component.scss']
 })
 export class InputColorComponent extends BaseInput {
+
   @Input() label: string;
   @Input() labelStyle: object;
   @Input() control: TFormControl;
+
 
   getColor(): string {
     let value = this.control.value as string;
@@ -18,7 +20,7 @@ export class InputColorComponent extends BaseInput {
       return '#' + value;
     }
     else {
-      return '#CCC';
+      return '#CCCCCC';
     }
   }
 }

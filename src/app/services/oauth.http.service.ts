@@ -6,12 +6,15 @@ import {HttpService} from "./http.service";
 import {environment} from "src/environments/environment";
 import {TokenInfo} from "../model/tokenInfo";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class OAuthHttpService extends HttpService {
 
   private readonly baseUrl = 'oauth';
+  private readonly headers = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Authorization': 'Basic ' + btoa(environment.clientName + ":" + environment.clientPass)
+  };
+
 
   getAccessToken(login: string, password: string): Observable<TokenInfo> {
     const params = new HttpParams({
@@ -21,11 +24,7 @@ export class OAuthHttpService extends HttpService {
         password: password
       }
     });
-    const headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Basic ' + btoa(environment.clientName + ":" + environment.clientPass)
-    };
-    return this.post(`${this.baseUrl}/token`, params, headers)
+    return this.post(`${this.baseUrl}/token`, params, this.headers)
       .pipe(map(result => this.deserialize(result)));
   }
 
@@ -36,11 +35,7 @@ export class OAuthHttpService extends HttpService {
         refresh_token: refreshToken
       }
     });
-    const headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Basic ' + btoa(environment.clientName + ":" + environment.clientPass)
-    };
-    return this.post(`${this.baseUrl}/token`, params, headers)
+    return this.post(`${this.baseUrl}/token`, params, this.headers)
       .pipe(map(result => this.deserialize(result)));
   }
 

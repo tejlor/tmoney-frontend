@@ -4,27 +4,26 @@ import {Observable, Subject} from "rxjs";
 import {TokenInfo} from "../model/tokenInfo";
 import {OAuthHttpService} from "./oauth.http.service";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class OAuthService {
 
   private readonly TOKEN_KEY = 'token';
 
   private _token: TokenInfo;
+
   private get token(): TokenInfo {
     if (!this._token) {
       this._token = this.loadFromLocalStorage();
     }
     return this._token;
   }
+
   private set token(token: TokenInfo) {
     this._token = token;
     this.saveToLocalStorage(token);
   }
 
-  constructor(
-    private oauthHttpService: OAuthHttpService) {
+  constructor(private oauthHttpService: OAuthHttpService) {
   }
 
   getAccessToken(): string {

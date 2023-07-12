@@ -2,21 +2,22 @@ import {Component, ElementRef} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Path} from 'src/app/app-routing.module';
-import {BaseFormComponent} from '../../common/base-form.component';
+import {BaseForm} from '../../common/base-form';
 import {CategoryHttpService} from 'src/app/services/category.http.service';
 import {Category} from 'src/app/model/category';
 import {Account} from 'src/app/model/account';
 import {TransferDefinition} from 'src/app/model/transferDefinition';
-import {TransferHttpService} from 'src/app/services/transfer.http.service';
-import {AccountHttpService} from 'src/app/services/account.http.service';
-import {SettingService} from 'src/app/services/setting.service';
+import {AccountService} from 'src/app/services/account.service';
+import {TransferDefinitionHttpService} from 'src/app/services/transfer-definition.http.service';
+import {Title} from '@angular/platform-browser';
+import {TITLE_POSTFIX} from 'src/app/utils/constants';
 
 @Component({
   selector: 'tm-transfer-definition-page',
   templateUrl: './transfer-definition-page.component.html',
   styleUrls: ['./transfer-definition-page.component.scss']
 })
-export class TransferDefinitionPageComponent extends BaseFormComponent {
+export class TransferDefinitionPageComponent extends BaseForm {
 
   readonly SOURCE_ACCOUNT = 'sourceAccount';
   readonly DESTINATION_ACCOUNT = 'destinationAccount';
@@ -29,17 +30,16 @@ export class TransferDefinitionPageComponent extends BaseFormComponent {
   definition: TransferDefinition;
   accounts: Account[];
   categories: Category[];
-  tags: string[];
 
 
   constructor(el: ElementRef,
               fb: FormBuilder,
-              private router: Router,
               route: ActivatedRoute,
-              private transferService: TransferHttpService,
-              private accountService: AccountHttpService,
-              private categoryService: CategoryHttpService,
-              private settingService: SettingService) {
+              private router: Router,
+              private titleService: Title,
+              private transferDefinitionHttpService: TransferDefinitionHttpService,
+              private accountService: AccountService,
+              private categoryHttpService: CategoryHttpService) {
 
     super(el, fb);
 
@@ -51,45 +51,37 @@ export class TransferDefinitionPageComponent extends BaseFormComponent {
       [this.DESCRIPTION, Validators.maxLength(255)]
     ]);
 
-    let definitionId = route.snapshot.params['id'];
+    let definitionId = route.snapshot.params[Path.params.id];
     if (definitionId) {
-      this.transferService.getById(definitionId).subscribe(definition => {
+      this.transferDefinitionHttpService.getById(definitionId).subscribe(definition => {
         this.definition = definition;
         this.fillForm(definition);
+        this.titleService.setTitle(`Definicja przelewu ${definition.name} ${TITLE_POSTFIX}`);
       });
     }
+    else {
+      this.titleService.setTitle(`Nowa definicja przelewu ${TITLE_POSTFIX}`);
+    }
 
-    this.accountService.getAll(true).subscribe(accounts => {
+    this.accountService.allAccounts$.subscribe(accounts => {
       this.accounts = accounts;
     });
 
-    this.categoryService.getAll().subscribe(categories => {
+    this.categoryHttpService.getAll().subscribe(categories => {
       this.categories = categories;
     });
-
-    this.settingService.settings.subscribe(settings => {
-      this.tags = settings.tags?.split(' ');
-    });
-  }
-
-  onTagClick(tag: string): void {
-    const textarea = document.getElementsByName(this.DESCRIPTION)[0] as any;
-    const startPos = textarea.selectionStart;
-    const currentText = this.controlValue(this.DESCRIPTION);
-    const newText = currentText.substring(0, startPos) + tag + currentText.substring(startPos, currentText.length);
-    this.control(this.DESCRIPTION).setValue(newText);
   }
 
   onSaveAndGoBack(): void {
     if (this.isValid()) {
-      this.transferService.saveOrUpdate(this.readObjectFromForm()).subscribe(account => {
-        this.router.navigateByUrl(Path.transferDefinitions);
+      this.transferDefinitionHttpService.saveOrUpdate(this.readForm()).subscribe(account => {
+        this.router.navigateByUrl(Path.transferDefinitions());
       });
     }
   }
 
   onCancel() {
-    this.router.navigateByUrl(Path.transferDefinitions);
+    this.router.navigateByUrl(Path.transferDefinitions());
   }
 
   private fillForm(definition: TransferDefinition): void {
@@ -102,7 +94,7 @@ export class TransferDefinitionPageComponent extends BaseFormComponent {
     });
   }
 
-  private readObjectFromForm(): TransferDefinition {
+  private readForm(): TransferDefinition {
     const definition = new TransferDefinition();
     definition.id = this.definition?.id;
     definition.sourceAccount = this.controlValue(this.SOURCE_ACCOUNT);

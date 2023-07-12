@@ -5,5 +5,7 @@ import {Component, Input} from '@angular/core';
   templateUrl: './yes-no-icon.component.html'
 })
 export class YesNoIconComponent {
+
   @Input() value: boolean;
+
 }

@@ -7,10 +7,12 @@ import {TFormControl} from '../form-control';
   templateUrl: './input-radio-group.component.html'
 })
 export class InputRadioGroupComponent extends BaseInput {
-  @Input() control: TFormControl;
+
   @Input() label: string;
   @Input() labelStyle: object;
+  @Input() control: TFormControl;
   @Input() options: Option[];
+
 }
 
 export type Option = {label: string, value: any};

@@ -1,11 +1,11 @@
 <h1>Konta</h1>
 
 <div class="w3-row header">
-  <div class="w3-col m6 tm-left">
-    <button class="w3-btn tm-blue" (click)="onAddClick()"><i class="fa-solid fa-plus"></i> Nowe</button>
+  <div class="w3-col m6">
+    <button class="w3-btn tm-blue" [routerLink]="Path.account()"><i class="fa-solid fa-plus"></i> Nowe</button>
   </div>
-  <div class="w3-col m6 tm-right">
-    <tm-filter (change)="search($event)"></tm-filter>
+  <div class="w3-col m6 tm-right-align">
+    <tm-filter [value]="tableParams.filter" (change)="onFilterChange($event)"></tm-filter>
   </div>
 </div>
 
@@ -42,10 +42,11 @@
         <td class="w3-center-align"><tm-yes-no-icon [value]="account.includeInSummary"></tm-yes-no-icon></td>
         <td><tm-account-colors [account]="account"></tm-account-colors></td>
         <td class="w3-center-align">{{account.orderNo}}</td>
-        <td class="w3-center-align"><tm-fa-icon [value]="account.icon"></tm-fa-icon></td>
+        <td class="w3-center-align"><i [ngClass]="account.icon"></i></td>
       </tr>
     </tbody>
   </table>
 </div>
 
-<tm-pagination [tableInfo]="tableData?.tableInfo" (pageSizeChange)="onPageSizeChange($event)" (pageChange)="onPageChange($event)"></tm-pagination>
+<tm-pagination [tableInfo]="tableData?.tableInfo" [pageSize]="tableParams.pageSize" [pageNo]="tableParams.pageNo"
+  (pageChange)="onPageNoChange($event)" (pageSizeChange)="onPageSizeChange($event)"></tm-pagination>

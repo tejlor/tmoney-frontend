@@ -7,7 +7,9 @@ import {TFormControl} from '../form-control';
   templateUrl: './input-text.component.html'
 })
 export class InputTextComponent extends BaseInput {
+
   @Input() label: string;
   @Input() labelStyle: object;
   @Input() control: TFormControl;
+
 }

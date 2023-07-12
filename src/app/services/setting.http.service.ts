@@ -4,12 +4,11 @@ import {map, Observable} from "rxjs";
 import {Setting} from "../model/setting";
 import {HttpService} from "./http.service";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class SettingHttpService extends HttpService {
 
   private readonly baseUrl = 'settings';
+  
 
   getAll(): Observable<Setting[]> {
     return this.get(`${this.baseUrl}`)

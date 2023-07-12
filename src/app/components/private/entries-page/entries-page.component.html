@@ -1,95 +1,97 @@
-  <h1>{{account?.name}}</h1>
+<h1>{{account?.name}}</h1>
 
-  <div class="w3-row header">
-    <div class="w3-col m6 tm-left">
-      <button class="w3-btn w3-text-white" [style.backgroundColor]="'#' + account?.color" [routerLink]="Path.entry(account?.code)" [disabled]="!account?.code">
-        <i class="fa-solid fa-plus"></i> Nowy
-      </button>
-    </div>
-    <div class="w3-col m6 tm-right">
-      <tm-filter [value]="tableParams.filter" (change)="search($event)"></tm-filter>
-    </div>
+<div class="w3-row header">
+  <div class="w3-col m6">
+    <button class="w3-btn w3-text-white" [style.backgroundColor]="account?.colorCss" [routerLink]="Path.entry(account?.code)" [disabled]="!account?.code">
+      <i class="fa-solid fa-plus"></i> Nowy
+    </button>
   </div>
-
-  <div class="w3-responsive">
-    <table *ngIf="account?.code" class="w3-table-all w3-hoverable w3-card">
-      <colgroup>
-        <col width="5%">
-        <col width="10%">
-        <col width="20%">
-        <col width="15%">
-        <col width="25%">
-        <col width="10%">
-        <col width="10%">
-        <col width="5%">
-      </colgroup>
-      <thead class="w3-text-white">
-        <tr [style.backgroundColor]="'#' + account?.color">
-          <th>ID</th>
-          <th>Data</th>
-          <th>Nazwa</th>
-          <th>Kategoria</th>
-          <th>Opis</th>
-          <th class="w3-right-align">Kwota</th>
-          <th class="w3-right-align">Saldo</th>
-          <th class="w3-center-align">Opcje</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let entry of tableData?.rows" (click)="onRowClick(entry)">
-          <td>{{entry.id}}</td>
-          <td>{{entry.date}}</td>
-          <td>{{entry.name}}</td>
-          <td><i *ngIf="entry.category.report === false" class="fa-solid fa-arrow-right-arrow-left">&nbsp;</i>{{entry.category.name}}</td>
-          <td>{{entry.description}}</td>
-          <td class="w3-right-align" [ngClass]="{'w3-text-red': entry.amount < 0, 'w3-text-green': entry.amount > 0}">
-            {{entry.amount | number: DEC_FORMAT}}</td>
-          <td class="w3-right-align">{{entry.balance | number: DEC_FORMAT}}</td>
-          <td class="w3-center-align"><i class="fa-regular fa-trash-can" (click)="onRemoveEntryClick($event, entry)"></i></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <table *ngIf="!account?.code" class="w3-table-all w3-hoverable w3-card">
-      <colgroup>
-        <col width="5%">
-        <col width="10%">
-        <col width="10%">
-        <col width="20%">
-        <col width="15%">
-        <col width="20%">
-        <col width="10%">
-        <col width="10%">
-      </colgroup>
-      <thead class="w3-text-white">
-        <tr [style.backgroundColor]="'#' + account?.color">
-          <th>ID</th>
-          <th>Data</th>
-          <th>Konto</th>
-          <th>Nazwa</th>
-          <th>Kategoria</th>
-          <th>Opis</th>
-          <th class="w3-right-align">Kwota</th>
-          <th class="w3-right-align">Saldo</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let entry of tableData?.rows" (click)="onRowClick(entry)" [ngStyle]="{backgroundColor: '#' + entry.account.lightColor}">
-          <td>{{entry.id}}</td>
-          <td>{{entry.date}}</td>
-          <td>{{entry.account.name}}</td>
-          <td>{{entry.name}}</td>
-          <td><i *ngIf="entry.category.report === false" class="fa-solid fa-arrow-right-arrow-left">&nbsp;</i>{{entry.category.name}}</td>
-          <td>{{entry.description}}</td>
-          <td class="w3-right-align" [ngClass]="{'w3-text-red': entry.amount < 0, 'w3-text-green': entry.amount > 0}">
-            {{entry.amount | number: DEC_FORMAT}}</td>
-          <td class="w3-right-align">{{entry.balanceOverall | number: DEC_FORMAT}}</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="w3-col m6 tm-right-align">
+    <tm-filter [value]="tableParams.filter" (change)="onFilterChange($event)"></tm-filter>
   </div>
+</div>
 
-  <tm-pagination [color]="'#' + account?.color" [tableInfo]="tableData?.tableInfo" [pageSize]="tableParams.pageSize" [pageNo]="tableParams.pageNo"
-    (pageChange)="onPageChange($event)" (pageSizeChange)="onPageSizeChange($event)"></tm-pagination>
+<div class="w3-responsive">
+  <table *ngIf="account?.code else summaryTable" class="w3-table-all w3-hoverable w3-card">
+    <colgroup>
+      <col width="5%">
+      <col width="10%">
+      <col width="20%">
+      <col width="15%">
+      <col width="25%">
+      <col width="10%">
+      <col width="10%">
+      <col width="5%">
+    </colgroup>
+    <thead class="w3-text-white">
+      <tr [style.backgroundColor]="account?.colorCss">
+        <th>ID</th>
+        <th>Data</th>
+        <th>Nazwa</th>
+        <th>Kategoria</th>
+        <th>Opis</th>
+        <th class="w3-right-align">Kwota</th>
+        <th class="w3-right-align">Saldo</th>
+        <th class="w3-center-align">Opcje</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entry of tableData?.rows" (click)="onRowClick(entry)">
+        <td>{{entry.id}}</td>
+        <td>{{entry.date}}</td>
+        <td>{{entry.name}}</td>
+        <td><i *ngIf="entry.category.report === false" class="fa-solid fa-arrow-right-arrow-left">&nbsp;</i>{{entry.category.name}}</td>
+        <td>{{entry.description}}</td>
+        <td class="w3-right-align" [ngClass]="{'w3-text-red': entry.amount < 0, 'w3-text-green': entry.amount > 0}">
+          {{entry.amount | number: DEC_FORMAT}}</td>
+        <td class="w3-right-align">{{entry.balance | number: DEC_FORMAT}}</td>
+        <td class="w3-center-align"><i class="fa-regular fa-trash-can" (click)="onRemoveEntryClick($event, entry)"></i></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-  <tm-dialog [config]="dialogConfig"></tm-dialog>
+<tm-pagination [color]="account?.colorCss" [tableInfo]="tableData?.tableInfo" [pageSize]="tableParams.pageSize" [pageNo]="tableParams.pageNo"
+  (pageChange)="onPageNoChange($event)" (pageSizeChange)="onPageSizeChange($event)"></tm-pagination>
+
+<tm-dialog [config]="dialogConfig"></tm-dialog>
+
+<ng-template #summaryTable>
+  <table class="w3-table-all w3-hoverable w3-card">
+    <colgroup>
+      <col width="5%">
+      <col width="10%">
+      <col width="10%">
+      <col width="20%">
+      <col width="15%">
+      <col width="20%">
+      <col width="10%">
+      <col width="10%">
+    </colgroup>
+    <thead class="w3-text-white">
+      <tr [style.backgroundColor]="account?.colorCss">
+        <th>ID</th>
+        <th>Data</th>
+        <th>Konto</th>
+        <th>Nazwa</th>
+        <th>Kategoria</th>
+        <th>Opis</th>
+        <th class="w3-right-align">Kwota</th>
+        <th class="w3-right-align">Saldo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entry of tableData?.rows" (click)="onRowClick(entry)" [ngStyle]="{backgroundColor: entry.account.lightColorCss}">
+        <td>{{entry.id}}</td>
+        <td>{{entry.date}}</td>
+        <td>{{entry.account.name}}</td>
+        <td>{{entry.name}}</td>
+        <td><i *ngIf="entry.category.report === false" class="fa-solid fa-arrow-right-arrow-left">&nbsp;</i>{{entry.category.name}}</td>
+        <td>{{entry.description}}</td>
+        <td class="w3-right-align" [ngClass]="{'w3-text-red': entry.amount < 0, 'w3-text-green': entry.amount > 0}">
+          {{entry.amount | number: DEC_FORMAT}}</td>
+        <td class="w3-right-align">{{entry.balanceOverall | number: DEC_FORMAT}}</td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>

@@ -1,11 +1,10 @@
-<h1>Raporty</h1>
-
 <div class="w3-card w3-white w3-margin-top w3-padding form">
+  <h1>Raporty</h1>
   <form [formGroup]="formGroup">
-    <tm-input-date label="Data początkowa" [control]="control(DATE_FROM)" [tmDatepicker]="datepickerFrom"></tm-input-date>
-    <tm-datepicker #datepickerFrom></tm-datepicker>
-    <tm-input-date label="Data końcowa" [control]="control(DATE_TO)" [tmDatepicker]="datepickerTo"></tm-input-date>
-    <tm-datepicker #datepickerTo></tm-datepicker>
+    <tm-input-date label="Data początkowa" [control]="control(DATE_FROM)" [tmDatePicker]="datePickerFrom"></tm-input-date>
+    <tm-date-picker #datePickerFrom></tm-date-picker>
+    <tm-input-date label="Data końcowa" [control]="control(DATE_TO)" [tmDatePicker]="datePickerTo"></tm-input-date>
+    <tm-date-picker #datePickerTo></tm-date-picker>
   </form>
-  <button class="w3-btn w3-blue w3-border w3-border-blue" (click)="generateReportPdf()">Generuj PDF</button>
+  <button class="w3-btn w3-blue w3-border w3-border-blue" (click)="onGenerateReportPdf()">Generuj PDF</button>
 </div>

@@ -11,9 +11,8 @@ export class OAuthInterceptor implements HttpInterceptor {
   private anonymousUrls = ['oauth/token'];
   private regexp = new RegExp('^https?:\/\/.+?\/(api\/)?(.+)$'); // http://192.168.1.3:2711/ or https://tmoney/api/
 
-  constructor(
-    private router: Router,
-    private oauthService: OAuthService) {
+  constructor(private router: Router,
+              private oauthService: OAuthService) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -23,8 +22,8 @@ export class OAuthInterceptor implements HttpInterceptor {
 
     const token = this.oauthService.getAccessToken();
     if (!token) {
-      this.router.navigateByUrl(Path.login);
-      throw new Error('Token is missing');
+      this.router.navigateByUrl(Path.login());
+      throw new Error('Brak tokena');
     }
 
     const header = `Bearer ${token}`;

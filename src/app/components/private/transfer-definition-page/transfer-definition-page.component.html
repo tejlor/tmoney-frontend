@@ -1,21 +1,15 @@
-<div class="body">
-  <div class="w3-card w3-white w3-margin-top w3-padding form">
-    <h1>{{definition ? definition.name : 'Nowa definicja'}}</h1>
-    <form [formGroup]="formGroup">
-      <tm-select label="Konto źródłowe" [control]="control(SOURCE_ACCOUNT)" [options]="accounts"></tm-select>
-      <tm-select label="Konto docelowe" [control]="control(DESTINATION_ACCOUNT)" [options]="accounts"></tm-select>
-      <tm-select label="Kategoria" [control]="control(CATEGORY)" [options]="categories"></tm-select>
-      <tm-input-text label="Nazwa" [control]="control(NAME)"></tm-input-text>
-      <tm-textarea label="Opis" [control]="control(DESCRIPTION)">
-        <div class="tags">
-          <span *ngFor="let tag of tags" class="w3-tag w3-round" (click)="onTagClick(tag)">{{tag}}</span>
-        </div>
-      </tm-textarea>
-      <div>
-        <button class="w3-btn w3-blue w3-border w3-border-blue" (click)="onSaveAndGoBack()">Zapisz i cofnij</button>
-        &nbsp;
-        <button class="w3-btn w3-border" (click)="onCancel()">Anuluj</button>
-      </div>
-    </form>
-  </div>
+<div class="w3-card w3-white w3-margin-top w3-padding form">
+  <h1>{{definition ? definition.name : 'Nowa definicja'}}</h1>
+  <form [formGroup]="formGroup">
+    <tm-select label="Konto źródłowe" [control]="control(SOURCE_ACCOUNT)" [options]="accounts"></tm-select>
+    <tm-select label="Konto docelowe" [control]="control(DESTINATION_ACCOUNT)" [options]="accounts"></tm-select>
+    <tm-select label="Kategoria" [control]="control(CATEGORY)" [options]="categories"></tm-select>
+    <tm-input-text label="Nazwa" [control]="control(NAME)"></tm-input-text>
+    <tm-tagged-textarea label="Opis" [control]="control(DESCRIPTION)"></tm-tagged-textarea>
+    <div>
+      <button class="w3-btn w3-blue w3-border w3-border-blue" (click)="onSaveAndGoBack()">Zapisz i cofnij</button>
+      &nbsp;
+      <button class="w3-btn w3-border" (click)="onCancel()">Anuluj</button>
+    </div>
+  </form>
 </div>

@@ -15,6 +15,7 @@ export class Entry extends AbstractDto {
 	description: string;
 	balance: number;
 	balanceOverall: number;
+	externalId: string;
 
 	constructor() {
 		super();

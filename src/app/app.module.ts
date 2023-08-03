@@ -51,6 +51,8 @@ import {TransferDefinitionPageComponent} from './components/private/transfer-def
 import {TransferDefinitionsPageComponent} from './components/private/transfer-definitions-page/transfer-definitions-page.component';
 import {TransferPageComponent} from './components/private/transfer-page/transfer-page.component';
 import {TaggedTextareaComponent} from './components/private/_common/tagged-description/tagged-textarea.component';
+import {TransactionsImportDialogComponent} from './components/private/dashboard-page/panel/import-dialog/import-dialog.component';
+import {InputFileComponent} from './components/common/form/input-file/input-file.component';
 
 
 function init(oauthService: OAuthService): () => Promise<void> {
@@ -104,7 +106,9 @@ function init(oauthService: OAuthService): () => Promise<void> {
     AccountBalancingPageComponent,
     TransferDefinitionPageComponent,
     TransferDefinitionsPageComponent,
-    TransferPageComponent
+    TransferPageComponent,
+    TransactionsImportDialogComponent,
+    InputFileComponent
   ],
   imports: [
     BrowserModule,

@@ -17,9 +17,11 @@
   <div class="w3-bar buttons">
     <button class="w3-btn" [routerLink]="Path.entries(account.code)"><i class="fa-solid fa-table"></i></button>
     <button class="w3-btn" [routerLink]="Path.entry(account.code)"><i class="fa-solid fa-plus"></i></button>
+    <button class="w3-btn" (click)="onUploadTransactionsClick($event)" *ngIf="canImportTransactions()"><i class="fa-solid fa-cloud-arrow-up"></i></button>
     <button class="w3-btn" [routerLink]="Path.accountBalancing(account.code)" *ngIf="account.balancingCategory"><i class="fa-solid fa-scale-balanced"></i></button>
     <button class="w3-btn"><i class="fa-solid fa-chart-column"></i></button>
     <button class="w3-btn" (click)="onPdfClick()"><i class="fa-solid fa-file-pdf"></i></button>
     <button class="w3-btn" [routerLink]="Path.account(account.code)"><i class="fa-solid fa-gear"></i></button>
   </div>
 </div>
+<tm-transactions-import-dialog [config]="dialogConfig" (onConfirm)="processImportedEntries($event)"></tm-transactions-import-dialog>

@@ -44,8 +44,19 @@ export class EntryHttpService extends HttpService {
     return this.post(`${this.baseUrl}/updateBalances`);
   }
 
+  importTransactions(file: File): Observable<Entry[]> {
+    const formData = new FormData();
+    formData.append("file", file, file.name);
+    return this.post(`${this.baseUrl}/transactions`, formData)
+      .pipe(map(result => this.deserializeArray(result)));
+  }
+
   private deserialize(entry: object): Entry {
     return plainToInstance(Entry, entry);
+  }
+
+  private deserializeArray(entries: object[]): Entry[] {
+    return plainToInstance(Entry, entries);
   }
 
   private deserializeTableData(entry: object): TableData<Entry> {

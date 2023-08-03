@@ -1,7 +1,7 @@
 <tm-account-summary [summary]="summary"></tm-account-summary>
 
 <div class="w3-card w3-white w3-margin-top w3-padding form">
-  <h1>{{summary?.account.name}}</h1>
+  <h1>{{summary?.account.name}}<span *ngIf="stateEntries">[{{stateIndex+1}}/{{stateEntries.length}}]</span></h1>
   <form [formGroup]="formGroup">
     <tm-select label="Kategoria" [labelStyle]="labelStyle" [control]="control(CATEGORY)" [options]="categories"></tm-select>
     <tm-input-date label="Data" [labelStyle]="labelStyle" [control]="control(DATE)" [tmDatePicker]="datePicker"></tm-input-date>
@@ -12,8 +12,15 @@
     <tm-tagged-textarea label="Opis" [labelStyle]="labelStyle" [control]="control(DESCRIPTION)"></tm-tagged-textarea>
   </form>
   <div>
-    <button class="w3-btn" [ngStyle]="{'background-color': '#' + summary?.account.color, 'color': 'white'}" (click)="onSaveAndGoBack()">Zapisz i cofnij</button>
+    <button class="w3-btn" [ngStyle]="{'background-color': '#' + summary?.account.color, 'color': 'white'}" 
+    (click)="onSaveAndGoBack()">Zapisz i cofnij</button>
     &nbsp;
-    <button class="w3-btn" [ngStyle]="{'background-color': '#' + summary?.account.color, 'color': 'white'}" (click)="onSaveAndClear()">Zapisz i dodaj kolejny</button>
+    <button class="w3-btn" [ngStyle]="{'background-color': '#' + summary?.account.color, 'color': 'white'}" 
+    *ngIf="!stateEntries || stateIndex+1 < stateEntries.length"
+    (click)="onSaveAndClear()">Zapisz i dodaj kolejny</button>
+    &nbsp;
+    <button class="w3-btn w3-border" 
+    *ngIf="stateEntries && stateIndex < stateEntries.length"
+    (click)="onSkip()">Pomiń</button>
   </div>
 </div>

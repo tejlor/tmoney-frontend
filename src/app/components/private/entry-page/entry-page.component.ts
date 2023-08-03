@@ -30,6 +30,8 @@ export class EntryPageComponent extends BaseForm {
   readonly signOptions = [{label: "Przychód", value: 1}, {label: "Koszt", value: -1}];
 
   entry: Entry;
+  stateEntries: Entry[];
+  stateIndex: number;
   categories: Category[];
   summary: AccountSummary;
   formGroup: FormGroup;
@@ -75,6 +77,16 @@ export class EntryPageComponent extends BaseForm {
       });
     }
     else {
+      const state = this.router.getCurrentNavigation().extras?.state;
+      if (state && state['entries']) {
+        this.stateIndex = 0;
+        this.stateEntries = state['entries'];
+        this.entry = this.stateEntries[this.stateIndex];
+        this.fillForm(this.entry);
+        if (this.entry.category) {
+          this.fillDefaultCategoryValues(this.entry.category);
+        }
+      }
       this.titleService.setTitle(`Nowy wpis ${TITLE_POSTFIX}`);
     }
   }
@@ -96,14 +108,29 @@ export class EntryPageComponent extends BaseForm {
   }
 
   onSaveAndClear(): void {
-    if(this.isValid()) {
+    if (this.isValid()) {
       this.entryHttpService.saveOrUpdate(this.readForm()).subscribe(entry => {
-        this.fillForm(new Entry());
-        this.formGroup.markAsUntouched();
-        this.formGroup.updateValueAndValidity();
-        this.loadSummary(this.summary.account.code);
+       this.loadNextEntry();
       });
     }
+  }
+
+  onSkip() {
+    this.loadNextEntry();
+  }
+
+  private loadNextEntry() {
+    let newEntry: Entry;
+    if (this.stateEntries && ++this.stateIndex < this.stateEntries.length) {
+      newEntry = this.stateEntries[this.stateIndex];
+    }
+    else {
+      newEntry = new Entry();
+    }
+    this.fillForm(newEntry);
+    this.formGroup.markAsUntouched();
+    this.formGroup.updateValueAndValidity();
+    this.loadSummary(this.summary.account.code);
   }
 
   private loadSummary(code: string): void {
@@ -142,8 +169,9 @@ export class EntryPageComponent extends BaseForm {
 
   private readForm(): Entry {
     const entry = new Entry();
-    entry.account = this.summary.account;
     entry.id = this.entry?.id;
+    entry.externalId = this.entry?.externalId;
+    entry.account = this.summary.account;
     entry.category = this.controlValue(this.CATEGORY) as Category;
     entry.date = this.controlValue(this.DATE);
     entry.name = this.controlValue(this.NAME);

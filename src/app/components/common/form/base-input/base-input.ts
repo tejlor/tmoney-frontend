@@ -14,9 +14,6 @@ export abstract class BaseInput {
       return null;
     }
 
-    console.log(this.control.errors);
-    
-
     if (this.control.hasError('required')) {
       return 'Pole wymagane';
     }

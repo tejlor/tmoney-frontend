@@ -127,6 +127,7 @@ export class EntryPageComponent extends BaseForm {
     else {
       newEntry = new Entry();
     }
+    this.entry = newEntry;
     this.fillForm(newEntry);
     this.formGroup.markAsUntouched();
     this.formGroup.updateValueAndValidity();

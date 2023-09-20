@@ -28,6 +28,9 @@ export class DashboardPageComponent implements OnInit {
     this.accountHttpService.getSummary().subscribe((array: AccountSummary[]) => {
       this.items = [];
       for (let item of array) {
+        if (!item.account.orderNo) {
+          continue;
+        }
         let pos = item.account.orderNo.split('.');
         let row = Number(pos[0]) - 1;
         let col = Number(pos[1]) - 1;
@@ -37,13 +40,7 @@ export class DashboardPageComponent implements OnInit {
         this.items[row][col] = item;
       }
 
-      const lastEntry = _.chain(array)
-        .filter(as => as.account.includeInSummary === true)
-        .map(as => as.entry)
-        .maxBy(entry => entry.date + ':' + entry.id)
-        .value();
-
-      this.summary = new AccountSummary(Account.summary(), lastEntry);
+      this.summary = array.find(as => as.account.code === 'SUMMARY');
     });
   }
 }

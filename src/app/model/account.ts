@@ -10,22 +10,13 @@ export class Account extends AbstractDto {
 
 	@Type(() => Category)
 	balancingCategory: Category;
-	
+
 	color: string;
 	lightColor: string;
 	darkColor: string;
 	orderNo: string;
 	icon: string;
 	logo: string;
-
-	static summary() {
-		const account = new Account();
-		account.code = null;
-		account.name = 'Podsumowanie';
-		account.color = '0d76cd';
-		account.icon = 'fa-solid fa-wallet';
-		return account;
-	}
 
 	get colorCss() {
 		return '#' + this.color;

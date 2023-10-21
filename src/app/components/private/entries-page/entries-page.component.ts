@@ -41,17 +41,10 @@ export class EntriesPageComponent extends BaseTablePage implements OnInit {
 
   ngOnInit(): void {
     this.accountCode = this.route.snapshot.params[Path.params.accountCode];
-    if (this.accountCode) {
-      this.accountHttpService.getByCode(this.accountCode).subscribe(result => {
-        this.account = result;
-        this.titleService.setTitle(`Wpisy konta ${this.account.name} ${TITLE_POSTFIX}`);
-      });
-    }
-    else {
-      this.account = Account.summary();
-      this.titleService.setTitle(`Wszystkie wpisy ${TITLE_POSTFIX}`);
-    }
-
+    this.accountHttpService.getByCode(this.accountCode).subscribe(result => {
+      this.account = result;
+      this.titleService.setTitle(`Wpisy konta ${this.account.name} ${TITLE_POSTFIX}`);
+    });
     this.initTableParams('date DESC, id DESC');
     this.reloadTableRows();
   }

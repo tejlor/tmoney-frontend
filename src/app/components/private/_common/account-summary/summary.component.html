@@ -11,5 +11,5 @@
     </div>
   </div>
 
-  <h3>{{(summary.account.code === 'SUMMARY' ? summary.entry?.balance : summary.entry?.balanceOverall) | number: DEC_FORMAT}} <span>PLN</span></h3>
+  <h3>{{(summary.account.code !== 'SUMMARY' ? summary.entry?.balance : summary.entry?.balanceOverall) | number: DEC_FORMAT}} <span>PLN</span></h3>
 </div>

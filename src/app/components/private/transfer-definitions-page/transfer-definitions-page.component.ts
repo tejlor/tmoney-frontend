@@ -39,7 +39,7 @@ export class TransferDefinitionsPageComponent extends BaseTablePage implements O
   }
 
   onRowClick(definition: TransferDefinition): void {
-    this.router.navigateByUrl(Path.transferDefinition(definition.id));
+    this.router.navigateByUrl(Path.transfer(definition.id));
   }
 
   onRemoveClick($event: MouseEvent, definition: TransferDefinition): void {

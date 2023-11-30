@@ -62,7 +62,7 @@ export class TransferPageComponent extends BaseForm {
   }
 
   onCancel(): void {
-    this.router.navigateByUrl(Path.dashboard());
+    this.router.navigateByUrl(Path.transferDefinitions());
   }
 
   private fillDefaultDefinitionValues(definition: TransferDefinition) {

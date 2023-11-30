@@ -8,8 +8,9 @@ import {BaseForm} from '../../common/base-form';
 import {BalanceRequest} from 'src/app/model/balanceRequest';
 import {AccountSummary} from 'src/app/model/accountSummary';
 import {parseAmount} from 'src/app/utils/utils';
-import {DATE_PATTERN, TITLE_POSTFIX} from 'src/app/utils/constants';
+import {DATE_FORMAT, DATE_PATTERN, TITLE_POSTFIX} from 'src/app/utils/constants';
 import {Title} from '@angular/platform-browser';
+import moment from 'moment';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class AccountBalancingPageComponent extends BaseForm {
       [this.DATE, [Validators.required, Validators.pattern(DATE_PATTERN)]],
       [this.BALANCE, [Validators.required, Validators.min(0)]]
     ]);
+    this.setControlValue(this.DATE, moment().format(DATE_FORMAT));
 
     let accountCode = route.snapshot.params[Path.params.code];
     if (accountCode) {

@@ -21,6 +21,7 @@ export class EntriesPageComponent extends BaseTablePage implements OnInit {
 
   readonly Path = Path;
   readonly DEC_FORMAT = DEC_FORMAT;
+  readonly SUMMARY = Account.SUMMARY;
 
   account: Account;
   tableData: TableData<Entry>;

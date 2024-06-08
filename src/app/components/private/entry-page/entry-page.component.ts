@@ -137,7 +137,7 @@ export class EntryPageComponent extends BaseForm {
   private loadSummary(code: string): void {
     this.accountHttpService.getSummary(code).subscribe(summaries => {
       this.summary = summaries[0];
-      this.labelStyle = {'color': '#' + this.summary.account.darkColor};
+      this.labelStyle = {'color': this.summary.account.darkColorCss};
     });
   }
 

@@ -53,6 +53,7 @@ import {TransferPageComponent} from './components/private/transfer-page/transfer
 import {TaggedTextareaComponent} from './components/private/_common/tagged-description/tagged-textarea.component';
 import {TransactionsImportDialogComponent} from './components/private/dashboard-page/panel/import-dialog/import-dialog.component';
 import {InputFileComponent} from './components/common/form/input-file/input-file.component';
+import {UppercaseDirective} from './components/common/directive/uppercase.directive';
 
 
 function init(oauthService: OAuthService): () => Promise<void> {
@@ -108,7 +109,8 @@ function init(oauthService: OAuthService): () => Promise<void> {
     TransferDefinitionsPageComponent,
     TransferPageComponent,
     TransactionsImportDialogComponent,
-    InputFileComponent
+    InputFileComponent,
+    UppercaseDirective
   ],
   imports: [
     BrowserModule,

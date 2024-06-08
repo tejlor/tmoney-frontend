@@ -3,6 +3,9 @@ import {AbstractDto} from "./abstractDto";
 import {Category} from "./category";
 
 export class Account extends AbstractDto {
+
+	static readonly SUMMARY = 'SUMMARY';
+
 	code: string;
 	name: string;
 	active: boolean;

@@ -61,7 +61,7 @@ export class AccountPageComponent extends BaseForm {
       [this.COLOR, Validators.pattern(COLOR_PATTERN)],
       [this.LIGHT_COLOR, Validators.pattern(COLOR_PATTERN)],
       [this.DARK_COLOR, Validators.pattern(COLOR_PATTERN)],
-      [this.ORDER_NO, Validators.pattern(/[1-9]\.[1-9]/)],
+      [this.ORDER_NO, Validators.pattern('[1-9]\.[1-9]')],
       [this.ICON, Validators.maxLength(50)],
       [this.LOGO]
     ]);

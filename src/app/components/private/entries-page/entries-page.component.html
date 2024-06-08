@@ -12,7 +12,7 @@
 </div>
 
 <div class="w3-responsive">
-  <table *ngIf="account?.code else summaryTable" class="w3-table-all w3-hoverable w3-card">
+  <table *ngIf="account?.code !== SUMMARY else summaryTable" class="w3-table-all w3-hoverable w3-card">
     <colgroup>
       <col width="5%">
       <col width="10%">
@@ -50,11 +50,6 @@
     </tbody>
   </table>
 </div>
-
-<tm-pagination [color]="account?.colorCss" [tableInfo]="tableData?.tableInfo" [pageSize]="tableParams.pageSize" [pageNo]="tableParams.pageNo"
-  (pageChange)="onPageNoChange($event)" (pageSizeChange)="onPageSizeChange($event)"></tm-pagination>
-
-<tm-dialog [config]="dialogConfig"></tm-dialog>
 
 <ng-template #summaryTable>
   <table class="w3-table-all w3-hoverable w3-card">
@@ -95,3 +90,8 @@
     </tbody>
   </table>
 </ng-template>
+
+<tm-pagination [color]="account?.colorCss" [tableInfo]="tableData?.tableInfo" [pageSize]="tableParams.pageSize" [pageNo]="tableParams.pageNo"
+  (pageChange)="onPageNoChange($event)" (pageSizeChange)="onPageSizeChange($event)"></tm-pagination>
+
+<tm-dialog [config]="dialogConfig"></tm-dialog>

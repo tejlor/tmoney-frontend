@@ -1,7 +1,7 @@
 <tm-account-summary [summary]="summary"></tm-account-summary>
 
 <div class="w3-card w3-white w3-margin-top w3-padding form">
-  <h1>{{summary?.account.name}}<span *ngIf="stateEntries">[{{stateIndex+1}}/{{stateEntries.length}}]</span></h1>
+  <h1>{{summary?.account.name}} <span *ngIf="stateEntries">[{{stateIndex+1}}/{{stateEntries.length}}]</span></h1>
   <form [formGroup]="formGroup">
     <tm-select label="Kategoria" [labelStyle]="labelStyle" [control]="control(CATEGORY)" [options]="categories"></tm-select>
     <tm-input-date label="Data" [labelStyle]="labelStyle" [control]="control(DATE)" [tmDatePicker]="datePicker"></tm-input-date>

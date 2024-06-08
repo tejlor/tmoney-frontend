@@ -3,7 +3,7 @@
   <form [formGroup]="formGroup">
     <div class="w3-row">
       <div class="w3-col m6 tm-left">
-        <tm-input-text label="Kod" [control]="control(CODE)"></tm-input-text>
+        <tm-input-text label="Kod" [control]="control(CODE)" [uppercase]="true"></tm-input-text>
         <tm-input-text label="Nazwa" [control]="control(NAME)"></tm-input-text>
         <tm-input-radio-group label="Aktywne" [control]="control(ACTIVE)" [options]="yesNoOptions"></tm-input-radio-group>
         <tm-input-radio-group label="Do podsumowania" [control]="control(INCLUDE_IN_SUMMARY)" [options]="yesNoOptions"></tm-input-radio-group>
